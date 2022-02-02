@@ -9,4 +9,4 @@
 
 **Lab Material** found at: https://github.com/Kevin-Sim/SET08103/tree/master/labs
 
-**Individual Marking Sheet** found at: https://livenapierac-my.sharepoint.com/:f:/g/personal/40509526_live_napier_ac_uk/EkHsoEHaOu1KukVNSztDSKoBLycL1-PVC9kyTmiXLeiCEQ?e=a5qoz8 
+**Individual Marking Sheet** found at: https://bit.ly/3HsUCPG
