@@ -14,7 +14,9 @@ along with the relevant consequence, should any guideline be broken:
 
 ### 1.
 #### Expectation:
+Team members are expected to work as if they are co-workers and be respectful. All team members are equal and all opinions are relevant and to be considered.
 #### Consequence:
+Any team member found to be disrespectful will need to apologise by way of a chocolate bar. More severe cases will be escalated.
 ### 2.
 #### Expectation:
 #### Consequence:
