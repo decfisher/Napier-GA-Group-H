@@ -1,6 +1,6 @@
-#SET08403 - Group H
+# SET08403 - Group H
 
-###Team Members:
+### Team Members:
 
 - Declan Fisher
 - Mark Haskett
