@@ -16,4 +16,5 @@
 ### Repository Status
 - Master Branch: ![workflow](https://img.shields.io/github/workflow/status/decfisher/Napier-GA-Group-H/Napier%20GA%20Group%20H%20Workflow/master?label=Build%20Status&style=for-the-badge)
 - License: ![license](https://img.shields.io/github/license/decfisher/Napier-GA-Group-H?label=%20&style=for-the-badge)
+- Develop Branch: ![workflow](https://img.shields.io/github/workflow/status/decfisher/Napier-GA-Group-H/Napier%20GA%20Group%20H%20Workflow/develop?label=Build%20Status&style=for-the-badge)
 - Release: ![releases](https://img.shields.io/github/v/release/decfisher/Napier-GA-Group-H?include_prereleases&label=%20&style=for-the-badge)
