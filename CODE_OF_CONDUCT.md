@@ -27,9 +27,3 @@ Any member continuing to work in a silo against the group decision will have the
 During team meetings all members will listen attentively without interrupting. Leadership will rotate on a weekly basis with every member having the opportunity to chair a meeting at least twice.
 #### Consequence:
 If a member is found to consistently interrupt or be overbearing in meetings without respect to the leadership rota, they will be required to buy the first round of drinks at the end of project wrap up.
-### 4.
-#### Expectation:
-#### Consequence:
-### 5.
-#### Expectation:
-#### Consequence:
