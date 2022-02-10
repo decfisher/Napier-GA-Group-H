@@ -7,10 +7,9 @@
 - James McNee
 - Thomas Peck
 
-**Kanban Board** found at: https://trello.com/b/mNFfTYlH/group-h-group-work
-
+**Kanban Board** found at: https://zube.io/napier-172/set08403-coursework-group-h/w/group-h-issues-board/kanban
+**Sprint Board** found at: https://zube.io/napier-172/set08403-coursework-group-h/w/group-h-issues-board/sprintboard?where%5Bsprint_id%5D=51481
 **Lab Material** found at: https://github.com/Kevin-Sim/SET08103/tree/master/labs
-
 **Individual Marking Sheet** found at: https://bit.ly/3HsUCPG
 
 ### Repository Status
