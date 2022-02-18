@@ -91,8 +91,8 @@ public class App
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT NAME, population"
-                            + "FROM country c"
+                    "SELECT NAME, population "
+                            + "FROM country c "
                             + "ORDER BY 2 DESC "
                             + "LIMIT 1;";
 
