@@ -19,7 +19,7 @@ Failed End Condition
 No report is produced. The report is incorrect.
 
 Primary Actor
-Employee
+Dave the Employee
 
 Trigger
 A request for population information for every country in the world from WHO, ordered from largest to smallest.

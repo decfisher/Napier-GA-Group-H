@@ -19,7 +19,7 @@ Failed End Condition
 No report is produced. The report is incorrect.
 
 Primary Actor
-Employee
+Dave the Employee
 
 Trigger
 A request for country population information from WHO.
