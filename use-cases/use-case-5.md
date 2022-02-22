@@ -1,7 +1,7 @@
-USE CASE: 5 Add a new employees details
+USE CASE: 5 Produce a Report on the population of all cities in the world, a continent, a region, a country and a district organised largest to smallest.
 CHARACTERISTIC INFORMATION
 Goal in Context
-As an HR advisor I want to add a new employee's details so that I can ensure the new employee is paid.
+As an employee of the organisation I want to produce reports on all the capital cities in the world, a continent, a region, a country and a district. These reports should be organised by population from largest to smallest, for WHO.
 
 Scope
 Company.
@@ -10,25 +10,26 @@ Level
 Primary task.
 
 Preconditions
-We know the new employee's details. Database allows entry of data.
+Database containing details on populations of all cities in the world.
 
 Success End Condition
-The new employee's details are added to the database so they are able to be paid.
+A report is available for the employee to use, which contains population information for capital cities in the world, a continent, a region, a country and a district which is organised by largest to smallest
 
 Failed End Condition
-No employee is added.
+No report is produced. The report is incorrect.
 
 Primary Actor
-HR Advisor.
+Employee
 
 Trigger
-A new employee joins the company.
+A request for population information for every city in the world from WHO, ordered from largest to smallest.
 
 MAIN SUCCESS SCENARIO
-A new employee joins the company
-HR advisor captures the new employee's details.
-HR advisor inputs those details into the database.
-New employee is able to be paid.
+WHO request city population information for the world, a continent, a region, a country and a district for their worldwide report, ordered from largest to smallest.
+Employee captures specified conditions, including the required continent, region, country and district.
+Employee runs specific query to satisfy WHOs request with required restrictions where applicable.
+Employee provides report to WHO.
+EXTENSIONS
 None.
 SUB-VARIATIONS
 None.

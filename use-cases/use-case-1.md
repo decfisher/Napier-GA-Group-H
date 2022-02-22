@@ -1,7 +1,7 @@
-USE CASE: 1 Produce a Report on the Salary of All Employees
+USE CASE: 1 Produce a Report on the population of people, people living in cities and people not living in cities
 CHARACTERISTIC INFORMATION
 Goal in Context
-As an HR advisor I want to produce a report on the salary of all employees so that I can support financial reporting of the organisation
+As an employee of the organisation I want to produce reports on the population of people, people living in cities and people not living in cities in each continent, region and country to provide to the World Health Organisation (WHO).
 
 Scope
 Company.
@@ -10,28 +10,27 @@ Level
 Primary task.
 
 Preconditions
-Database contains all current employee salary data.
+Database containing details on populations of the world.
 
 Success End Condition
-A report is available for HR to provide to finance.
+A report is available for the employee to use, which contains population information for each continent, region and country.
 
 Failed End Condition
-No report is produced.
+No report is produced. The report is incorrect.
 
 Primary Actor
-HR Advisor.
+Employee
 
 Trigger
-A request for finance information is sent to HR.
+A request for population information from WHO
 
 MAIN SUCCESS SCENARIO
-Finance request salary information for all employees.
-HR advisor captures all employees to get salary information for.
-HR advisor extracts current salary information of all employees.
-HR advisor provides report to finance.
+WHO request population information for a worldwide report.
+Employee captures specified conditions.
+Employee runs specific query to satisfy WHOs request.
+Employee provides report to WHO.
 EXTENSIONS
-No employees exist:
-HR advisor informs finance no employees exist.
+None.
 SUB-VARIATIONS
 None.
 

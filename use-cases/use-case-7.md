@@ -1,7 +1,7 @@
-USE CASE: 7 Update an employees details
+USE CASE: 7 Produce a Report on the population of all countries in the world, a continent and a region, ordered from largest to smallest.
 CHARACTERISTIC INFORMATION
 Goal in Context
-As an HR advisor I want to update an employee's details so that employee's details are kept up-to-date.
+As an employee of the organisation I want to produce reports on all the countries in the world, a continent and a region for WHO, ordered from largest to smallest.
 
 Scope
 Company.
@@ -10,25 +10,25 @@ Level
 Primary task.
 
 Preconditions
-We know who the employee is. We know which details we wish to update. Database allows user to update data.
+Database containing details on populations of all countries in the world.
 
 Success End Condition
-The employee's details are updated.
+A report is available for the employee to use, which contains population information for countries in the world, a continent and a region, ordered from largest to smallest.
 
 Failed End Condition
-The employee's details are not updated and therefore out of date.
+No report is produced. The report is incorrect.
 
 Primary Actor
-HR Advisor.
+Employee
 
 Trigger
-An employee's details change.
+A request for population information for every country in the world from WHO, ordered from largest to smallest.
 
 MAIN SUCCESS SCENARIO
-An employee informs HR advisor of change of details.
-HR advisor captures the employee's new details.
-HR advisor inputs those details into the database.
-Employee's details are updated and correct in the database.
+WHO request country population information for the world, a continent and a region for their worldwide report, ordered from largest to smallest.
+Employee captures specified conditions, including the required continent and region.
+Employee runs specific query to satisfy WHOs request with required restrictions where applicable.
+Employee provides report to WHO.
 EXTENSIONS
 None.
 SUB-VARIATIONS

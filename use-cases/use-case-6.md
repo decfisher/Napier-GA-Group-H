@@ -1,7 +1,7 @@
-USE CASE: 6 View any employee's details
+USE CASE: 6 Produce a Report on the population of all countries in the world, a continent and a region.
 CHARACTERISTIC INFORMATION
 Goal in Context
-As an HR advisor I want to view any employee's details so that the employee's promotion request can be supported.
+As an employee of the organisation I want to produce reports on all the countries in the world, a continent and a region, for WHO.
 
 Scope
 Company.
@@ -10,25 +10,25 @@ Level
 Primary task.
 
 Preconditions
-We know the details of the employee. Database contains current employee data.
+Database containing details on populations of countries.
 
 Success End Condition
-I am able to view the employee's details.
+A report is available for the employee to use, which contains population information for countries in the world, in a continent and a region.
 
 Failed End Condition
-Unable to view the employee's details.
+No report is produced. The report is incorrect.
 
 Primary Actor
-HR Advisor.
+Employee
 
 Trigger
-An employee is up for a promotion.
+A request for country population information from WHO.
 
 MAIN SUCCESS SCENARIO
-An employee applies for a promotion.
-HR advisor captures name of the person to get the information for.
-HR advisor extracts current details of the employee.
-HR advisor provides information to support promotion request.
+WHO request country population information for the world, a continent and a region for their worldwide report.
+Employee captures specified conditions, including the required continent and region.
+Employee runs specific query to satisfy WHOs request with restrictions on continent and region where applicable.
+Employee provides report to WHO.
 EXTENSIONS
 None.
 SUB-VARIATIONS

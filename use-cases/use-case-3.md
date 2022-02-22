@@ -1,7 +1,7 @@
-USE CASE: 3 Produce a Report on the Salary of Employees in my department
+USE CASE: 3 Produce a Report on the population of all capital cities in the world, a continent and a region, organised largest to smallest.
 CHARACTERISTIC INFORMATION
 Goal in Context
-As a department manager I want to produce a report on the salary of employees in my department so that I can support financial reporting for my department.
+As an employee of the organisation I want to produce reports on all the capital cities in the world, a continent and a region. These reports should be organised by population from largest to smallest, for WHO.
 
 Scope
 Company.
@@ -10,28 +10,27 @@ Level
 Primary task.
 
 Preconditions
-We know the managers department. Database contains current employee salary data.
+Database containing details on populations of capital cities.
 
 Success End Condition
-A report is available for the department manager to provide to finance.
+A report is available for the employee to use, which contains population information for capital cities in the world, in a continent and a region which is organised by largest to smallest
 
 Failed End Condition
-No report is produced.
+No report is produced. The report is incorrect.
 
 Primary Actor
-Department manager.
+Employee
 
 Trigger
-A request for finance information is sent to a department manager.
+A request for capital city population information from WHO, ordered from largest to smallest.
 
 MAIN SUCCESS SCENARIO
-Finance request salary information for a department.
-Department manager captures name of their department to get salary information for.
-Department manager extracts current salary information of all employees of their department.
-Department manager provides report to finance.
+WHO request capital city population information for the world, a continent and a region for their worldwide report, ordered from largest to smallest.
+Employee captures specified conditions, including the required continent and region.
+Employee runs specific query to satisfy WHOs request with restrictions on continent and region where applicable.
+Employee provides report to WHO.
 EXTENSIONS
-Department does not exist:
-Department manager informs finance no department exists.
+None.
 SUB-VARIATIONS
 None.
 

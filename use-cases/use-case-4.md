@@ -1,7 +1,7 @@
-USE CASE: 4 Produce a Report on the Salary of Employees of a Given Role
+USE CASE: 4 Produce a Report on the top 10 populated cities in the world, a continent, a region, a country and a district.
 CHARACTERISTIC INFORMATION
 Goal in Context
-As an HR advisor I want to produce a report on the salary of employees of a given role so that I can support financial reporting of the organisation.
+As an employee of the organisation I want to produce reports on the top N populated cities by world, continent, region, country and district. Where N is provided by the user, to give to the World Health Organisation.
 
 Scope
 Company.
@@ -10,28 +10,27 @@ Level
 Primary task.
 
 Preconditions
-We know the role. Database contains current employee salary data.
+Database containing details on the population of all cities.
 
 Success End Condition
-A report is available for HR to provide to finance.
+A report is available for the employee to use, which contains the top 10 most populated cities in the world, a continent, a region, a country and a district.
 
 Failed End Condition
-No report is produced.
+No report is produced. The report is incorrect.
 
 Primary Actor
-HR Advisor.
+Employee
 
 Trigger
-A request for finance information is sent to HR.
+A request for the top 10 populated cities in the world, continent, region, country and district by WHO.
 
 MAIN SUCCESS SCENARIO
-Finance request salary information for a given role.
-HR advisor captures name of the role to get salary information for.
-HR advisor extracts current salary information of all employees of the given role.
-HR advisor provides report to finance.
+WHO request top 10 city population information for the world, continent, region, country and district for their worldwide report.
+Employee captures specified conditions, including the number of records requested and the required continent, region, country and district.
+Employee runs specific query to satisfy WHOs request with restrictions on location where applicable.
+Employee provides report to WHO.
 EXTENSIONS
-Role does not exist:
-HR advisor informs finance no role exists.
+None.
 SUB-VARIATIONS
 None.
 

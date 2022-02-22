@@ -1,7 +1,7 @@
-USE CASE: 2 Produce a Report on the Salary of Employees in a department
+USE CASE: 2 Produce a Report on the top 10 populated capital cities in the world, a continent and region
 CHARACTERISTIC INFORMATION
 Goal in Context
-As an HR advisor I want to produce a report on the salary of employees in a department so that I can support financial reporting of the organisation.
+As an employee of the organisation I want to produce reports on the top N populated capital cities, sorted by world, continent and region, where N is provided by the user, to give to the World Health Organisation.
 
 Scope
 Company.
@@ -10,28 +10,27 @@ Level
 Primary task.
 
 Preconditions
-We know the department. Database contains current employee salary data.
+Database containing details on populations of capital cities.
 
 Success End Condition
-A report is available for HR to provide to finance.
+A report is available for the employee to use, which contains population information for each capital city and the corresponding continent and region.
 
 Failed End Condition
-No report is produced.
+No report is produced. The report is incorrect.
 
 Primary Actor
-HR Advisor.
+Employee
 
 Trigger
-A request for finance information is sent to HR.
+A request for capital city population information from WHO
 
 MAIN SUCCESS SCENARIO
-Finance request salary information for a department.
-HR advisor captures name of the department to get salary information for.
-HR advisor extracts current salary information of all employees of the department.
-HR advisor provides report to finance.
+WHO request top 10 capital city population information for the world, a continent and a region for their worldwide report.
+Employee captures specified conditions, including the top 10 records and the required continent and region.
+Employee runs specific query to satisfy WHOs request with restrictions on continent and region where applicable.
+Employee provides report to WHO.
 EXTENSIONS
-Department does not exist:
-HR advisor informs finance no department exists.
+None.
 SUB-VARIATIONS
 None.
 
