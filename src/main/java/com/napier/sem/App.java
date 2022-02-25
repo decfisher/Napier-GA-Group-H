@@ -2,6 +2,9 @@ package com.napier.sem;
 
 import java.sql.*;
 
+/**
+ * Runs the database application
+ */
 public class App
 {
     public static void main(String[] args)
@@ -83,6 +86,10 @@ public class App
         }
     }
 
+    /**
+     * Gets list of countries
+     * @return a Country object
+     */
     public Country getCountry()
     {
         try

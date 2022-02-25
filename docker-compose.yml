@@ -6,6 +6,8 @@ services:
 
   # db is is db folder
   db:
+    image: mysql:8.0.25
+    platform: 'linux/x86_64'
     build: db/.
     command: --default-authentication-plugin=mysql_native_password
     restart: always
