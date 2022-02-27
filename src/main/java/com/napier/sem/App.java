@@ -267,7 +267,7 @@ public class App
         } else if (type == "Continent")
         {
             // Print Header
-            System.out.println(String.format("%-10s %10s %110s ", "Country", "Continent", "Population"));
+            System.out.println(String.format("%-10s %10s %10s ", "Country", "Continent", "Population"));
             // Loop over all employees in the list
             for (Country cou : countries)
             {
