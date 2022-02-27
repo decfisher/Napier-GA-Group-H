@@ -18,7 +18,8 @@ public class App
         //Country cou = a.getCountry();
         // Extract employee salary information
         //ArrayList<Country> countries = a.getCountriesByPopulation();
-        ArrayList<Country> countries = a.getCountriesByPopulation("Antarctica");
+        //ArrayList<Country> countries = a.getCountriesByPopulation("Antarctica");
+        ArrayList<Country> countries = a.getCountriesByPopulation("Asia", "Eastern Asia");
         //a.displayCountry(cou);
         //a.printCountries(countries);
 
@@ -253,12 +254,12 @@ public class App
         if (type == "World")
         {
             // Print header
-            System.out.println(String.format("%-10s %-10s ", "Country", "Population"));
+            System.out.println(String.format("%-10s %10s ", "Country", "Population"));
             // Loop over all employees in the list
             for (Country cou : countries)
             {
                 String cou_string =
-                        String.format("%-10s %-10s ",
+                        String.format("%-10s %10s ",
                                 cou.Name, cou.Population);
                 System.out.println(cou_string);
             }
@@ -266,12 +267,12 @@ public class App
         } else if (type == "Continent")
         {
             // Print Header
-            System.out.println(String.format("%-10s %-45s %-10s ", "Country", "Continent", "Population"));
+            System.out.println(String.format("%-10s %10s %110s ", "Country", "Continent", "Population"));
             // Loop over all employees in the list
             for (Country cou : countries)
             {
                 String cou_string =
-                        String.format("%-10s %-45s %-10s ",
+                        String.format("%-10s %10s %10s ",
                                 cou.Name, cou.Continent, cou.Population);
                 System.out.println(cou_string);
             }
@@ -279,12 +280,12 @@ public class App
         } else
         {
             // Print Header
-            System.out.println(String.format("%-10s %-10s %-10s %-10s ", "Country", "Population", "Continent", "Region"));
+            System.out.println(String.format("%-10s %10s %10s %10s ", "Country", "Continent", "Region", "Population"));
             // Loop over all employees in the list
             for (Country cou : countries) {
                 String cou_string =
-                        String.format("%-10s %-10s %-10s %-10s ",
-                                cou.Name, cou.Population, cou.Continent, cou.Region);
+                        String.format("%-10s %10s %10s %10s ",
+                                cou.Name, cou.Continent, cou.Region, cou.Population);
                 System.out.println(cou_string);
 
             }
