@@ -1,6 +1,7 @@
 package com.napier.sem;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  * Runs the database application
@@ -14,8 +15,12 @@ public class App
 
         // Connect to database
         a.connect();
-        Country cou = a.getCountry();
-        a.displayCountry(cou);
+        //Country cou = a.getCountry();
+        // Extract employee salary information
+        ArrayList<Country> countries = a.getCountriesByPopulation();
+        //a.displayCountry(cou);
+        a.printCountries(countries);
+
 
         // Disconnect from database
         a.disconnect();
@@ -125,6 +130,40 @@ public class App
         }
     }
 
+    public ArrayList<Country> getCountriesByPopulation()
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT NAME, population "
+                            + "FROM country c "
+                            + "ORDER BY 2 DESC ";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return query result if query is sucessful
+            // Check one is returned
+            ArrayList<Country> countries = new ArrayList<Country>();
+            while (rset.next())
+            {
+                Country cou = new Country();
+                cou.Name = rset.getString("NAME");
+                cou.Population = rset.getInt("Population");
+                countries.add(cou);
+            }
+            return countries;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get Country details");
+            return null;
+        }
+    }
+
     public void displayCountry(Country cou)
     {
         if (cou != null)
@@ -133,6 +172,20 @@ public class App
                     cou.Name + " "
                     + cou.Population + " ");
 
+        }
+    }
+
+    public static void printCountries(ArrayList<Country> countries)
+    {
+        // Print header
+        System.out.println(String.format("%-10s %-15s %-20s %-8s", "Name", "Continent", "Region", "Population"));
+        // Loop over all Countries in the list
+        for (Country cou : countries)
+        {
+            String cou_string =
+                    String.format("%-10s %-15s %-20s %-8s",
+                            cou.Name, cou.Population);
+            System.out.println(cou_string);
         }
     }
 }
