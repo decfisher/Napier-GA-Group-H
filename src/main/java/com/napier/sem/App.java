@@ -177,10 +177,10 @@ public class App
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT NAME, population, Region "
+                    "SELECT NAME, population, Continent "
                             + "FROM country c "
-                            + "WHERE continent = " + Continent
-                            + " ORDER BY 2 DESC ";
+                            + "WHERE continent = '" + Continent + "' "
+                            + " ORDER BY 2 DESC";
 
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
@@ -216,9 +216,9 @@ public class App
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT NAME, population, Region "
+                    "SELECT NAME, population, Continent, Region "
                             + "FROM country c "
-                            + "WHERE continent = " + Continent + " AND Region = " + Region
+                            + "WHERE continent = '" + Continent + "' AND Region = '" + Region + "' "
                             + " ORDER BY 2 DESC ";
 
             // Execute SQL statement
