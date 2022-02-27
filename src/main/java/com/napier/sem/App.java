@@ -17,7 +17,8 @@ public class App
         a.connect();
         //Country cou = a.getCountry();
         // Extract employee salary information
-        ArrayList<Country> countries = a.getCountriesByPopulation();
+        //ArrayList<Country> countries = a.getCountriesByPopulation();
+        ArrayList<Country> countries = a.getCountriesByPopulation("Antarctica");
         //a.displayCountry(cou);
         //a.printCountries(countries);
 
