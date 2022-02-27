@@ -183,7 +183,7 @@ public class App
         for (Country cou : countries)
         {
             String cou_string =
-                    String.format("%-10s %-15s %-20s %-8s",
+                    String.format("%-10s %-15s",
                             cou.Name, cou.Population);
             System.out.println(cou_string);
         }
