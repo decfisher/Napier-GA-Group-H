@@ -19,7 +19,7 @@ public class App
         // Extract employee salary information
         ArrayList<Country> countries = a.getCountriesByPopulation();
         //a.displayCountry(cou);
-        a.printCountries(countries);
+        //a.printCountries(countries);
 
 
         // Disconnect from database
@@ -154,6 +154,7 @@ public class App
                 cou.Population = rset.getInt("Population");
                 countries.add(cou);
             }
+            printCountries(countries, "World");
             return countries;
         }
         catch (Exception e)
@@ -164,28 +165,129 @@ public class App
         }
     }
 
-    public void displayCountry(Country cou)
-    {
-        if (cou != null)
-        {
-            System.out.println(
-                    cou.Name + " "
-                    + cou.Population + " ");
 
+
+    //overloaded Java method to get Population by Continent
+    public ArrayList<Country> getCountriesByPopulation(String Continent)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT NAME, population, Region "
+                            + "FROM country c "
+                            + "WHERE continent = " + Continent
+                            + " ORDER BY 2 DESC ";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return query result if query is sucessful
+            // Check one is returned
+            ArrayList<Country> countries = new ArrayList<Country>();
+            while (rset.next())
+            {
+                Country cou = new Country();
+                cou.Name = rset.getString("NAME");
+                cou.Population = rset.getInt("Population");
+                cou.Continent = rset.getString("Continent");
+                countries.add(cou);
+            }
+            printCountries(countries, "Continent");
+            return countries;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get Country details");
+            return null;
         }
     }
 
-    public static void printCountries(ArrayList<Country> countries)
+
+    //overloaded Java method to get Population by Continent and region
+    public ArrayList<Country> getCountriesByPopulation(String Continent, String Region)
     {
-        // Print header
-        System.out.println(String.format("%-10s %-15s %-20s %-8s", "Name", "Continent", "Region", "Population"));
-        // Loop over all Countries in the list
-        for (Country cou : countries)
+        try
         {
-            String cou_string =
-                    String.format("%-10s %-15s",
-                            cou.Name, cou.Population);
-            System.out.println(cou_string);
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT NAME, population, Region "
+                            + "FROM country c "
+                            + "WHERE continent = " + Continent + " AND Region = " + Region
+                            + " ORDER BY 2 DESC ";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return query result if query is sucessful
+            // Check one is returned
+            ArrayList<Country> countries = new ArrayList<Country>();
+            while (rset.next())
+            {
+                Country cou = new Country();
+                cou.Name = rset.getString("NAME");
+                cou.Population = rset.getInt("Population");
+                cou.Continent = rset.getString("Continent");
+                cou.Region = rset.getString("Region");
+                countries.add(cou);
+            }
+            printCountries(countries, "Region");
+            return countries;
         }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get Country details");
+            return null;
+        }
+    }
+
+
+    public static void printCountries(ArrayList<Country> countries, String type)
+    {
+
+        if (type == "World")
+        {
+            // Print header
+            System.out.println(String.format("%-10s %-50s", "Country", "Population"));
+            // Loop over all employees in the list
+            for (Country cou : countries)
+            {
+                String cou_string =
+                        String.format("%-10s %-50s",
+                                cou.Name, cou.Population);
+                System.out.println(cou_string);
+            }
+
+        } else if (type == "Continent")
+        {
+            // Print Header
+            System.out.println(String.format("%-10s %-50s %-50s", "Country", "Population", "Continent"));
+            // Loop over all employees in the list
+            for (Country cou : countries)
+            {
+                String cou_string =
+                        String.format("%-10s %-50s %-50s",
+                                cou.Name, cou.Population, cou.Continent);
+                System.out.println(cou_string);
+            }
+
+        } else
+        {
+            // Print Header
+            System.out.println(String.format("%-10s %-50s %-50s %-50s", "Country", "Population", "Continent", "Region"));
+            // Loop over all employees in the list
+            for (Country cou : countries) {
+                String cou_string =
+                        String.format("%-10s %-50s %-50s %-50s",
+                                cou.Name, cou.Population, cou.Continent, cou.Region);
+                System.out.println(cou_string);
+
+            }
+        }
+
     }
 }
