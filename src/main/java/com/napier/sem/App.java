@@ -253,12 +253,12 @@ public class App
         if (type == "World")
         {
             // Print header
-            System.out.println(String.format("%-10s %-50s", "Country", "Population"));
+            System.out.println(String.format("%-10s %-10s ", "Country", "Population"));
             // Loop over all employees in the list
             for (Country cou : countries)
             {
                 String cou_string =
-                        String.format("%-10s %-50s",
+                        String.format("%-10s %-10s ",
                                 cou.Name, cou.Population);
                 System.out.println(cou_string);
             }
@@ -266,12 +266,12 @@ public class App
         } else if (type == "Continent")
         {
             // Print Header
-            System.out.println(String.format("%-10s %-50s %-50s", "Country", "Population", "Continent"));
+            System.out.println(String.format("%-10s %-10s %-10s ", "Country", "Population", "Continent"));
             // Loop over all employees in the list
             for (Country cou : countries)
             {
                 String cou_string =
-                        String.format("%-10s %-50s %-50s",
+                        String.format("%-10s %-10s %-10s ",
                                 cou.Name, cou.Population, cou.Continent);
                 System.out.println(cou_string);
             }
@@ -279,11 +279,11 @@ public class App
         } else
         {
             // Print Header
-            System.out.println(String.format("%-10s %-50s %-50s %-50s", "Country", "Population", "Continent", "Region"));
+            System.out.println(String.format("%-10s %-10s %-10s %-10s ", "Country", "Population", "Continent", "Region"));
             // Loop over all employees in the list
             for (Country cou : countries) {
                 String cou_string =
-                        String.format("%-10s %-50s %-50s %-50s",
+                        String.format("%-10s %-10s %-10s %-10s ",
                                 cou.Name, cou.Population, cou.Continent, cou.Region);
                 System.out.println(cou_string);
 
