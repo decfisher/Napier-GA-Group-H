@@ -10,15 +10,7 @@ public class App {
     /**
      * Connection to MySQL database.
      */
-    private Connection connection;
-
-    private App(Connection con) {
-        this.connection = connection;
-    }
-
-    public App() {
-        this(null);
-    }
+    private Connection connection = null;
 
     public static void main(String[] args) {
         App a = new App(); // Create new Application
