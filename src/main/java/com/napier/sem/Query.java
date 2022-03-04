@@ -286,7 +286,6 @@ public class Query {
                                 + "WHERE region = '" + name + "'"
                                 + " ORDER BY population DESC"
                                 + " LIMIT " + n;
-
                 // Execute SQL statement
                 ResultSet rset = stmt.executeQuery(strSelect);
                 // Return query result if query is successful
@@ -310,6 +309,110 @@ public class Query {
             System.out.println(e.getMessage());
             System.out.println("Failed to execute query");
             return null;
+        }
+    }
+
+    public void getPopulation(String queryType) {
+        try {
+            if (queryType.equals("Continent")) {
+                // Create an SQL statement
+                Statement stmt = connection.createStatement();
+                // Create string for SQL statement
+                String strSelect =
+                        "SELECT continent, population " +
+                                "FROM country c " +
+                                "GROUP BY continent " +
+                                "ORDER BY population DESC";
+                // Execute SQL statement
+                ResultSet rset = stmt.executeQuery(strSelect);
+                // Return query result if query is successful
+                // Check one is returned
+                ArrayList<Country> countries = new ArrayList<Country>();
+                while (rset.next())
+                {
+                    Country country = new Country();
+                    country.Continent = rset.getString("Continent");
+                    country.Population = rset.getInt("Population");
+                    countries.add(country);
+                }
+                System.out.println("Population in each continent");
+                // Print Header
+                System.out.println(String.format("%-10s %10s ", "Continent", "Population"));
+                // Loop over all countries in the list
+                for (Country cou : countries) {
+                    String cou_string =
+                            String.format("%-10s %10s ",
+                                    cou.Continent, cou.Population);
+                    System.out.println(cou_string);
+                }
+
+            } else if (queryType.equals("Region")) {
+                // Create an SQL statement
+                Statement stmt = connection.createStatement();
+                // Create string for SQL statement
+                String strSelect =
+                        "SELECT region, population "
+                                + "FROM country c "
+                                + "GROUP BY region"
+                                + " ORDER BY population DESC";
+                // Execute SQL statement
+                ResultSet rset = stmt.executeQuery(strSelect);
+                // Return query result if query is successful
+                // Check one is returned
+                ArrayList<Country> countries = new ArrayList<Country>();
+                while (rset.next())
+                {
+                    Country country = new Country();
+                    country.Continent = rset.getString("Region");
+                    country.Population = rset.getInt("Population");
+                    countries.add(country);
+                }
+                System.out.println("Population in each region");
+                // Print Header
+                System.out.println(String.format("%-10s %10s ", "Region", "Population"));
+                // Loop over all countries in the list
+                for (Country cou : countries) {
+                    String cou_string =
+                            String.format("%-10s %10s ",
+                                    cou.Region, cou.Population);
+                    System.out.println(cou_string);
+                }
+            } else if (queryType.equals("Country")) {
+                // Create an SQL statement
+                Statement stmt = connection.createStatement();
+                // Create string for SQL statement
+                String strSelect =
+                        "SELECT country, population "
+                                + "FROM country c "
+                                + " ORDER BY population DESC";
+                // Execute SQL statement
+                ResultSet rset = stmt.executeQuery(strSelect);
+                // Return query result if query is successful
+                // Check one is returned
+                ArrayList<Country> countries = new ArrayList<Country>();
+                while (rset.next())
+                {
+                    Country country = new Country();
+                    country.Continent = rset.getString("NAME");
+                    country.Population = rset.getInt("Population");
+                    countries.add(country);
+                }
+                System.out.println("Population in each region");
+                // Print Header
+                System.out.println(String.format("%-10s %10s ", "Name", "Population"));
+                // Loop over all countries in the list
+                for (Country cou : countries) {
+                    String cou_string =
+                            String.format("%-10s %10s ",
+                                    cou.Name, cou.Population);
+                    System.out.println(cou_string);
+                }
+            } else {
+                throw new Exception();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to execute query");
         }
     }
 }

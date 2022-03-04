@@ -1,8 +1,6 @@
 package com.napier.sem;
 
 public class Country {
-
-
     public String Code;
     public String Name;
     public String Continent;
@@ -18,7 +16,4 @@ public class Country {
     public String HeadOfState;
     public int Capital;
     public String Code2;
-
-
-
 }
