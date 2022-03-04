@@ -319,10 +319,10 @@ public class Query {
                 Statement stmt = connection.createStatement();
                 // Create string for SQL statement
                 String strSelect =
-                        "SELECT continent, SUM(population) AS 'population' " +
+                        "SELECT continent, SUM(population) AS Population " +
                                 "FROM country c " +
-                                "GROUP BY continent " +
-                                "ORDER BY 'population' DESC";
+                                "GROUP BY 1 " +
+                                "ORDER BY Population DESC";
                 // Execute SQL statement
                 ResultSet rset = stmt.executeQuery(strSelect);
                 // Return query result if query is successful
