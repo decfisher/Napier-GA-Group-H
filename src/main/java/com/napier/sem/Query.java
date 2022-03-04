@@ -321,7 +321,6 @@ public class Query {
                 String strSelect =
                         "SELECT continent, population " +
                                 "FROM country c " +
-                                "GROUP BY continent " +
                                 "ORDER BY population DESC";
                 // Execute SQL statement
                 ResultSet rset = stmt.executeQuery(strSelect);
