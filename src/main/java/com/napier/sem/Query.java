@@ -319,7 +319,7 @@ public class Query {
                 Statement stmt = connection.createStatement();
                 // Create string for SQL statement
                 String strSelect =
-                        "SELECT continent, COUNT(*) AS 'population' " +
+                        "SELECT continent, SUM(population) AS 'population' " +
                                 "FROM country c " +
                                 "GROUP BY continent " +
                                 "ORDER BY 'population' DESC";
