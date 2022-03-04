@@ -19,11 +19,12 @@ public class App
         // Extract employee salary information
         //ArrayList<Country> countries = a.getCountriesByPopulation();
         //ArrayList<Country> countries = a.getCountriesByPopulation("Antarctica");
-        ArrayList<Country> countries = a.getCountriesByPopulation("Asia", "Eastern Asia");
+        //ArrayList<Country> countries = a.getCountriesByPopulation("Asia", "Eastern Asia");
         //a.displayCountry(cou);
         //a.printCountries(countries);
-
-
+        a.getTopNCountryPopulation(5);
+        a.getTopNCountryPopulation(5,"Continent","Asia");
+        a.getTopNCountryPopulation(5, "Region", "Western Europe");
         // Disconnect from database
         a.disconnect();
     }
@@ -224,7 +225,7 @@ public class App
 
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
-            // Return query result if query is sucessful
+            // Return query result if query is successful
             // Check one is returned
             ArrayList<Country> countries = new ArrayList<Country>();
             while (rset.next())
@@ -248,37 +249,39 @@ public class App
     }
 
 
-    public static void printCountries(ArrayList<Country> countries, String type)
-    {
+    public static void printCountries(ArrayList<Country> countries, String type) {
 
-        if (type == "World")
-        {
+        if (type.equals("World")) {
             // Print header
             System.out.println(String.format("%-10s %10s ", "Country", "Population"));
             // Loop over all employees in the list
-            for (Country cou : countries)
-            {
+            for (Country cou : countries) {
                 String cou_string =
                         String.format("%-10s %10s ",
                                 cou.Name, cou.Population);
                 System.out.println(cou_string);
             }
-
-        } else if (type == "Continent")
-        {
+        } else if (type.equals("Continent")) {
             // Print Header
             System.out.println(String.format("%-10s %10s %10s ", "Country", "Continent", "Population"));
             // Loop over all employees in the list
-            for (Country cou : countries)
-            {
+            for (Country cou : countries) {
                 String cou_string =
                         String.format("%-10s %10s %10s ",
                                 cou.Name, cou.Continent, cou.Population);
                 System.out.println(cou_string);
             }
-
-        } else
-        {
+        } else if (type.equals("Region")) {
+            // Print Header
+            System.out.println(String.format("%-10s %10s %10s ", "Country", "Region", "Population"));
+            // Loop over all employees in the list
+            for (Country cou : countries) {
+                String cou_string =
+                        String.format("%-10s %10s %10s ",
+                                cou.Name, cou.Region, cou.Population);
+                System.out.println(cou_string);
+            }
+        } else {
             // Print Header
             System.out.println(String.format("%-10s %10s %10s %10s ", "Country", "Continent", "Region", "Population"));
             // Loop over all employees in the list
@@ -287,9 +290,108 @@ public class App
                         String.format("%-10s %10s %10s %10s ",
                                 cou.Name, cou.Continent, cou.Region, cou.Population);
                 System.out.println(cou_string);
-
             }
         }
+    }
 
+    // Top N populous countries in the world
+    public ArrayList<Country> getTopNCountryPopulation(int n) {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT NAME, population "
+                            + "FROM country c "
+                            + " ORDER BY population DESC"
+                            + " LIMIT " + n;
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return query result if query is successful
+            // Check one is returned
+            ArrayList<Country> countries = new ArrayList<Country>();
+            while (rset.next())
+            {
+                Country country = new Country();
+                country.Name = rset.getString("NAME");
+                country.Population = rset.getInt("Population");
+                countries.add(country);
+            }
+            System.out.println("Top " + n + " Most Populated Countries in the World");
+            printCountries(countries, "World");
+            return countries;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to execute query");
+            return null;
+        }
+    }
+
+    // Top N populous countries in a continent/region
+    public ArrayList<Country> getTopNCountryPopulation(int n, String queryType, String name) {
+        try {
+            if (queryType.equals("Continent")) {
+                // Create an SQL statement
+                Statement stmt = con.createStatement();
+                // Create string for SQL statement
+                String strSelect =
+                        "SELECT NAME, continent, population "
+                                + "FROM country c "
+                                + "WHERE continent = '" + name + "'"
+                                + " ORDER BY population DESC"
+                                + " LIMIT " + n;
+
+                // Execute SQL statement
+                ResultSet rset = stmt.executeQuery(strSelect);
+                // Return query result if query is successful
+                // Check one is returned
+                ArrayList<Country> countries = new ArrayList<Country>();
+                while (rset.next())
+                {
+                    Country country = new Country();
+                    country.Name = rset.getString("NAME");
+                    country.Continent = rset.getString("Continent");
+                    country.Population = rset.getInt("Population");
+                    countries.add(country);
+                }
+                System.out.println("Top " + n + " Most Populated Countries in " + name);
+                printCountries(countries, "Continent");
+                return countries;
+            } else if (queryType.equals("Region")) {
+                // Create an SQL statement
+                Statement stmt = con.createStatement();
+                // Create string for SQL statement
+                String strSelect =
+                        "SELECT NAME, region, population "
+                                + "FROM country c "
+                                + "WHERE region = '" + name + "'"
+                                + " ORDER BY population DESC"
+                                + " LIMIT " + n;
+
+                // Execute SQL statement
+                ResultSet rset = stmt.executeQuery(strSelect);
+                // Return query result if query is successful
+                // Check one is returned
+                ArrayList<Country> countries = new ArrayList<Country>();
+                while (rset.next())
+                {
+                    Country country = new Country();
+                    country.Name = rset.getString("NAME");
+                    country.Region = rset.getString("Region");
+                    country.Population = rset.getInt("Population");
+                    countries.add(country);
+                }
+                System.out.println("Top " + n + " Most Populated Countries in " + name);
+                printCountries(countries, "Region");
+                return countries;
+            } else {
+                throw new Exception();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to execute query");
+            return null;
+        }
     }
 }
