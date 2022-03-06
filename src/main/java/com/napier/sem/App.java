@@ -19,6 +19,8 @@ public class App {
         // Create query object to initialise queries
         Query query = new Query(a.connection);
         query.getPopulation("Continent");
+        query.getPopulation("Region");
+        query.getPopulation("Country");
 
         a.disconnect(); // Disconnect from database
     }

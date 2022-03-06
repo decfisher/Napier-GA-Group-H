@@ -332,7 +332,7 @@ public class Query {
                 {
                     Country country = new Country();
                     country.Continent = rset.getString("Continent");
-                    country.Population = rset.getInt("Population");
+                    country.Population = rset.getLong("Population");
                     countries.add(country);
                 }
                 System.out.println("Population in each continent");
@@ -351,10 +351,10 @@ public class Query {
                 Statement stmt = connection.createStatement();
                 // Create string for SQL statement
                 String strSelect =
-                        "SELECT region, population "
-                                + "FROM country c "
-                                + "GROUP BY region"
-                                + " ORDER BY population DESC";
+                        "SELECT region, SUM(population) AS Population " +
+                                "FROM country c " +
+                                "GROUP BY 1 " +
+                                "ORDER BY Population DESC";
                 // Execute SQL statement
                 ResultSet rset = stmt.executeQuery(strSelect);
                 // Return query result if query is successful
@@ -363,8 +363,8 @@ public class Query {
                 while (rset.next())
                 {
                     Country country = new Country();
-                    country.Continent = rset.getString("Region");
-                    country.Population = rset.getInt("Population");
+                    country.Region = rset.getString("Region");
+                    country.Population = rset.getLong("Population");
                     countries.add(country);
                 }
                 System.out.println("Population in each region");
@@ -382,9 +382,10 @@ public class Query {
                 Statement stmt = connection.createStatement();
                 // Create string for SQL statement
                 String strSelect =
-                        "SELECT country, population "
-                                + "FROM country c "
-                                + " ORDER BY population DESC";
+                        "SELECT NAME, SUM(population) AS Population " +
+                                "FROM country c " +
+                                "GROUP BY 1 " +
+                                "ORDER BY Population DESC";
                 // Execute SQL statement
                 ResultSet rset = stmt.executeQuery(strSelect);
                 // Return query result if query is successful
@@ -393,13 +394,13 @@ public class Query {
                 while (rset.next())
                 {
                     Country country = new Country();
-                    country.Continent = rset.getString("NAME");
-                    country.Population = rset.getInt("Population");
+                    country.Name = rset.getString("NAME");
+                    country.Population = rset.getLong("Population");
                     countries.add(country);
                 }
                 System.out.println("Population in each region");
                 // Print Header
-                System.out.println(String.format("%-10s %10s ", "Name", "Population"));
+                System.out.println(String.format("%-10s %10s ", "Country", "Population"));
                 // Loop over all countries in the list
                 for (Country cou : countries) {
                     String cou_string =
