@@ -5,6 +5,9 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+/**
+ * Produces queries from the database
+ */
 public class Query {
 
     private Connection connection;
@@ -12,6 +15,7 @@ public class Query {
     public Query(Connection connection) {
         this.connection = connection;
     }
+
     /**
      * Gets list of countries
      * @return a Country object
@@ -31,7 +35,7 @@ public class Query {
 
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
-            // Return query result if query is sucessful
+            // Return query result if query is successful
             // Check one is returned
             if (rset.next())
             {
@@ -51,6 +55,10 @@ public class Query {
         }
     }
 
+    /**
+     * Gets list of countries by their population count
+     * @return an ArrayList of Country objects
+     */
     public ArrayList<Country> getCountriesByPopulation()
     {
         try
@@ -86,9 +94,11 @@ public class Query {
         }
     }
 
-
-
-    //overloaded Java method to get Population by Continent
+    /**
+     * Gets a list of countries by population filtered by continent
+     * @param Continent
+     * @return an ArrayList of Country objects
+     */
     public ArrayList<Country> getCountriesByPopulation(String Continent)
     {
         try
@@ -126,8 +136,12 @@ public class Query {
         }
     }
 
-
-    //overloaded Java method to get Population by Continent and region
+    /**
+     * Gets a list of countries by population filtered by region
+     * @param Continent
+     * @param Region
+     * @return an ArrayList of Country objects
+     */
     public ArrayList<Country> getCountriesByPopulation(String Continent, String Region)
     {
         try
@@ -166,7 +180,11 @@ public class Query {
         }
     }
 
-
+    /**
+     * Prints a list of countries
+     * @param countries
+     * @param type
+     */
     public static void printCountries(ArrayList<Country> countries, String type) {
 
         if (type.equals("World")) {
@@ -212,7 +230,11 @@ public class Query {
         }
     }
 
-    // Top N populous countries in the world
+    /**
+     * Gets the top N of countries based on population
+     * @param n
+     * @return an ArrayList of Countries
+     */
     public ArrayList<Country> getTopNCountryPopulation(int n) {
         try {
             // Create an SQL statement
@@ -246,7 +268,13 @@ public class Query {
         }
     }
 
-    // Top N populous countries in a continent/region
+    /**
+     * Gets the top N of continent/region based on population
+     * @param n
+     * @param name
+     * @param queryType
+     * @return an ArrayList of Countries
+     */
     public ArrayList<Country> getTopNCountryPopulation(int n, String queryType, String name) {
         try {
             if (queryType.equals("Continent")) {
@@ -312,6 +340,10 @@ public class Query {
         }
     }
 
+    /**
+     * Gets the total population of a continent/region/country
+     * @param queryType
+     */
     public void getPopulation(String queryType) {
         try {
             if (queryType.equals("Continent")) {
