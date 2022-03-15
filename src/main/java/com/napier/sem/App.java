@@ -18,9 +18,14 @@ public class App {
 
         // Create query object to initialise queries
         Query query = new Query(a.connection);
-        query.getPopulation("Continent");
-        query.getPopulation("Region");
-        query.getPopulation("Country");
+        //query.getPopulation("Continent");
+        //query.getPopulation("Region");
+        //query.getPopulation("Country");
+
+        query.getCapitalCitiesByPopulation();
+        query.getCapitalCitiesByPopulation("Asia");
+        query.getCapitalCitiesByPopulation("Asia","Eastern Asia");
+
 
         a.disconnect(); // Disconnect from database
     }

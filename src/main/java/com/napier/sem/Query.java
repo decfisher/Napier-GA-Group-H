@@ -110,7 +110,7 @@ public class Query {
                     "SELECT NAME, population, Continent "
                             + "FROM country c "
                             + "WHERE continent = '" + Continent + "' "
-                            + " ORDER BY 2 DESC";
+                            + " ORDER BY 3 DESC";
 
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
@@ -153,7 +153,7 @@ public class Query {
                     "SELECT NAME, population, Continent, Region "
                             + "FROM country c "
                             + "WHERE continent = '" + Continent + "' AND Region = '" + Region + "' "
-                            + " ORDER BY 2 DESC ";
+                            + " ORDER BY 4 DESC ";
 
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
@@ -207,17 +207,7 @@ public class Query {
                                 cou.Name, cou.Continent, cou.Population);
                 System.out.println(cou_string);
             }
-        } else if (type.equals("Region")) {
-            // Print Header
-            System.out.println(String.format("%-10s %10s %10s ", "Country", "Region", "Population"));
-            // Loop over all employees in the list
-            for (Country cou : countries) {
-                String cou_string =
-                        String.format("%-10s %10s %10s ",
-                                cou.Name, cou.Region, cou.Population);
-                System.out.println(cou_string);
-            }
-        } else {
+        }  else {
             // Print Header
             System.out.println(String.format("%-10s %10s %10s %10s ", "Country", "Continent", "Region", "Population"));
             // Loop over all employees in the list
@@ -446,6 +436,169 @@ public class Query {
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to execute query");
+        }
+    }
+
+    /**
+     * Gets list of Capital Cities by their population count
+     * @return an ArrayList of Country objects
+     */
+    public ArrayList<Country> getCapitalCitiesByPopulation()
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = connection.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT ci.Name, ci.Population "
+                            + "FROM country co "
+                            + "LEFT JOIN city ci ON co.Capital = ci.ID "
+                            + "ORDER BY 2 DESC; ";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return query result if query is sucessful
+            // Check one is returned
+            ArrayList<Country> cap_cities = new ArrayList<Country>();
+            while (rset.next())
+            {
+                Country cou = new Country();
+                cou.Name = rset.getString("NAME");
+                cou.Population = rset.getInt("Population");
+                cap_cities.add(cou);
+            }
+            printCapitalCities(cap_cities, "World");
+            return cap_cities;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get Capital City details");
+            return null;
+        }
+    }
+
+    /**
+     * Gets a list of Capital Cities by population filtered by continent
+     * @param Continent
+     * @return an ArrayList of Country objects
+     */
+    public ArrayList<Country> getCapitalCitiesByPopulation(String Continent)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = connection.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT ci.Name, ci.Population "
+                            + "FROM country co "
+                            + "LEFT JOIN city ci ON co.Capital = ci.ID "
+                            + "WHERE co.Continent = '"+ Continent + "' "
+                            + "ORDER BY 3 DESC; ";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return query result if query is sucessful
+            // Check one is returned
+            ArrayList<Country> cap_cities = new ArrayList<Country>();
+            while (rset.next())
+            {
+                Country cou = new Country();
+                cou.Name = rset.getString("NAME");
+                cou.Population = rset.getInt("Population");
+                cou.Continent = rset.getString("Continent");
+                cap_cities.add(cou);
+            }
+            printCapitalCities(cap_cities, "Continent");
+            return cap_cities;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get Capital City  details");
+            return null;
+        }
+    }
+
+    /**
+     * Gets a list of Capital Cities by population filtered by region
+     * @param Continent
+     * @param Region
+     * @return an ArrayList of Country objects
+     */
+    public ArrayList<Country> getCapitalCitiesByPopulation(String Continent, String Region)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = connection.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT ci.Name, ci.Population "
+                            + "FROM country co "
+                            + "LEFT JOIN city ci ON co.Capital = ci.ID "
+                            + "WHERE co.Continent = '"+ Continent + "' AND co.Region = '" + Region + "' "
+                            + "ORDER BY 4 DESC; ";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return query result if query is successful
+            // Check one is returned
+            ArrayList<Country> cap_cities = new ArrayList<Country>();
+            while (rset.next())
+            {
+                Country cou = new Country();
+                cou.Name = rset.getString("NAME");
+                cou.Population = rset.getInt("Population");
+                cou.Continent = rset.getString("Continent");
+                cou.Region = rset.getString("Region");
+                cap_cities.add(cou);
+            }
+            printCapitalCities(cap_cities, "Region");
+            return cap_cities;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get Capital City  details");
+            return null;
+        }
+    }
+
+    public static void printCapitalCities(ArrayList<Country> cap_cities, String type) {
+
+        if (type.equals("World")) {
+            // Print header
+            System.out.println(String.format("%-10s %10s ", "Capital City", "Population"));
+            // Loop over all employees in the list
+            for (Country cou : cap_cities) {
+                String cou_string =
+                        String.format("%-10s %10s ",
+                                cou.Name, cou.Population);
+                System.out.println(cou_string);
+            }
+        } else if (type.equals("Continent")) {
+            // Print Header
+            System.out.println(String.format("%-10s %10s %10s ", "Capital City", "Continent", "Population"));
+            // Loop over all employees in the list
+            for (Country cou : cap_cities) {
+                String cou_string =
+                        String.format("%-10s %10s %10s ",
+                                cou.Name, cou.Continent, cou.Population);
+                System.out.println(cou_string);
+            }
+        }  else {
+            // Print Header
+            System.out.println(String.format("%-10s %10s %10s %10s ", "Capital City", "Continent", "Region", "Population"));
+            // Loop over all employees in the list
+            for (Country cou : cap_cities) {
+                String cou_string =
+                        String.format("%-10s %10s %10s %10s ",
+                                cou.Name, cou.Continent, cou.Region, cou.Population);
+                System.out.println(cou_string);
+            }
         }
     }
 }
