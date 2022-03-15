@@ -492,7 +492,7 @@ public class Query {
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT ci.Name, ci.Population "
+                    "SELECT ci.Name, co.Continent, ci.Population "
                             + "FROM country co "
                             + "LEFT JOIN city ci ON co.Capital = ci.ID "
                             + "WHERE co.Continent = '"+ Continent + "' "
@@ -536,7 +536,7 @@ public class Query {
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT ci.Name, ci.Population "
+                    "SELECT ci.Name, co.Continent, co.Region, ci.Population "
                             + "FROM country co "
                             + "LEFT JOIN city ci ON co.Capital = ci.ID "
                             + "WHERE co.Continent = '"+ Continent + "' AND co.Region = '" + Region + "' "
