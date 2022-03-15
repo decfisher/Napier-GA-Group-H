@@ -18,7 +18,8 @@ public class App {
 
         // Create query object to initialise queries
         Query query = new Query(a.connection);
-        query.getTopNCityPopulation(5, "Country", "Ireland");
+        query.getTopNCountryPopulation(5, "Country", "Ireland");
+        query.getCapitalCitiesByPopulation("Asia","Eastern Asia");
 
         a.disconnect(); // Disconnect from database
     }
