@@ -20,7 +20,7 @@ public class App {
         Query query = new Query(a.connection);
         //query.getTopNCountryPopulation(5, "Country", "Ireland");
         query.getCapitalCitiesByPopulation("Asia","Eastern Asia");
-        query.topNPopulatedCapitalCities("Asia","Eastern Asia",5);
+        query.topNPopulatedCapitalCities("Asia","Eastern Asia",3);
 
         a.disconnect(); // Disconnect from database
     }

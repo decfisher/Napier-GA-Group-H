@@ -585,8 +585,8 @@ public class Query {
                     "SELECT ci.Name, ci.Population "
                             + "FROM country co "
                             + "LEFT JOIN city ci ON co.Capital = ci.ID "
-                            + " LIMIT " + n + " "
-                            + "ORDER BY 2 DESC; ";
+                            + "ORDER BY 2 DESC "
+                            + " LIMIT " + n + ";";
 
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
@@ -630,8 +630,8 @@ public class Query {
                             + "FROM country co "
                             + "LEFT JOIN city ci ON co.Capital = ci.ID "
                             + "WHERE co.Continent = '"+ Continent + "' "
-                            + " LIMIT " + n  + " "
-                            + "ORDER BY 3 DESC; ";
+                            + "ORDER BY 3 DESC "
+                            + " LIMIT " + n + ";";
 
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
@@ -677,8 +677,8 @@ public class Query {
                             + "FROM country co "
                             + "LEFT JOIN city ci ON co.Capital = ci.ID "
                             + "WHERE co.Continent = '"+ Continent + "' AND co.Region = '" + Region + "' "
-                            + " LIMIT " + n + " "
-                            + "ORDER BY 4 DESC; ";
+                            + "ORDER BY 4 DESC "
+                            + " LIMIT " + n + ";";
 
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
