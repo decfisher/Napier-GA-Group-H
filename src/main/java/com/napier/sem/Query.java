@@ -568,6 +568,144 @@ public class Query {
     }
 
     /**
+     * Gets list of top n Capital Cities by their population count
+     * Where n is defined by user
+     * @param n
+     * @return an ArrayList of Country objects
+     */
+
+    public ArrayList<Country> topNPopulatedCapitalCities(int n)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = connection.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT ci.Name, ci.Population "
+                            + "FROM country co "
+                            + "LEFT JOIN city ci ON co.Capital = ci.ID "
+                            + " LIMIT " + n + " "
+                            + "ORDER BY 2 DESC; ";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return query result if query is sucessful
+            // Check one is returned
+            ArrayList<Country> cap_cities = new ArrayList<Country>();
+            while (rset.next())
+            {
+                Country cou = new Country();
+                cou.Name = rset.getString("NAME");
+                cou.Population = rset.getInt("Population");
+                cap_cities.add(cou);
+            }
+            printCapitalCities(cap_cities, "World");
+            return cap_cities;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to execute query topNPopulatedCapitalCities");
+            return null;
+        }
+    }
+
+    /**
+     * Gets list of top n Capital Cities by their population count
+     * Filtered by continent and where n is defined by user
+     * @param Continent
+     * @param n
+     * @return an ArrayList of Country objects
+     */
+    public ArrayList<Country> topNPopulatedCapitalCities(String Continent, int n)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = connection.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT ci.Name, co.Continent, ci.Population "
+                            + "FROM country co "
+                            + "LEFT JOIN city ci ON co.Capital = ci.ID "
+                            + "WHERE co.Continent = '"+ Continent + "' "
+                            + " LIMIT " + n  + " "
+                            + "ORDER BY 3 DESC; ";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return query result if query is sucessful
+            // Check one is returned
+            ArrayList<Country> cap_cities = new ArrayList<Country>();
+            while (rset.next())
+            {
+                Country cou = new Country();
+                cou.Name = rset.getString("NAME");
+                cou.Population = rset.getInt("Population");
+                cou.Continent = rset.getString("Continent");
+                cap_cities.add(cou);
+            }
+            printCapitalCities(cap_cities, "Continent");
+            return cap_cities;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to execute query topNPopulatedCapitalCities");
+            return null;
+        }
+    }
+
+    /**
+     * Gets list of top n Capital Cities by their population count
+     * Filtered by region and where n is defined by user
+     * @param Continent
+     * @param Region
+     * @param n
+     * @return an ArrayList of Country objects
+     */
+    public ArrayList<Country> topNPopulatedCapitalCities(String Continent, String Region, int n)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = connection.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT ci.Name, co.Continent, co.Region, ci.Population "
+                            + "FROM country co "
+                            + "LEFT JOIN city ci ON co.Capital = ci.ID "
+                            + "WHERE co.Continent = '"+ Continent + "' AND co.Region = '" + Region + "' "
+                            + " LIMIT " + n + " "
+                            + "ORDER BY 4 DESC; ";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return query result if query is successful
+            // Check one is returned
+            ArrayList<Country> cap_cities = new ArrayList<Country>();
+            while (rset.next())
+            {
+                Country cou = new Country();
+                cou.Name = rset.getString("NAME");
+                cou.Population = rset.getInt("Population");
+                cou.Continent = rset.getString("Continent");
+                cou.Region = rset.getString("Region");
+                cap_cities.add(cou);
+            }
+            printCapitalCities(cap_cities, "Region");
+            return cap_cities;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to execute query topNPopulatedCapitalCities");
+            return null;
+        }
+    }
+
+    /**
      * Prints a list of Capital Cities
      * @param cap_cities
      * @param type
