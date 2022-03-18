@@ -744,4 +744,229 @@ public class Query {
             }
         }
     }
+
+    /**
+     * Prints a list of Cities
+     */
+    public static void printCities(ArrayList<City> cities, String type) {
+
+        if (type.equals("World")) {
+            // Print header
+            System.out.println(String.format("%-10s %10s ", "City", "Population"));
+            // Loop over all cities in the list
+            for (City cit : cities) {
+                String cit_string =
+                        String.format("%-10s %10s ",
+                                cit.Name, cit.Population);
+                System.out.println(cit_string);
+            }
+
+        } else if (type.equals("Continent")) {
+            // Print Header
+            System.out.println(String.format("%-10s %10s %10s ", "City", "Continent", "Population"));
+            // Loop over all cities in the list
+            for (City cit : cities) {
+                String cit_string =
+                        String.format("%-10s %10s %10s ",
+                                cit.Name, cit.Continent, cit.Population);
+                System.out.println(cit_string);
+            }
+
+        } else if (type.equals("Region")) {
+            // Print Header
+            System.out.println(String.format("%-10s %10s %10s %10s ", "City", "Continent", "Region", "Population"));
+            // Loop over all cities in the list
+            for (City cit : cities) {
+                String cit_string =
+                        String.format("%-10s %10s %10s %10s",
+                                cit.Name, cit.Continent, cit.Region, cit.Population);
+                System.out.println(cit_string);
+            }
+
+        } else if (type.equals("Country")) {
+            // Print Header
+            System.out.println(String.format("%-10s %10s %10s %10s %10s ", "City", "Continent", "Region", "Country", "Population"));
+            // Loop over all cities in the list
+            for (City cit : cities) {
+                String cit_string =
+                        String.format("%-10s %10s %10s %10s %10s",
+                                cit.Name, cit.Continent, cit.Region, cit.Country, cit.Population);
+                System.out.println(cit_string);
+            }
+
+        }  else {
+            // Print Header
+            System.out.println(String.format("%-10s %10s %10s %10s %10s %10s ", "City", "Continent", "Region", "Country", "District", "Population"));
+            // Loop over all employees in the list
+            for (City cit : cities) {
+                String cit_string =
+                        String.format("%-10s %10s %10s %10s %10s %10s ",
+                                cit.Name, cit.Continent, cit.Region, cit.Country, cit.District, cit.Population);
+                System.out.println(cit_string);
+            }
+        }
+    }
+
+
+
+    /**
+     * Orders cities based on population
+     * @return an ArrayList of Cities
+     */
+    public ArrayList<City> largeToSmallCityPopulation() {
+        try {
+            // Create an SQL statement
+            Statement stmt = connection.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT NAME, population "
+                            + "FROM city a "
+                            + " ORDER BY population DESC";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return query result if query is successful
+            // Check one is returned
+            ArrayList<City> cities = new ArrayList<City>();
+            while (rset.next())
+            {
+                City city = new City();
+                city.Name = rset.getString("NAME");
+                city.Population = rset.getInt("Population");
+                cities.add(city);
+            }
+            System.out.println("Most populated cities in the World from largest to smallest");
+            printCities(cities, "World");
+            return cities;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to execute largeToSmallCityPopulation");
+            return null;
+        }
+    }
+
+    /**
+     * Orders the cities in a continent/region/country/district based on population
+     * @param n
+     * @param name
+     * @param queryType
+     * @return an ArrayList of Cities
+     */
+    public ArrayList<City> largeToSmallCityPopulation(int n, String queryType, String name) {
+        try {
+            if (queryType.equals("Continent")) {
+                // Create an SQL statement
+                Statement stmt = connection.createStatement();
+                // Create string for SQL statement
+                String strSelect =
+                        "SELECT NAME, continent, population "
+                                + "FROM city c "
+                                + "WHERE continent = '" + name + "'"
+                                + " ORDER BY population DESC";
+
+                // Execute SQL statement
+                ResultSet rset = stmt.executeQuery(strSelect);
+                // Return query result if query is successful
+                // Check one is returned
+                ArrayList<City> cities = new ArrayList<City>();
+                while (rset.next())
+                {
+                    City city = new City();
+                    city.Name = rset.getString("NAME");
+                    city.Continent = rset.getString("Continent");
+                    city.Population = rset.getInt("Population");
+                    cities.add(city);
+                }
+                System.out.println("Largest to smallest populated cities in " + name);
+                printCities(cities, "Continent");
+                return cities;
+
+            } else if (queryType.equals("Region")) {
+                // Create an SQL statement
+                Statement stmt = connection.createStatement();
+                // Create string for SQL statement
+                String strSelect =
+                        "SELECT NAME, region, population "
+                                + "FROM city c "
+                                + "WHERE region = '" + name + "'"
+                                + " ORDER BY population DESC";
+                // Execute SQL statement
+                ResultSet rset = stmt.executeQuery(strSelect);
+                // Return query result if query is successful
+                // Check one is returned
+                ArrayList<City> cities = new ArrayList<City>();
+                while (rset.next())
+                {
+                    City city = new City();
+                    city.Name = rset.getString("NAME");
+                    city.Region = rset.getString("Region");
+                    city.Population = rset.getInt("Population");
+                    cities.add(city);
+                }
+                System.out.println("Largest to smallest populated cities in " + name);
+                printCities(cities, "Region");
+                return cities;
+
+            } else if (queryType.equals("Country")) {
+                // Create an SQL statement
+                Statement stmt = connection.createStatement();
+                // Create string for SQL statement
+                String strSelect =
+                        "SELECT NAME, country, population "
+                                + "FROM city c "
+                                + "WHERE country = '" + name + "'"
+                                + " ORDER BY population DESC";
+                // Execute SQL statement
+                ResultSet rset = stmt.executeQuery(strSelect);
+                // Return query result if query is successful
+                // Check one is returned
+                ArrayList<City> cities = new ArrayList<City>();
+                while (rset.next())
+                {
+                    City city = new City();
+                    city.Name = rset.getString("NAME");
+                    city.Country = rset.getString("Country");
+                    city.Population = rset.getInt("Population");
+                    cities.add(city);
+                }
+                System.out.println("Largest to smallest populated cities in " + name);
+                printCities(cities, "Country");
+                return cities;
+
+            } else if (queryType.equals("District")) {
+                // Create an SQL statement
+                Statement stmt = connection.createStatement();
+                // Create string for SQL statement
+                String strSelect =
+                        "SELECT NAME, district, population "
+                                + "FROM city c "
+                                + "WHERE district = '" + name + "'"
+                                + " ORDER BY population DESC";
+                // Execute SQL statement
+                ResultSet rset = stmt.executeQuery(strSelect);
+                // Return query result if query is successful
+                // Check one is returned
+                ArrayList<City> cities = new ArrayList<City>();
+                while (rset.next())
+                {
+                    City city = new City();
+                    city.Name = rset.getString("NAME");
+                    city.District = rset.getString("District");
+                    city.Population = rset.getInt("Population");
+                    cities.add(city);
+                }
+                System.out.println("Largest to smallest populated cities in " + name);
+                printCities(cities, "District");
+                return cities;
+
+
+            } else {
+                throw new Exception();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to execute largeToSmallCityPopulation");
+            return null;
+        }
+    }
 }
