@@ -21,7 +21,7 @@ public class App {
         //query.getTopNCountryPopulation(5, "Country", "Ireland");
         //query.getCapitalCitiesByPopulation("Asia","Eastern Asia");
         //query.topNPopulatedCapitalCities("Asia","Eastern Asia",3);
-        query.largeToSmallCityPopulation(2,"Continent","Asia");
+        query.largeToSmallCityPopulation("Continent","Asia");
 
         a.disconnect(); // Disconnect from database
     }

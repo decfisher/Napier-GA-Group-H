@@ -806,8 +806,7 @@ public class Query {
             }
         }
     }
-
-
+    //Tom Code paste here
 
     /**
      * Orders cities based on population
@@ -847,21 +846,21 @@ public class Query {
 
     /**
      * Orders the cities in a continent/region/country/district based on population
-     * @param n
      * @param name
      * @param queryType
      * @return an ArrayList of Cities
      */
-    public ArrayList<City> largeToSmallCityPopulation(int n, String queryType, String name) {
+    public ArrayList<City> largeToSmallCityPopulation(String queryType, String name) {
         try {
             if (queryType.equals("Continent")) {
                 // Create an SQL statement
                 Statement stmt = connection.createStatement();
                 // Create string for SQL statement
                 String strSelect =
-                        "SELECT NAME, continent, population "
+                        "SELECT c.NAME, co.continent, c.population "
                                 + "FROM city c "
-                                + "WHERE continent = '" + name + "'"
+                                + "LEFT JOIN country co ON c.CountryCode = co.Code "
+                                + "WHERE co.continent = '" + name + "'"
                                 + " ORDER BY population DESC";
 
                 // Execute SQL statement
@@ -886,9 +885,10 @@ public class Query {
                 Statement stmt = connection.createStatement();
                 // Create string for SQL statement
                 String strSelect =
-                        "SELECT NAME, region, population "
+                        "SELECT c.NAME, co.Region, c.population "
                                 + "FROM city c "
-                                + "WHERE region = '" + name + "'"
+                                + "LEFT JOIN country co ON c.CountryCode = co.Code "
+                                + "WHERE co.Region = '" + name + "'"
                                 + " ORDER BY population DESC";
                 // Execute SQL statement
                 ResultSet rset = stmt.executeQuery(strSelect);
@@ -912,9 +912,10 @@ public class Query {
                 Statement stmt = connection.createStatement();
                 // Create string for SQL statement
                 String strSelect =
-                        "SELECT NAME, country, population "
+                        "SELECT c.NAME, co.Name as Country, c.population "
                                 + "FROM city c "
-                                + "WHERE country = '" + name + "'"
+                                + "LEFT JOIN country co ON c.CountryCode = co.Code "
+                                + "WHERE co.Name = '" + name + "'"
                                 + " ORDER BY population DESC";
                 // Execute SQL statement
                 ResultSet rset = stmt.executeQuery(strSelect);
@@ -969,4 +970,5 @@ public class Query {
             return null;
         }
     }
+
 }
