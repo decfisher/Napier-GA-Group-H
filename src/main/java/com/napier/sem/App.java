@@ -16,12 +16,15 @@ public class App {
         App a = new App(); // Create new Application
         a.connect(); // Connect to database
 
+        Report report = new Report(a.connection);
+        report.countryReport();
+
         // Create query object to initialise queries
-        Query query = new Query(a.connection);
+//        Query query = new Query(a.connection);
         //query.getTopNCountryPopulation(5, "Country", "Ireland");
         //query.getCapitalCitiesByPopulation("Asia","Eastern Asia");
         //query.topNPopulatedCapitalCities("Asia","Eastern Asia",3);
-        query.largeToSmallCityPopulation("Continent","Asia");
+//        query.largeToSmallCityPopulation("Continent","Asia");
 
         a.disconnect(); // Disconnect from database
     }

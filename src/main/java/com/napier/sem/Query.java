@@ -687,12 +687,12 @@ public class Query {
             ArrayList<Country> cap_cities = new ArrayList<Country>();
             while (rset.next())
             {
-                Country cou = new Country();
-                cou.Name = rset.getString("NAME");
-                cou.Population = rset.getInt("Population");
-                cou.Continent = rset.getString("Continent");
-                cou.Region = rset.getString("Region");
-                cap_cities.add(cou);
+                Country country = new Country();
+                country.Name = rset.getString("NAME");
+                country.Population = rset.getInt("Population");
+                country.Continent = rset.getString("Continent");
+                country.Region = rset.getString("Region");
+                cap_cities.add(country);
             }
             printCapitalCities(cap_cities, "Region");
             return cap_cities;
