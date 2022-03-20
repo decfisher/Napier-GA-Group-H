@@ -20,10 +20,8 @@ public class Query {
      * Gets list of countries
      * @return a Country object
      */
-    public Country getCountry()
-    {
-        try
-        {
+    public Country getCountry() {
+        try {
             // Create an SQL statement
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
@@ -37,18 +35,58 @@ public class Query {
             ResultSet rset = stmt.executeQuery(strSelect);
             // Return query result if query is successful
             // Check one is returned
-            if (rset.next())
-            {
+            if (rset.next()) {
                 Country cou = new Country();
                 cou.Name = rset.getString("NAME");
                 cou.Population = rset.getInt("Population");
                 return cou;
-            }
-            else
+            } else {
                 return null;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get Country details");
+            return null;
         }
-        catch (Exception e)
-        {
+    }
+
+    public Country getCountry(String code) {
+        try {
+            // Create an SQL statement
+            Statement stmt = connection.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT Code, Name, Continent, Region, SurfaceArea, IdepYear, Population, " +
+                            "LifeExpectancy, GNP, GNPOld, LocalName, GovernmentForm, HeadOfState, Capital, Code2 "
+                            + "FROM country c "
+                            + " WHERE Code = '" + code + "'";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return query result if query is successful
+            // Check one is returned
+            if (rset.next()) {
+                Country country = new Country();
+                country.Code = rset.getString("Code");
+                country.Name = rset.getString("NAME");
+                country.Continent = rset.getString("Continent");
+                country.Region = rset.getString("Region");
+                country.SurfaceArea = rset.getDouble("SurfaceArea");
+                country.IndepYear = rset.getInt("IndepYear");
+                country.Population = rset.getInt("Population");
+                country.LifeExpectancy = rset.getDouble("LifeExpectancy");
+                country.GNP = rset.getDouble("GNP");
+                country.GNPOld = rset.getDouble("GNPOld");
+                country.LocalName = rset.getString("LocalName");
+                country.GovernmentForm = rset.getString("GovernmentForm");
+                country.HeadOfState = rset.getString("HeadOfState");
+                country.Capital = rset.getInt("Capital");
+                country.Code2 = rset.getString("Code2");
+                return country;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get Country details");
             return null;

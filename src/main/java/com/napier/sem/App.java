@@ -92,4 +92,8 @@ public class App {
             }
         }
     }
+
+    public Connection getConnection() {
+        return connection;
+    }
 }
