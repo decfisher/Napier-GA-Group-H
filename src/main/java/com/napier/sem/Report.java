@@ -61,9 +61,10 @@ public class Report {
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT NAME, Country, District, Population "
-                            + "FROM city c "
-                            + "ORDER BY NAME ASC ";
+                    "SELECT ci.Name, co.Name AS Country, ci.District, ci.Population "
+                            + "FROM country co "
+                            + "LEFT JOIN city ci ON co.Capital = ci.ID "
+                            + "ORDER BY 4 ASC ";
 
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
@@ -86,7 +87,7 @@ public class Report {
             for (City city : cities) {
                 String s =
                         String.format("%-20s %20s %20s %20s ",
-                                city.Name, city.Continent, city.Region, city.Population);
+                                city.Name, city.Continent, city.District, city.Population);
                 System.out.println(s);
             }
             return cities;

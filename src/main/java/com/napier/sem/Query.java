@@ -500,7 +500,7 @@ public class Query {
 
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
-            // Return query result if query is sucessful
+            // Return query result if query is successful
             // Check one is returned
             ArrayList<Country> cap_cities = new ArrayList<Country>();
             while (rset.next())
