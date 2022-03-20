@@ -20,4 +20,5 @@
 - License: ![license](https://img.shields.io/github/license/decfisher/Napier-GA-Group-H?label=%20&style=for-the-badge)
 - Develop Branch: ![workflow](https://img.shields.io/github/workflow/status/decfisher/Napier-GA-Group-H/Napier%20GA%20Group%20H%20Workflow/develop?label=Build%20Status&style=for-the-badge)
 - Release: ![releases](https://img.shields.io/github/v/release/decfisher/Napier-GA-Group-H?include_prereleases&label=%20&style=for-the-badge)
-- Code Coverage: [![codecov](https://codecov.io/gh/decfisher/Napier-GA-Group-H/branch/master/graph/badge.svg?token=NM8Y82JTNH)](https://codecov.io/gh/decfisher/Napier-GA-Group-H)
+- Code Coverage (Master Branch): [![codecov](https://codecov.io/gh/decfisher/Napier-GA-Group-H/branch/master/graph/badge.svg?token=NM8Y82JTNH)](https://codecov.io/gh/decfisher/Napier-GA-Group-H)
+- Code Coverage (Develop Branch): [![codecov](https://codecov.io/gh/decfisher/Napier-GA-Group-H/branch/develop/graph/badge.svg?token=NM8Y82JTNH)](https://codecov.io/gh/decfisher/Napier-GA-Group-H)
