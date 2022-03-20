@@ -17,7 +17,7 @@ public class App {
         a.connect(); // Connect to database
 
         Report report = new Report(a.connection);
-        report.cityReport();
+        report.capitalCityReport();
 
         // Create query object to initialise queries
 //        Query query = new Query(a.connection);

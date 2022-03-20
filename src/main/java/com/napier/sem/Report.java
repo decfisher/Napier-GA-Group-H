@@ -97,4 +97,46 @@ public class Report {
             return null;
         }
     }
+
+    public ArrayList<City> capitalCityReport() {
+        try {
+            // Create an SQL statement
+            Statement stmt = connection.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT ci.Name, co.Name AS Country, ci.Population "
+                            + "FROM city ci "
+                            + "INNER JOIN country co ON ci.ID = co.Capital "
+                            + "ORDER BY ci.Name ASC ";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return query result if query is successful
+            // Check one is returned
+            ArrayList<City> cities = new ArrayList<City>();
+            while (rset.next())
+            {
+                City city = new City();
+                city.Name = rset.getString("NAME");
+                city.Country = rset.getString("Country");
+                city.Population = rset.getInt("Population");
+                cities.add(city);
+            }
+            // Print header
+            System.out.println("CAPITAL CITY REPORT");
+            System.out.println(String.format("%-20s %20s %20s ", "Name", "Country", "Population"));
+            // Loop over all employees in the list
+            for (City city : cities) {
+                String s =
+                        String.format("%-20s %20s %20s ",
+                                city.Name, city.Country, city.Population);
+                System.out.println(s);
+            }
+            return cities;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city report");
+            return null;
+        }
+    }
 }
