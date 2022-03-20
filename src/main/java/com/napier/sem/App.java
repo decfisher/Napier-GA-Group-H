@@ -14,7 +14,11 @@ public class App {
 
     public static void main(String[] args) {
         App a = new App(); // Create new Application
-        a.connect(); // Connect to database
+        if (args.length < 1) {
+            a.connect("localhost:33060", 30000); // Connect to database
+        } else {
+            a.connect(args[0], Integer.parseInt(args[1]));
+        }
 
         Report report = new Report(a.connection);
         report.capitalCityReport();
@@ -32,7 +36,7 @@ public class App {
     /**
      * Connect to the MySQL database.
      */
-    public void connect()
+    public void connect(String location, int delay)
     {
         try
         {
@@ -54,7 +58,7 @@ public class App {
                 // Wait a bit for db to start
                 Thread.sleep(30000);
                 // Connect to database
-                connection = DriverManager.getConnection("jdbc:mysql://db:3306/world?useSSL=false", "root", "example");
+                connection = DriverManager.getConnection("jdbc:mysql://" + location + "/world?allowPublicKeyRetrieval=true&useSSL=false", "root", "example");
                 System.out.println("Successfully connected");
                 break;
             }
