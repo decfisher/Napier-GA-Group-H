@@ -56,7 +56,7 @@ public class Query {
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT Code, Name, Continent, Region, SurfaceArea, IdepYear, Population, " +
+                    "SELECT Code, Name, Continent, Region, SurfaceArea, IndepYear, Population, " +
                             "LifeExpectancy, GNP, GNPOld, LocalName, GovernmentForm, HeadOfState, Capital, Code2 "
                             + "FROM country c "
                             + " WHERE Code = '" + code + "'";
