@@ -62,9 +62,9 @@ public class Report {
             // Create string for SQL statement
             String strSelect =
                     "SELECT ci.Name, co.Name AS Country, ci.District, ci.Population "
-                            + "FROM country co "
-                            + "LEFT JOIN city ci ON co.Capital = ci.ID "
-                            + "ORDER BY 4 ASC ";
+                            + "FROM city ci "
+                            + "LEFT JOIN country co ON ci.CountryCode = co.Code "
+                            + "ORDER BY ci.Name ASC ";
 
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
@@ -87,7 +87,7 @@ public class Report {
             for (City city : cities) {
                 String s =
                         String.format("%-20s %20s %20s %20s ",
-                                city.Name, city.Continent, city.District, city.Population);
+                                city.Name, city.Country, city.District, city.Population);
                 System.out.println(s);
             }
             return cities;
@@ -97,47 +97,4 @@ public class Report {
             return null;
         }
     }
-
-    public ArrayList<Country> capitalCityReport() {
-        try {
-            // Create an SQL statement
-            Statement stmt = connection.createStatement();
-            // Create string for SQL statement
-            String strSelect =
-                    "SELECT ci.Name, co.Name, ci.Population "
-                            + "FROM country co "
-                            + "LEFT JOIN city ci ON co.Capital = ci.ID "
-                            + "ORDER BY 4 ASC ";
-
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Return query result if query is successful
-            // Check one is returned
-            ArrayList<Country> countries = new ArrayList<Country>();
-            while (rset.next())
-            {
-                Country country = new Country();
-                country.Name = rset.getString("NAME");
-                country.Name = rset.getString("NAME");
-                country.Population = rset.getInt("Population");
-                countries.add(country);
-            }
-            // Print header
-            System.out.println("CAPITAL CITY REPORT");
-            System.out.println(String.format("%-20s %20s %20s ", "Name", "Country", "Population"));
-            // Loop over all employees in the list
-            for (Country country : countries) {
-                String s =
-                        String.format("%-20s %20s %20s ",
-                                country.Name, country.Name, country.Population);
-                System.out.println(s);
-            }
-            return countries;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get capital city report");
-            return null;
-        }
-    }
-
 }
