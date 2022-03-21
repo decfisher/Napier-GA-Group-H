@@ -76,5 +76,23 @@ class WorldDatabaseAppTest {
     @Test
     void testgetPopulation() { query.getPopulation(null);}
 
+    @Test
+    void testgetPopulationOf() { query.getPopulationOf();}
+
+    @Test
+    void testgetPopulationOf2() { query.getPopulationOf(null);}
+
+    @Test
+    void testgetPopulationOf3() { query.getPopulationOf(null,null);}
+
+    @Test
+    void testgetPopulationOf4() { query.getPopulationOf(null,null,null);}
+
+    @Test
+    void testgetPopulationOf5() { query.getPopulationOf(null,null,null,null);}
+
+    @Test
+    void testgetPopulationOf6() { query.getPopulationOf(null,null,null,null,null);}
+
 
 }

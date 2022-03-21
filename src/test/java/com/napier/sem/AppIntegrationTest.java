@@ -106,4 +106,33 @@ public class AppIntegrationTest {
         assertEquals(country.Name, "Peking");
         assertEquals(country.Population, 7472000);
     }
+
+    //James Integration Tests for story #5
+    //getCapitalCitiesByPopulation()
+    @Test
+    void getCapitalCitiesByPopulation() {
+        ArrayList<Country> countries = query.getCountriesByPopulation();
+        Country cou = countries.get(0);
+        assertEquals(cou.Name,"Seoul");
+        assertEquals(cou.Population,9901619);
+    }
+
+    @Test
+    void getCapitalCitiesByPopulation1() {
+        ArrayList<Country> countries = query.getCountriesByPopulation("Asia");
+        Country cou = countries.get(0);
+        assertEquals(cou.Name,"Seoul");
+        assertEquals(cou.Population,9901619);
+        assertEquals(cou.Continent,"Asia");
+    }
+
+    @Test
+    void getCapitalCitiesByPopulation2() {
+        ArrayList<Country> countries = query.getCountriesByPopulation("Asia","Eastern Asia");
+        Country cou = countries.get(0);
+        assertEquals(cou.Name,"Jakarta");
+        assertEquals(cou.Population,9604900);
+        assertEquals(cou.Continent,"Asia");
+        assertEquals(cou.Region,"Eastern Asia");
+    }
 }
