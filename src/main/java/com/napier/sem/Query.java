@@ -1326,12 +1326,11 @@ public class Query {
                             + "SELECT A.Language, A.Percentage, B.Population, (A.Percentage * B.Population) AS LanguageSpeakers "
                             + "FROM countrylanguage A "
                             + "LEFT JOIN country B ON A.CountryCode = B.Code "
-                            + "WHERE A.Language IN('CHINESE', 'ENGLISH', 'HINDI', 'SPANISH', 'ARABIC');";
-                            //+ "CREATE TABLE LISTED_LANGUAGES AS "
-                            //+ "SELECT LANGUAGE, SUM(LANGUAGE_SPEAKERS) AS TOTAL_SPEAKERS, SUM(LANGUAGE_SPEAKERS)/(SELECT SUM(POPULATION) FROM COUNTRY) AS PERCENT_OF_WORLD_POP "
-                            //+ "FROM TOP_LANGUAGE "
-                            //+ "GROUP BY LANGUAGE "
-                            //+ "ORDER BY 2 DESC;";
+                            + "WHERE A.Language IN('CHINESE', 'ENGLISH', 'HINDI', 'SPANISH', 'ARABIC'); "
+                            + "SELECT Language, SUM(LanguageSpeakers) AS TotalSpeakers, SUM(LanguageSpeakers)/(SELECT SUM(Population) FROM country) AS PercentOfWorldPop "
+                            + "FROM TopLanguage "
+                            + "GROUP BY Language "
+                            + "ORDER BY 2 DESC;";
 
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
@@ -1341,9 +1340,10 @@ public class Query {
             while (rset.next()) {
                 Language lang = new Language();
                 lang.Language = rset.getString("Language");
-                lang.Percentage = rset.getDouble("Percentage");
-                lang.Population = rset.getLong("Population");
-                lang.LanguageSpeakers = rset.getLong("LanguageSpeakers");
+                //lang.Percentage = rset.getDouble("Percentage");
+                //lang.Population = rset.getLong("Population");
+                lang.TotalSpeakers = rset.getLong("TotalSpeakers");
+                lang.PercentOfWorldPop = rset.getLong("PercentOfWorldPop");
                 languages.add(lang);
             }
             return languages;
