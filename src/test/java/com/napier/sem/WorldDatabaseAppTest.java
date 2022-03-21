@@ -22,6 +22,7 @@ class WorldDatabaseAppTest {
         query.getTopNCountryPopulation(0,null, null);
     }
 
+
     @Test
     void testGetCountry() {
         query.getCountry(null);
@@ -31,5 +32,49 @@ class WorldDatabaseAppTest {
     void testPrintCountries() {
         query.topNPopulatedCapitalCities(null,null,0);
     }
+
+    //Declan To Check*******************************************************************************************
+    @Test
+    void testgetCountriesByPopulation() { query.getCountriesByPopulation();}
+
+    @Test
+    void testgetCountriesByPopulation2() { query.getCountriesByPopulation(null);}
+
+    @Test
+    void testgetCountriesByPopulation3() { query.getCountriesByPopulation(null,null);}
+
+    @Test
+    void testgetTopNCountryPopulation() { query.getTopNCountryPopulation(0);}
+
+    @Test
+    void testgetTopNCountryPopulation2() { query.getTopNCountryPopulation(0,null,null);}
+
+    @Test
+    void testlargeToSmallCityPopulation3() { query.largeToSmallCityPopulation();}
+
+    @Test
+    void testlargeToSmallCityPopulation4() { query.largeToSmallCityPopulation(null,null);}
+
+    @Test
+    void testgetCapitalCitiesByPopulation() { query.getCapitalCitiesByPopulation();}
+
+    @Test
+    void testgetCapitalCitiesByPopulation2() { query.getCapitalCitiesByPopulation(null);}
+
+    @Test
+    void testgetCapitalCitiesByPopulation3() { query.getCapitalCitiesByPopulation(null,null);}
+
+    @Test
+    void testtopNPopulatedCapitalCities() { query.topNPopulatedCapitalCities(0);}
+
+    @Test
+    void testtopNPopulatedCapitalCities2() { query.topNPopulatedCapitalCities(null,0);}
+
+    @Test
+    void testtopNPopulatedCapitalCities3() { query.topNPopulatedCapitalCities(null,null,0);}
+
+    @Test
+    void testgetPopulation() { query.getPopulation(null);}
+
 
 }
