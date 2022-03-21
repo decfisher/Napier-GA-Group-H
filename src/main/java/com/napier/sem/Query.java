@@ -1070,7 +1070,7 @@ public class Query {
             if (rset.next()) {
                 Country cou = new Country();
                 cou.Name = Region;
-                cou.Population = rset.getInt("Population");
+                cou.Population = rset.getLong("Population");
                 System.out.println("The Population of " + Region + " is " + cou.Population);
                 // Print Header
                 System.out.println(String.format("%-10s %10s ", "Name", "Population"));
@@ -1116,7 +1116,7 @@ public class Query {
             if (rset.next()) {
                 Country cou = new Country();
                 cou.Name = aCountry;
-                cou.Population = rset.getInt("Population");
+                cou.Population = rset.getLong("Population");
                 System.out.println("The Population of " + aCountry + " is " + cou.Population);
                 // Print Header
                 System.out.println(String.format("%-10s %10s ", "Name", "Population"));
@@ -1162,7 +1162,7 @@ public class Query {
             if (rset.next()) {
                 Country cou = new Country();
                 cou.Name = District;
-                cou.Population = rset.getInt("Population");
+                cou.Population = rset.getLong("Population");
                 System.out.println("The Population of " + District + " is " + cou.Population);
                 // Print Header
                 System.out.println(String.format("%-10s %10s ", "Name", "Population"));
