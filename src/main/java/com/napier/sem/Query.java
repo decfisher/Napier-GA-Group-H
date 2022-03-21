@@ -981,7 +981,7 @@ public class Query {
             if (rset.next()) {
                 Country cou = new Country();
                 cou.Name = "World";
-                cou.Population = rset.getInt("Population");
+                cou.Population = rset.getLong("Population");
                 System.out.println("The Population of the world is " + cou.Population);
                 // Print Header
                 System.out.println(String.format("%-10s %10s ", "Name", "Population"));
@@ -997,7 +997,7 @@ public class Query {
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to execute query topNPopulatedCapitalCities");
+            System.out.println("Failed to execute query getPopulationOf with 0 parameters");
             return null;
         }
     }
@@ -1025,7 +1025,7 @@ public class Query {
             if (rset.next()) {
                 Country cou = new Country();
                 cou.Name = Continent;
-                cou.Population = rset.getInt("Population");
+                cou.Population = rset.getLong("Population");
                 System.out.println("The Population of " + Continent + " is " + cou.Population);
                 // Print Header
                 System.out.println(String.format("%-10s %10s ", "Name", "Population"));
@@ -1041,7 +1041,7 @@ public class Query {
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to execute query topNPopulatedCapitalCities");
+            System.out.println("Failed to execute query getPopulationOf with 1 parameter");
             return null;
         }
     }
