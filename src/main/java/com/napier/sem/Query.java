@@ -1325,7 +1325,7 @@ public class Query {
                     //"CREATE TABLE TOP_LANGUAGE AS "
                     "SELECT A.Language, A.Percentage, B.Population, (A.Percentage * B.Population) AS LanguageSpeakers "
                             + "FROM countrylanguage A "
-                            + "LEFT JOIN country B ON A.CountryCode = B.CountryCode "
+                            + "LEFT JOIN country B ON A.CountryCode = B.Code "
                             + "WHERE A.Language IN('CHINESE', 'ENGLISH', 'HINDI', 'SPANISH', 'ARABIC');";
                             //+ "CREATE TABLE LISTED_LANGUAGES AS "
                             //+ "SELECT LANGUAGE, SUM(LANGUAGE_SPEAKERS) AS TOTAL_SPEAKERS, SUM(LANGUAGE_SPEAKERS)/(SELECT SUM(POPULATION) FROM COUNTRY) AS PERCENT_OF_WORLD_POP "
