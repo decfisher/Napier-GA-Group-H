@@ -75,7 +75,7 @@ public class Query {
                     "SELECT NAME, population, Continent "
                             + "FROM country c "
                             + "WHERE continent = '" + Continent + "' "
-                            + " ORDER BY 3 DESC";
+                            + " ORDER BY 2 DESC";
 
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
@@ -118,7 +118,7 @@ public class Query {
                     "SELECT NAME, population, Continent, Region "
                             + "FROM country c "
                             + "WHERE continent = '" + Continent + "' AND Region = '" + Region + "' "
-                            + " ORDER BY 4 DESC ";
+                            + " ORDER BY 2 DESC ";
 
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);

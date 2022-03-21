@@ -29,4 +29,38 @@ public class AppIntegrationTest {
         assertEquals(country.Region, "Caribbean");
         assertEquals(country.Capital, 129);
     }
+
+    //James Integration Tests for story #14
+    @Test
+    void getCountriesByPopulation0param()
+    {
+        ArrayList<Country> countries = query.getCountriesByPopulation();
+        Country cou = countries.get(0);
+        assertEquals(cou.Name,"China");
+        assertEquals(cou.Population,1277558000);
+
+
+    }
+    @Test
+    void getCountriesByPopulation1param()
+    {
+        ArrayList<Country> countries = query.getCountriesByPopulation("Asia");
+        Country cou = countries.get(0);
+        assertEquals(cou.Name,"China");
+        assertEquals(cou.Population,1277558000);
+        assertEquals(cou.Continent,"Asia");
+
+    }
+
+    @Test
+    void getCountriesByPopulation2param()
+    {
+        ArrayList<Country> countries = query.getCountriesByPopulation("Asia","Eastern Asia");
+        Country cou = countries.get(0);
+        assertEquals(cou.Name,"China");
+        assertEquals(cou.Population,1277558000);
+        assertEquals(cou.Continent,"Asia");
+        assertEquals(cou.Region,"Eastern Asia");
+
+    }
 }
