@@ -20,20 +20,13 @@ public class App {
             a.connect(args[0], Integer.parseInt(args[1]));
         }
 
-        Report report = new Report(a.connection);
-        report.capitalCityReport();
+        //Report report = new Report(a.connection);
+        //report.capitalCityReport();
 
         // Create query object to initialise queries
         Query query = new Query(a.connection);
-        //query.getTopNCountryPopulation(5, "Country", "Ireland");
-        //query.getCapitalCitiesByPopulation("Asia","Eastern Asia");
-        //query.topNPopulatedCapitalCities("Asia","Eastern Asia",3);
-//        query.largeToSmallCityPopulation("Continent","Asia");
-        query.getPopulationOf("Asia");
-        query.getPopulationOf("Asia","Eastern Asia");
-        query.getPopulationOf("Asia","Eastern Asia","China");
-        query.getPopulationOf("Asia","Eastern Asia","China","Peking");
-        query.getPopulationOf("Asia","Eastern Asia","China","Peking","Peking");
+        //query.getLanguagePopularity();
+        query.getLanguagePopularity();
 
         a.disconnect(); // Disconnect from database
     }
