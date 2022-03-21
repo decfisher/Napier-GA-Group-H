@@ -1324,8 +1324,8 @@ public class Query {
             String strSelect =
                     //"CREATE TABLE TOP_LANGUAGE AS "
                     "SELECT A.LANGUAGE, A.PERCENTAGE, B.POPULATION, (A.PERCENTAGE * B.POPULATION) AS LANGUAGE_SPEAKERS "
-                            + "FROM COUNTRYLANGUAGE A "
-                            + "LEFT JOIN COUNTRY B ON A.COUNTRY = B.COUNTRYCODE "
+                            + "FROM countrylanguage A "
+                            + "LEFT JOIN COUNTRY B ON A.COUNTRYCODE = B.COUNTRYCODE "
                             + "WHERE A.LANGUAGE IN('CHINESE', 'ENGLISH', 'HINDI', 'SPANISH', 'ARABIC');";
                             //+ "CREATE TABLE LISTED_LANGUAGES AS "
                             //+ "SELECT LANGUAGE, SUM(LANGUAGE_SPEAKERS) AS TOTAL_SPEAKERS, SUM(LANGUAGE_SPEAKERS)/(SELECT SUM(POPULATION) FROM COUNTRY) AS PERCENT_OF_WORLD_POP "
