@@ -1,8 +1,6 @@
 package com.napier.sem;
 
 import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
-
 
 class WorldDatabaseAppTest {
     static App app;
@@ -17,82 +15,230 @@ class WorldDatabaseAppTest {
         query = new Query(app.getConnection());
     }
 
+    //Written tests
+
     @Test
-    void testTopNCountryPopulation() {
-        query.getTopNCountryPopulation(0,null, null);
+    void testTopNPopulatedCapitalCities() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.topNPopulatedCapitalCities(0);
+        });
+
+        Assertions.assertEquals("N must be greater than 0", thrown.getMessage());
     }
 
+    @Test
+    void testTopNPopulatedCapitalCities_Continent1() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.topNPopulatedCapitalCities(null,0);
+        });
+
+        Assertions.assertEquals("N must be greater than 0", thrown.getMessage());
+    }
+
+    @Test
+    void testTopNPopulatedCapitalCities_Continent2() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.topNPopulatedCapitalCities(null,1);
+        });
+
+        Assertions.assertEquals("Continent must be specified", thrown.getMessage());
+    }
+
+    @Test
+    void testTopNPopulatedCapitalCities_Region1() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.topNPopulatedCapitalCities(null,null,0);
+        });
+
+        Assertions.assertEquals("N must be greater than 0", thrown.getMessage());
+    }
+
+    @Test
+    void testTopNPopulatedCapitalCities_Region2() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.topNPopulatedCapitalCities("Continent", null,1);
+        });
+
+        Assertions.assertEquals("Continent or region must be specified", thrown.getMessage());
+    }
+
+    @Test
+    void testTopNPopulatedCapitalCities_Region3() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.topNPopulatedCapitalCities(null,"Region",1);
+        });
+
+        Assertions.assertEquals("Continent or region must be specified", thrown.getMessage());
+    }
+
+    @Test
+    void testGetTopNCountryPopulation() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.getTopNCountryPopulation(0);
+        });
+
+        Assertions.assertEquals("N must be greater than 0", thrown.getMessage());
+    }
+
+    @Test
+    void testTopNCountryPopulation() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.getTopNCountryPopulation(0,null, null);
+        });
+
+        Assertions.assertEquals("N must be greater than 0", thrown.getMessage());
+    }
+
+    @Test
+    void testTopNCountryPopulation2() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.getTopNCountryPopulation(1,"queryType", null);
+        });
+
+        Assertions.assertEquals("queryType or name must be specified", thrown.getMessage());
+    }
+
+    @Test
+    void testTopNCountryPopulation3() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.getTopNCountryPopulation(1,null, "name");
+        });
+
+        Assertions.assertEquals("queryType or name must be specified", thrown.getMessage());
+    }
+
+    @Test
+    void testTopNCountryPopulation4() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.getTopNCountryPopulation(1,null, null);
+        });
+
+        Assertions.assertEquals("queryType or name must be specified", thrown.getMessage());
+    }
+
+    @Test
+    void testGetCountriesByPopulation_Continent() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.getCountriesByPopulation(null);
+        });
+
+        Assertions.assertEquals("Continent must be specified", thrown.getMessage());
+    }
+
+    @Test
+    void testGetCountriesByPopulation_Region1() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.getCountriesByPopulation(null,null);
+        });
+
+        Assertions.assertEquals("Continent or Region must be specified", thrown.getMessage());
+    }
+
+    @Test
+    void testGetCountriesByPopulation_Region2() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.getCountriesByPopulation("Continent",null);
+        });
+
+        Assertions.assertEquals("Continent or Region must be specified", thrown.getMessage());
+    }
+
+    @Test
+    void testGetCountriesByPopulation_Region3() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.getCountriesByPopulation(null,"Region");
+        });
+
+        Assertions.assertEquals("Continent or Region must be specified", thrown.getMessage());
+    }
 
     @Test
     void testGetCountry() {
-        query.getCountry(null);
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.getCountry(null);
+        });
+
+        Assertions.assertEquals("code must be specified", thrown.getMessage());
     }
 
     @Test
-    void testPrintCountries() {
-        query.topNPopulatedCapitalCities(null,null,0);
+    void testGetCapitalCitiesByPopulation_Continent() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.getCapitalCitiesByPopulation(null);
+        });
+
+        Assertions.assertEquals("Continent must be specified", thrown.getMessage());
     }
 
-    //Declan To Check*******************************************************************************************
     @Test
-    void testgetCountriesByPopulation() { query.getCountriesByPopulation();}
+    void testGetCapitalCitiesByPopulation_Region1() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.getCapitalCitiesByPopulation(null,null);
+        });
 
-    @Test
-    void testgetCountriesByPopulation2() { query.getCountriesByPopulation(null);}
-
-    @Test
-    void testgetCountriesByPopulation3() { query.getCountriesByPopulation(null,null);}
-
-    @Test
-    void testgetTopNCountryPopulation() { query.getTopNCountryPopulation(0);}
+        Assertions.assertEquals("Continent or Region must be specified", thrown.getMessage());
+    }
 
     @Test
-    void testgetTopNCountryPopulation2() { query.getTopNCountryPopulation(0,null,null);}
+    void testGetCapitalCitiesByPopulation_Region2() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.getCapitalCitiesByPopulation("Continent",null);
+        });
+
+        Assertions.assertEquals("Continent or Region must be specified", thrown.getMessage());
+    }
 
     @Test
-    void testlargeToSmallCityPopulation3() { query.largeToSmallCityPopulation();}
+    void testGetCapitalCitiesByPopulation_Region3() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.getCapitalCitiesByPopulation(null,"Region");
+        });
+
+        Assertions.assertEquals("Continent or Region must be specified", thrown.getMessage());
+    }
 
     @Test
-    void testlargeToSmallCityPopulation4() { query.largeToSmallCityPopulation(null,null);}
+    void testLargeToSmallCityPopulation1() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.largeToSmallCityPopulation(null,null);
+        });
+
+        Assertions.assertEquals("queryType or name must be specified", thrown.getMessage());
+    }
 
     @Test
-    void testgetCapitalCitiesByPopulation() { query.getCapitalCitiesByPopulation();}
+    void testLargeToSmallCityPopulation2() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.largeToSmallCityPopulation("queryType",null);
+        });
+
+        Assertions.assertEquals("queryType or name must be specified", thrown.getMessage());
+    }
 
     @Test
-    void testgetCapitalCitiesByPopulation2() { query.getCapitalCitiesByPopulation(null);}
+    void testLargeToSmallCityPopulation3() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.largeToSmallCityPopulation(null,"name");
+        });
+
+        Assertions.assertEquals("queryType or name must be specified", thrown.getMessage());
+    }
 
     @Test
-    void testgetCapitalCitiesByPopulation3() { query.getCapitalCitiesByPopulation(null,null);}
+    void testGetPopulation() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.getPopulation(null);
+        });
+
+        Assertions.assertEquals("queryType must be specified", thrown.getMessage());
+    }
 
     @Test
-    void testtopNPopulatedCapitalCities() { query.topNPopulatedCapitalCities(0);}
+    void testGetPopulationOf_Continent() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.getPopulationOf(null);
+        });
 
-    @Test
-    void testtopNPopulatedCapitalCities2() { query.topNPopulatedCapitalCities(null,0);}
-
-    @Test
-    void testtopNPopulatedCapitalCities3() { query.topNPopulatedCapitalCities(null,null,0);}
-
-    @Test
-    void testgetPopulation() { query.getPopulation(null);}
-
-    @Test
-    void testgetPopulationOf() { query.getPopulationOf();}
-
-    @Test
-    void testgetPopulationOf2() { query.getPopulationOf(null);}
-
-    @Test
-    void testgetPopulationOf3() { query.getPopulationOf(null,null);}
-
-    @Test
-    void testgetPopulationOf4() { query.getPopulationOf(null,null,null);}
-
-    @Test
-    void testgetPopulationOf5() { query.getPopulationOf(null,null,null,null);}
-
-    @Test
-    void testgetPopulationOf6() { query.getPopulationOf(null,null,null,null,null);}
-
-
+        Assertions.assertEquals("Continent must be specified", thrown.getMessage());
+    }
 }

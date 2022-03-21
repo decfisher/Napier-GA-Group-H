@@ -1,5 +1,8 @@
 package com.napier.sem;
 
+/**
+ * Class containing City fields
+ */
 public class City {
     public int ID;
     public String Name;
