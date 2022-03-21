@@ -30,6 +30,10 @@ public class App {
         //query.topNPopulatedCapitalCities("Asia","Eastern Asia",3);
 //        query.largeToSmallCityPopulation("Continent","Asia");
         query.getPopulationOf("Asia");
+        query.getPopulationOf("Asia","Eastern Asia");
+        query.getPopulationOf("Asia","Eastern Asia","China");
+        query.getPopulationOf("Asia","Eastern Asia","China","Peking");
+        query.getPopulationOf("Asia","Eastern Asia","China","Peking","Peking");
 
         a.disconnect(); // Disconnect from database
     }

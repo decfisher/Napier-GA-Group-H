@@ -1047,6 +1047,189 @@ public class Query {
     }
 
     /**
+     * Gets the population of a Region
+     * @return a Country object
+     */
+    public Country getPopulationOf(String Continent, String Region)
+    {
+        try {
+
+
+            // Create an SQL statement
+            Statement stmt = connection.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT SUM(population) AS Population "
+                            + "FROM country co "
+                            + "WHERE co.continent = '" + Continent + " AND co.Region = '" + Region + "';";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return query result if query is successful
+            // Check one is returned
+            if (rset.next()) {
+                Country cou = new Country();
+                cou.Name = Region;
+                cou.Population = rset.getInt("Population");
+                System.out.println("The Population of " + Region + " is " + cou.Population);
+                // Print Header
+                System.out.println(String.format("%-10s %10s ", "Name", "Population"));
+                String cou_string =
+                        String.format("%-10s %10s ", cou.Name, cou.Population);
+                System.out.println(cou_string);
+                return cou;
+            } else {
+                return null;
+            }
+
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to execute query getPopulationOf with 2 parameters");
+            return null;
+        }
+    }
+
+
+    /**
+     * Gets the population of a Country
+     * @return a Country object
+     */
+    public Country getPopulationOf(String Continent, String Region, String aCountry)
+    {
+        try {
+
+
+            // Create an SQL statement
+            Statement stmt = connection.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT Population "
+                            + "FROM country co "
+                            + "WHERE co.Name = '" + aCountry + "';";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return query result if query is successful
+            // Check one is returned
+            if (rset.next()) {
+                Country cou = new Country();
+                cou.Name = aCountry;
+                cou.Population = rset.getInt("Population");
+                System.out.println("The Population of " + aCountry + " is " + cou.Population);
+                // Print Header
+                System.out.println(String.format("%-10s %10s ", "Name", "Population"));
+                String cou_string =
+                        String.format("%-10s %10s ", cou.Name, cou.Population);
+                System.out.println(cou_string);
+                return cou;
+            } else {
+                return null;
+            }
+
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to execute query getPopulationOf with 3 parameters");
+            return null;
+        }
+    }
+
+    /**
+     * Gets the population of a District
+     * @return a Country object
+     */
+    public Country getPopulationOf(String Continent, String Region, String aCountry, String District)
+    {
+        try {
+
+
+            // Create an SQL statement
+            Statement stmt = connection.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SUM(ci.Population) AS Population "
+                            + "FROM country co "
+                            + "LEFT JOIN city ci ON co.Capital = ci.ID "
+                            + "WHERE co.Name = '" + aCountry + "' AND ci.District = '" + District +"';";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return query result if query is successful
+            // Check one is returned
+            if (rset.next()) {
+                Country cou = new Country();
+                cou.Name = District;
+                cou.Population = rset.getInt("Population");
+                System.out.println("The Population of " + District + " is " + cou.Population);
+                // Print Header
+                System.out.println(String.format("%-10s %10s ", "Name", "Population"));
+                String cou_string =
+                        String.format("%-10s %10s ", cou.Name, cou.Population);
+                System.out.println(cou_string);
+                return cou;
+            } else {
+                return null;
+            }
+
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to execute query getPopulationOf with 4 parameters");
+            return null;
+        }
+    }
+
+    /**
+     * Gets the population of a City
+     * @return a Country object
+     */
+    public Country getPopulationOf(String Continent, String Region, String aCountry, String District, String City)
+    {
+        try {
+
+
+            // Create an SQL statement
+            Statement stmt = connection.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SUM(ci.Population) AS Population "
+                            + "FROM country co "
+                            + "LEFT JOIN city ci ON co.Capital = ci.ID "
+                            + "WHERE ci.Name = '" + City + "' AND ci.District = '" + District +"';";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return query result if query is successful
+            // Check one is returned
+            if (rset.next()) {
+                Country cou = new Country();
+                cou.Name = City;
+                cou.Population = rset.getLong("Population");
+                System.out.println("The Population of " + City + " is " + cou.Population);
+                // Print Header
+                System.out.println(String.format("%-10s %10s ", "Name", "Population"));
+                String cou_string =
+                        String.format("%-10s %10s ", cou.Name, cou.Population);
+                System.out.println(cou_string);
+                return cou;
+            } else {
+                return null;
+            }
+
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to execute query getPopulationOf with 5 parameters");
+            return null;
+        }
+    }
+
+    /**
      * Gets list of countries
      * @return a Country object
      */
