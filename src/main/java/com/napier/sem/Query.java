@@ -959,6 +959,94 @@ public class Query {
     }
 
     /**
+     * Gets the population of the world
+     * @return a Country object
+     */
+    public Country getPopulationOf()
+    {
+        try {
+
+
+            // Create an SQL statement
+            Statement stmt = connection.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT SUM(population) AS Population "
+                            + "FROM country co ;";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return query result if query is successful
+            // Check one is returned
+            if (rset.next()) {
+                Country cou = new Country();
+                cou.Name = "World";
+                cou.Population = rset.getInt("Population");
+                System.out.println("The Population of the world is " + cou.Population);
+                // Print Header
+                System.out.println(String.format("%-10s %10s ", "Name", "Population"));
+                String cou_string =
+                        String.format("%-10s %10s ", cou.Name, cou.Population);
+                System.out.println(cou_string);
+                return cou;
+            } else {
+                return null;
+            }
+
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to execute query topNPopulatedCapitalCities");
+            return null;
+        }
+    }
+    /**
+     * Gets the population of a Contient
+     * @return a Country object
+     */
+    public Country getPopulationOf(String Continent)
+    {
+        try {
+
+
+            // Create an SQL statement
+            Statement stmt = connection.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT SUM(population) AS Population "
+                            + "FROM country co "
+                            + "WHERE co.continent = '" + Continent + "';";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return query result if query is successful
+            // Check one is returned
+            if (rset.next()) {
+                Country cou = new Country();
+                cou.Name = Continent;
+                cou.Population = rset.getInt("Population");
+                System.out.println("The Population of " + Continent + " is " + cou.Population);
+                // Print Header
+                System.out.println(String.format("%-10s %10s ", "Name", "Population"));
+                String cou_string =
+                        String.format("%-10s %10s ", cou.Name, cou.Population);
+                System.out.println(cou_string);
+                return cou;
+            } else {
+                return null;
+            }
+
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to execute query topNPopulatedCapitalCities");
+            return null;
+        }
+    }
+
+    /**
      * Gets list of countries
      * @return a Country object
      */
