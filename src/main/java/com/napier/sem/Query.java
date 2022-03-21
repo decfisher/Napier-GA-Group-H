@@ -1341,8 +1341,9 @@ public class Query {
             while (rset.next()) {
                 Language lang = new Language();
                 lang.Language = rset.getString("Language");
-                lang.Total_Speakers = rset.getLong("Total_Speakers");
-                lang.Percent_Of_World_Pop = rset.getDouble("Percent_Of_World_Pop");
+                lang.Percentage = rset.getDouble("Percentage");
+                lang.Population = rset.getLong("Population");
+                lang.LanguageSpeakers = rset.getLong("LanguageSpeakers");
                 languages.add(lang);
             }
             return languages;
