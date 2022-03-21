@@ -111,7 +111,7 @@ public class AppIntegrationTest {
     //getCapitalCitiesByPopulation()
     @Test
     void getCapitalCitiesByPopulation() {
-        ArrayList<Country> countries = query.getCountriesByPopulation();
+        ArrayList<Country> countries = query.getCapitalCitiesByPopulation();
         Country cou = countries.get(0);
         assertEquals(cou.Name,"Seoul");
         assertEquals(cou.Population,9901619);
@@ -119,7 +119,7 @@ public class AppIntegrationTest {
 
     @Test
     void getCapitalCitiesByPopulation1() {
-        ArrayList<Country> countries = query.getCountriesByPopulation("Asia");
+        ArrayList<Country> countries = query.getCapitalCitiesByPopulation("Asia");
         Country cou = countries.get(0);
         assertEquals(cou.Name,"Seoul");
         assertEquals(cou.Population,9901619);
@@ -128,7 +128,7 @@ public class AppIntegrationTest {
 
     @Test
     void getCapitalCitiesByPopulation2() {
-        ArrayList<Country> countries = query.getCountriesByPopulation("Asia","Eastern Asia");
+        ArrayList<Country> countries = query.getCapitalCitiesByPopulation("Asia","Eastern Asia");
         Country cou = countries.get(0);
         assertEquals(cou.Name,"Jakarta");
         assertEquals(cou.Population,9604900);
