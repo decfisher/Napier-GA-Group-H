@@ -1305,4 +1305,53 @@ public class Query {
             return null;
         }
     }
+
+    /**
+     * Languages Spoken Largest To Smallest
+     */
+
+    /**
+     * Gets list of top 5 languages based on numbers of speakers
+     * @return an ArrayList of Language objects
+     */
+    public ArrayList<Language> getLanguagePopularity()
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = connection.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "CREATE TABLE TOP_LANGUAGE AS "
+                            + "SELECT A.LANGUAGE, A.PERCENTAGE, B.POPULATION, (A.PERCENTAGE * B.POPULATION) AS LANGUAGE_SPEAKERS "
+                            + "FROM COUNTRYLANGUAGE A "
+                            + "LEFT JOIN COUNTRY B A.COUNTRY = B.COUNTRYCODE"
+                            + "WHERE A.LANGUAGE IN('CHINESE', 'ENGLISH', 'HINDI', 'SPANISH', 'ARABIC');"
+                            + "CREATE TABLE LISTED_LANGUAGES AS "
+                            + "SELECT LANGUAGE, SUM(LANGUAGE_SPEAKERS) AS TOTAL_SPEAKERS, SUM(LANGUAGE_SPEAKERS)/(SELECT SUM(POPULATION) FROM COUNTRY) AS PERCENT_OF_WORLD_POP "
+                            + "FROM TOP_LANGUAGE "
+                            + "GROUP BY LANGUAGE "
+                            + "ORDER BY CALCULATED TOTAL_SPEAKERS DESC;";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return query result if query is successful
+            // Check one is returned
+            ArrayList<Language> languages = new ArrayList<Language>();
+            while (rset.next()) {
+                Language lang = new Language();
+                lang.Language = rset.getString("Language");
+                lang.Total_Speakers = rset.getLong("Total_Speakers");
+                lang.Percent_Of_World_Pop = rset.getDouble("Percent_Of_World_Pop");
+                languages.add(lang);
+            }
+            return languages;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get Population details");
+            return null;
+        }
+    }
 }
