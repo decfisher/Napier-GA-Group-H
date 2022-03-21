@@ -1061,7 +1061,7 @@ public class Query {
             String strSelect =
                     "SELECT SUM(population) AS Population "
                             + "FROM country co "
-                            + "WHERE co.continent = '" + Continent + " AND co.Region = '" + Region + "';";
+                            + "WHERE co.continent = '" + Continent + "' AND co.Region = '" + Region + "' ;";
 
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
@@ -1150,7 +1150,7 @@ public class Query {
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SUM(ci.Population) AS Population "
+                    "SELECT SUM(ci.Population) AS Population "
                             + "FROM country co "
                             + "LEFT JOIN city ci ON co.Capital = ci.ID "
                             + "WHERE co.Name = '" + aCountry + "' AND ci.District = '" + District +"';";
@@ -1196,7 +1196,7 @@ public class Query {
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SUM(ci.Population) AS Population "
+                    "SELECT SUM(ci.Population) AS Population "
                             + "FROM country co "
                             + "LEFT JOIN city ci ON co.Capital = ci.ID "
                             + "WHERE ci.Name = '" + City + "' AND ci.District = '" + District +"';";
