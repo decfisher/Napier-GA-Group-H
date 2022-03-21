@@ -2,6 +2,9 @@ package com.napier.sem;
 
 public class Language {
     public String Language;
-    public long Total_Speakers;
-    public double Percent_Of_World_Pop;
+    public double Percentage;
+    public long Population;
+    public long LanguageSpeakers;
+    public long TotalSpeakers;
+    public double PercentOfWorldPop;
 }
