@@ -135,7 +135,7 @@ public class AppIntegrationTest {
         assertEquals(cou.Continent,"Asia");
         assertEquals(cou.Region,"Southeast Asia");
     }
-    // Integration tests TP
+    // Integration tests TP final
         @Test
     void topNPopulatedCapitalCities() {
         ArrayList<Country> countries = query.topNPopulatedCapitalCities(1);
