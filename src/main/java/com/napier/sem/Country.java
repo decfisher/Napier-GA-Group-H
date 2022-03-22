@@ -1,5 +1,8 @@
 package com.napier.sem;
 
+/**
+ * Class containing Country fields
+ */
 public class Country {
     public String Code;
     public String Name;
