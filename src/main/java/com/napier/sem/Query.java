@@ -1323,13 +1323,15 @@ public class Query {
             // Create string for SQL statement
             String strSelect =
                     "CREATE TABLE TopLanguage AS "
-                            + "SELECT A.Language, A.Percentage, B.Population, (A.Percentage * B.Population) AS LanguageSpeakers "
+                            //+ "SELECT A.Language, A.Percentage, B.Population, (A.Percentage * B.Population) AS LanguageSpeakers "
+                            //+ "FROM countrylanguage A "
+                            //+ "LEFT JOIN country B ON A.CountryCode = B.Code "
+                            //+ "WHERE A.Language IN('CHINESE', 'ENGLISH', 'HINDI', 'SPANISH', 'ARABIC'); "
+                            + "SELECT A.Language, SUM(A.Percentage * B.Population) AS TotalSpeakers, SUM(A.Percentage * B.Population)/(SELECT SUM(B.Population)) AS PercentOfWorldPop "
                             + "FROM countrylanguage A "
                             + "LEFT JOIN country B ON A.CountryCode = B.Code "
-                            + "WHERE A.Language IN('CHINESE', 'ENGLISH', 'HINDI', 'SPANISH', 'ARABIC'); "
-                            + "SELECT Language, SUM(LanguageSpeakers) AS TotalSpeakers, SUM(LanguageSpeakers)/(SELECT SUM(Population) FROM country) AS PercentOfWorldPop "
-                            + "FROM TopLanguage "
-                            + "GROUP BY Language "
+                            + "WHERE A.Language IN('CHINESE', 'ENGLISH', 'HINDI', 'SPANISH', 'ARABIC') "
+                            + "GROUP BY A.Language "
                             + "ORDER BY 2 DESC;";
 
             // Execute SQL statement
