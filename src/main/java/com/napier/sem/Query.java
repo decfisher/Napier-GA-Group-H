@@ -1322,10 +1322,6 @@ public class Query {
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
             String strSelect =
-                            //+ "SELECT A.Language, A.Percentage, B.Population, (A.Percentage * B.Population) AS LanguageSpeakers "
-                            //+ "FROM countrylanguage A "
-                            //+ "LEFT JOIN country B ON A.CountryCode = B.Code "
-                            //+ "WHERE A.Language IN('CHINESE', 'ENGLISH', 'HINDI', 'SPANISH', 'ARABIC'); "
                     "SELECT A.Language, SUM(A.Percentage * B.Population) AS TotalSpeakers, SUM(A.Percentage * B.Population)/(SELECT SUM(B.Population)) AS PercentOfWorldPop "
                             + "FROM countrylanguage A "
                             + "LEFT JOIN country B ON A.CountryCode = B.Code "
@@ -1341,13 +1337,11 @@ public class Query {
             while (rset.next()) {
                 Language lang = new Language();
                 lang.Language = rset.getString("Language");
-                //lang.Percentage = rset.getDouble("Percentage");
-                //lang.Population = rset.getLong("Population");
                 lang.TotalSpeakers = rset.getLong("TotalSpeakers");
-                lang.PercentOfWorldPop = rset.getLong("PercentOfWorldPop");
+                lang.PercentOfWorldPop = rset.getDouble("PercentOfWorldPop");
                 languages.add(lang);
             }
-            return languages;
+                return languages;
         }
         catch (Exception e)
         {
