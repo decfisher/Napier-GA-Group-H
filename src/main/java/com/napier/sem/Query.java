@@ -959,6 +959,24 @@ public class Query {
     }
 
     /**
+     * Prints a list of Languages ranked by total number of speakers
+     * @param lang_rank
+     */
+    public static void printLangRank(ArrayList<Language> lang_rank) {
+
+        // Print header
+        System.out.println(String.format("%-10s %10s %10s", "Language", "TotalSpeakers", "PercentOfWorldPop"));
+        // Loop over all languages in the list
+        for (Language lang : lang_rank) {
+            String lang_string =
+                    String.format("%-10s %10s %10s",
+                            lang.Language, lang.TotalSpeakers, lang.PercentOfWorldPop);
+            System.out.println(lang_string);
+        }
+
+    }
+
+    /**
      * Gets the population of the world
      * @return a Country object
      */
@@ -1322,8 +1340,7 @@ public class Query {
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT A.Language, b.Population "
-                            //"SUM(A.Percentage * B.Population) AS TotalSpeakers, (SUM(A.Percentage * B.Population)/(SUM(B.Population))) AS PercentOfWorldPop "
+                    "SELECT A.Language, SUM(A.Percentage * B.Population) AS TotalSpeakers, (SUM(A.Percentage * B.Population)/(SUM(B.Population))) AS PercentOfWorldPop "
                             + "FROM countrylanguage A "
                             + "LEFT JOIN country B ON A.CountryCode = B.Code "
                             + "WHERE A.Language IN('Chinese', 'English', 'Hindi', 'Spanish', 'Arabic') "
@@ -1342,6 +1359,7 @@ public class Query {
                 lang.PercentOfWorldPop = rset.getDouble("PercentOfWorldPop");
                 languages.add(lang);
             }
+                printLangRank(languages);
                 return languages;
         }
         catch (Exception e)
