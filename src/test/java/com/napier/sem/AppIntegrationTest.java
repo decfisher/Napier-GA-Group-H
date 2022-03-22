@@ -167,24 +167,24 @@ public class AppIntegrationTest {
     void largeToSmallCityPopulation() {
         ArrayList<City> cities = query.largeToSmallCityPopulation();
         City cit = cities.get(0);
-        assertEquals(cit.Name,"Seoul");
-        assertEquals(cit.Population,9981619);
+        assertEquals(cit.Name,"Mumbai (Bombay)");
+        assertEquals(cit.Population,10500000);
     }
 
     @Test
     void largeToSmallCityPopulation1() {
         ArrayList<City> cities = query.largeToSmallCityPopulation("Asia", "Continent");
         City cit = cities.get(0);
-        assertEquals(cit.Name,"Jakarta");
-        assertEquals(cit.Population,9604900);
+        assertEquals(cit.Name,"Mumbai (Bombay)");
+        assertEquals(cit.Population,10500000);
         assertEquals(cit.Continent,"Asia");
     }
     @Test
     void largeToSmallCityPopulation2() {
         ArrayList<City> cities = query.largeToSmallCityPopulation("Southeast Asia", "Region");
         City cit = cities.get(0);
-        assertEquals(cit.Name, "Jakarta");
-        assertEquals(cit.Population, 9604900);
+        assertEquals(cit.Name, "Mumbai (Bombay)");
+        assertEquals(cit.Population, 10500000);
         assertEquals(cit.Continent, "Asia");
         assertEquals(cit.Region, "Southeast Asia");
     }
@@ -192,21 +192,21 @@ public class AppIntegrationTest {
     void largeToSmallCityPopulation3() {
         ArrayList<City> cities = query.largeToSmallCityPopulation("Indonesia", "Country");
         City cit = cities.get(0);
-        assertEquals(cit.Name, "Jakarta");
-        assertEquals(cit.Population, 9604900);
+        assertEquals(cit.Name, "Mumbai (Bombay)");
+        assertEquals(cit.Population, 10500000);
         assertEquals(cit.Continent, "Asia");
         assertEquals(cit.Region, "Southeast Asia");
-        assertEquals(cit.Country, "Indonesia");
+        assertEquals(cit.Country, "India");
     }
     @Test
     void largeToSmallCityPopulation4() {
         ArrayList<City> cities = query.largeToSmallCityPopulation("Jakarta Raya", "District");
         City cit = cities.get(0);
-        assertEquals(cit.Name, "Jakarta");
-        assertEquals(cit.Population, 9604900);
+        assertEquals(cit.Name, "Mumbai (Bombay)");
+        assertEquals(cit.Population, 10500000);
         assertEquals(cit.Continent, "Asia");
         assertEquals(cit.Region, "Southeast Asia");
-        assertEquals(cit.Country, "Indonesia");
-        assertEquals(cit.District, "Jakarta Raya");
+        assertEquals(cit.Country, "India");
+        assertEquals(cit.District, "Maharashtra");
     }
 }
