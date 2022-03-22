@@ -1342,7 +1342,7 @@ public class Query {
             String strSelect =
                     "SELECT A.Language, SUM(A.Percentage * B.Population) AS TotalSpeakers, (SUM(A.Percentage * B.Population)/(SUM(B.Population))) AS PercentOfWorldPop "
                             + "FROM countrylanguage A "
-                            + "LEFT JOIN (SELECT code, sum(Population) as Population from country group by 1;) B ON A.CountryCode = B.Code "
+                            + "LEFT JOIN (SELECT Code, sum(Population) as Population from country group by 1) B ON A.CountryCode = B.Code "
                             //+ "(SELECT code,sum(Population) from country group by 1;) B"
                             + " WHERE A.Language IN('Chinese', 'English', 'Hindi', 'Spanish', 'Arabic') "
                             + "GROUP BY A.Language "
