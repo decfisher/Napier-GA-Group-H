@@ -208,4 +208,5 @@ public class AppIntegrationTest {
         assertEquals(cit.Region, "Southeast Asia");
         assertEquals(cit.Country, "Indonesia");
         assertEquals(cit.District, "Jakarta Raya");
+    }
 }
