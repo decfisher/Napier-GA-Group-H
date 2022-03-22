@@ -135,7 +135,7 @@ public class AppIntegrationTest {
         assertEquals(cou.Continent,"Asia");
         assertEquals(cou.Region,"Southeast Asia");
     }
-    
+    // Integration tests TP
         @Test
     void topNPopulatedCapitalCities() {
         ArrayList<Country> countries = query.topNPopulatedCapitalCities(1);
@@ -162,7 +162,7 @@ public class AppIntegrationTest {
         assertEquals(cou.Continent,"Asia");
         assertEquals(cou.Region,"Southeast Asia");
     }
-// Integration tests TP
+
     @Test
     void largeToSmallCityPopulation() {
         ArrayList<City> cities = query.largeToSmallCityPopulation();
@@ -173,7 +173,7 @@ public class AppIntegrationTest {
 
     @Test
     void largeToSmallCityPopulation1() {
-        ArrayList<City> cities = query.largeToSmallCityPopulation("Asia", "Continent");
+        ArrayList<City> cities = query.largeToSmallCityPopulation("Continent", "Asia");
         City cit = cities.get(0);
         assertEquals(cit.Name,"Mumbai (Bombay)");
         assertEquals(cit.Population,10500000);
@@ -181,7 +181,7 @@ public class AppIntegrationTest {
     }
     @Test
     void largeToSmallCityPopulation2() {
-        ArrayList<City> cities = query.largeToSmallCityPopulation("Southeast Asia", "Region");
+        ArrayList<City> cities = query.largeToSmallCityPopulation("Region", "Southeast Asia");
         City cit = cities.get(0);
         assertEquals(cit.Name, "Mumbai (Bombay)");
         assertEquals(cit.Population, 10500000);
@@ -190,7 +190,7 @@ public class AppIntegrationTest {
     }
     @Test
     void largeToSmallCityPopulation3() {
-        ArrayList<City> cities = query.largeToSmallCityPopulation("Indonesia", "Country");
+        ArrayList<City> cities = query.largeToSmallCityPopulation("India", "India");
         City cit = cities.get(0);
         assertEquals(cit.Name, "Mumbai (Bombay)");
         assertEquals(cit.Population, 10500000);
@@ -200,7 +200,7 @@ public class AppIntegrationTest {
     }
     @Test
     void largeToSmallCityPopulation4() {
-        ArrayList<City> cities = query.largeToSmallCityPopulation("Jakarta Raya", "District");
+        ArrayList<City> cities = query.largeToSmallCityPopulation("District", "Maharashtra");
         City cit = cities.get(0);
         assertEquals(cit.Name, "Mumbai (Bombay)");
         assertEquals(cit.Population, 10500000);
