@@ -64,10 +64,13 @@ public class Query {
      * @param Continent
      * @return an ArrayList of Country objects
      */
-    public ArrayList<Country> getCountriesByPopulation(String Continent)
-    {
-        try
-        {
+    public ArrayList<Country> getCountriesByPopulation(String Continent) {
+
+        if (Continent == null) {
+            throw new IllegalArgumentException("Continent must be specified");
+        }
+
+        try {
             // Create an SQL statement
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
@@ -107,10 +110,13 @@ public class Query {
      * @param Region
      * @return an ArrayList of Country objects
      */
-    public ArrayList<Country> getCountriesByPopulation(String Continent, String Region)
-    {
-        try
-        {
+    public ArrayList<Country> getCountriesByPopulation(String Continent, String Region) {
+
+        if (Continent == null || Region == null) {
+            throw new IllegalArgumentException("Continent or Region must be specified");
+        }
+
+        try {
             // Create an SQL statement
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
@@ -155,6 +161,11 @@ public class Query {
      * @return an ArrayList of Countries
      */
     public ArrayList<Country> getTopNCountryPopulation(int n) {
+
+        if (n < 1) {
+            throw new IllegalArgumentException("N must be greater than 0");
+        }
+
         try {
             // Create an SQL statement
             Statement stmt = connection.createStatement();
@@ -195,6 +206,15 @@ public class Query {
      * @return an ArrayList of Countries
      */
     public ArrayList<Country> getTopNCountryPopulation(int n, String queryType, String name) {
+
+        if (n < 1) {
+            throw new IllegalArgumentException("N must be greater than 0");
+        }
+
+        if (queryType == null || name == null) {
+            throw new IllegalArgumentException("queryType or name must be specified");
+        }
+
         try {
             if (queryType.equals("Continent")) {
                 // Create an SQL statement
@@ -250,7 +270,7 @@ public class Query {
                 printCountries(countries, "Region");
                 return countries;
             } else {
-                throw new Exception();
+                return null;
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -306,6 +326,11 @@ public class Query {
      * @return an ArrayList of Cities
      */
     public ArrayList<City> largeToSmallCityPopulation(String queryType, String name) {
+
+        if (queryType == null || name == null) {
+            throw new IllegalArgumentException("queryType or name must be specified");
+        }
+
         try {
             if (queryType.equals("Continent")) {
                 // Create an SQL statement
@@ -437,6 +462,11 @@ public class Query {
      * @param queryType
      */
     public void getPopulation(String queryType) {
+
+        if (queryType == null) {
+            throw new IllegalArgumentException("queryType must be specified");
+        }
+
         try {
             if (queryType.equals("Continent")) {
                 // Create an SQL statement
@@ -537,7 +567,7 @@ public class Query {
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Failed to execute query");
+            System.out.println("Failed to print");
         }
     }
 
@@ -586,10 +616,13 @@ public class Query {
      * @param Continent
      * @return an ArrayList of Country objects
      */
-    public ArrayList<Country> getCapitalCitiesByPopulation(String Continent)
-    {
-        try
-        {
+    public ArrayList<Country> getCapitalCitiesByPopulation(String Continent) {
+
+        if (Continent == null) {
+            throw new IllegalArgumentException("Continent must be specified");
+        }
+
+        try {
             // Create an SQL statement
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
@@ -630,10 +663,13 @@ public class Query {
      * @param Region
      * @return an ArrayList of Country objects
      */
-    public ArrayList<Country> getCapitalCitiesByPopulation(String Continent, String Region)
-    {
-        try
-        {
+    public ArrayList<Country> getCapitalCitiesByPopulation(String Continent, String Region) {
+
+        if (Continent == null || Region == null) {
+            throw new IllegalArgumentException("Continent or Region must be specified");
+        }
+
+        try {
             // Create an SQL statement
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
@@ -676,10 +712,13 @@ public class Query {
      * @return an ArrayList of Country objects
      */
 
-    public ArrayList<Country> topNPopulatedCapitalCities(int n)
-    {
-        try
-        {
+    public ArrayList<Country> topNPopulatedCapitalCities(int n) {
+
+        if (n < 1) {
+            throw new NullPointerException("N must be greater than 0");
+        }
+
+        try {
             // Create an SQL statement
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
@@ -720,10 +759,16 @@ public class Query {
      * @param n
      * @return an ArrayList of Country objects
      */
-    public ArrayList<Country> topNPopulatedCapitalCities(String Continent, int n)
-    {
-        try
-        {
+    public ArrayList<Country> topNPopulatedCapitalCities(String Continent, int n) {
+        if (n < 1) {
+            throw new IllegalArgumentException("N must be greater than 0");
+        }
+
+        if (Continent == null) {
+            throw new IllegalArgumentException("Continent must be specified");
+        }
+
+        try {
             // Create an SQL statement
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
@@ -767,41 +812,44 @@ public class Query {
      * @param n
      * @return an ArrayList of Country objects
      */
-    public ArrayList<Country> topNPopulatedCapitalCities(String continent, String region, int n)
-    {
-        try
-        {
-            if (continent == null || region == null) {
-                throw new Exception();
-            } else {
-                // Create an SQL statement
-                Statement stmt = connection.createStatement();
-                // Create string for SQL statement
-                String strSelect =
-                        "SELECT ci.Name, co.Continent, co.Region, ci.Population "
-                                + "FROM country co "
-                                + "LEFT JOIN city ci ON co.Capital = ci.ID "
-                                + "WHERE co.Continent = '"+ continent + "' AND co.Region = '" + region + "' "
-                                + "ORDER BY 4 DESC "
-                                + " LIMIT " + n + ";";
+    public ArrayList<Country> topNPopulatedCapitalCities(String continent, String region, int n) {
 
-                // Execute SQL statement
-                ResultSet rset = stmt.executeQuery(strSelect);
-                // Return query result if query is successful
-                // Check one is returned
-                ArrayList<Country> cap_cities = new ArrayList<Country>();
+        if (n < 1) {
+            throw new IllegalArgumentException("N must be greater than 0");
+        }
 
-                while (rset.next()) {
-                    Country country = new Country();
-                    country.Name = rset.getString("NAME");
-                    country.Population = rset.getInt("Population");
-                    country.Continent = rset.getString("Continent");
-                    country.Region = rset.getString("Region");
-                    cap_cities.add(country);
-                }
-                printCapitalCities(cap_cities, "Region");
-                return cap_cities;
+        if (continent == null || region == null) {
+            throw new IllegalArgumentException("Continent or region must be specified");
+        }
+
+        try {
+            // Create an SQL statement
+            Statement stmt = connection.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT ci.Name, co.Continent, co.Region, ci.Population "
+                            + "FROM country co "
+                            + "LEFT JOIN city ci ON co.Capital = ci.ID "
+                            + "WHERE co.Continent = '"+ continent + "' AND co.Region = '" + region + "' "
+                            + "ORDER BY 4 DESC "
+                            + " LIMIT " + n + ";";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return query result if query is successful
+            // Check one is returned
+            ArrayList<Country> cap_cities = new ArrayList<Country>();
+
+            while (rset.next()) {
+                Country country = new Country();
+                country.Name = rset.getString("NAME");
+                country.Population = rset.getInt("Population");
+                country.Continent = rset.getString("Continent");
+                country.Region = rset.getString("Region");
+                cap_cities.add(country);
             }
+            printCapitalCities(cap_cities, "Region");
+            return cap_cities;
         }
         catch (Exception e)
         {
@@ -812,151 +860,8 @@ public class Query {
     }
 
     /**
-     * Helper Functions
+     * Population Queries
      */
-
-    /**
-     * Prints a list of Capital Cities
-     * @param cap_cities
-     * @param type
-     */
-    public static void printCapitalCities(ArrayList<Country> cap_cities, String type) {
-
-        if (type.equals("World")) {
-            // Print header
-            System.out.println(String.format("%-10s %10s ", "Capital City", "Population"));
-            // Loop over all employees in the list
-            for (Country cou : cap_cities) {
-                String cou_string =
-                        String.format("%-10s %10s ",
-                                cou.Name, cou.Population);
-                System.out.println(cou_string);
-            }
-        } else if (type.equals("Continent")) {
-            // Print Header
-            System.out.println(String.format("%-10s %10s %10s ", "Capital City", "Continent", "Population"));
-            // Loop over all employees in the list
-            for (Country cou : cap_cities) {
-                String cou_string =
-                        String.format("%-10s %10s %10s ",
-                                cou.Name, cou.Continent, cou.Population);
-                System.out.println(cou_string);
-            }
-        }  else {
-            // Print Header
-            System.out.println(String.format("%-10s %10s %10s %10s ", "Capital City", "Continent", "Region", "Population"));
-            // Loop over all employees in the list
-            for (Country cou : cap_cities) {
-                String cou_string =
-                        String.format("%-10s %10s %10s %10s ",
-                                cou.Name, cou.Continent, cou.Region, cou.Population);
-                System.out.println(cou_string);
-            }
-        }
-    }
-
-    /**
-     * Prints a list of Cities
-     */
-    public static void printCities(ArrayList<City> cities, String type) {
-
-        if (type.equals("World")) {
-            // Print header
-            System.out.println(String.format("%-10s %10s ", "City", "Population"));
-            // Loop over all cities in the list
-            for (City cit : cities) {
-                String cit_string =
-                        String.format("%-10s %10s ",
-                                cit.Name, cit.Population);
-                System.out.println(cit_string);
-            }
-
-        } else if (type.equals("Continent")) {
-            // Print Header
-            System.out.println(String.format("%-10s %10s %10s ", "City", "Continent", "Population"));
-            // Loop over all cities in the list
-            for (City cit : cities) {
-                String cit_string =
-                        String.format("%-10s %10s %10s ",
-                                cit.Name, cit.Continent, cit.Population);
-                System.out.println(cit_string);
-            }
-
-        } else if (type.equals("Region")) {
-            // Print Header
-            System.out.println(String.format("%-10s %10s %10s %10s ", "City", "Continent", "Region", "Population"));
-            // Loop over all cities in the list
-            for (City cit : cities) {
-                String cit_string =
-                        String.format("%-10s %10s %10s %10s",
-                                cit.Name, cit.Continent, cit.Region, cit.Population);
-                System.out.println(cit_string);
-            }
-
-        } else if (type.equals("Country")) {
-            // Print Header
-            System.out.println(String.format("%-10s %10s %10s %10s %10s ", "City", "Continent", "Region", "Country", "Population"));
-            // Loop over all cities in the list
-            for (City cit : cities) {
-                String cit_string =
-                        String.format("%-10s %10s %10s %10s %10s",
-                                cit.Name, cit.Continent, cit.Region, cit.Country, cit.Population);
-                System.out.println(cit_string);
-            }
-
-        }  else {
-            // Print Header
-            System.out.println(String.format("%-10s %10s %10s %10s %10s %10s ", "City", "Continent", "Region", "Country", "District", "Population"));
-            // Loop over all employees in the list
-            for (City cit : cities) {
-                String cit_string =
-                        String.format("%-10s %10s %10s %10s %10s %10s ",
-                                cit.Name, cit.Continent, cit.Region, cit.Country, cit.District, cit.Population);
-                System.out.println(cit_string);
-            }
-        }
-    }
-    //Tom Code paste here
-
-    /**
-     * Prints a list of countries
-     * @param countries
-     * @param type
-     */
-    public static void printCountries(ArrayList<Country> countries, String type) {
-
-        if (type.equals("World")) {
-            // Print header
-            System.out.println(String.format("%-10s %10s ", "Country", "Population"));
-            // Loop over all employees in the list
-            for (Country cou : countries) {
-                String cou_string =
-                        String.format("%-10s %10s ",
-                                cou.Name, cou.Population);
-                System.out.println(cou_string);
-            }
-        } else if (type.equals("Continent")) {
-            // Print Header
-            System.out.println(String.format("%-10s %10s %10s ", "Country", "Continent", "Population"));
-            // Loop over all employees in the list
-            for (Country cou : countries) {
-                String cou_string =
-                        String.format("%-10s %10s %10s ",
-                                cou.Name, cou.Continent, cou.Population);
-                System.out.println(cou_string);
-            }
-        }  else {
-            // Print Header
-            System.out.println(String.format("%-10s %10s %10s %10s ", "Country", "Continent", "Region", "Population"));
-            // Loop over all employees in the list
-            for (Country cou : countries) {
-                String cou_string =
-                        String.format("%-10s %10s %10s %10s ",
-                                cou.Name, cou.Continent, cou.Region, cou.Population);
-                System.out.println(cou_string);
-            }
-        }
-    }
 
     /**
      * Prints a list of Languages ranked by total number of speakers
@@ -1023,8 +928,12 @@ public class Query {
      * Gets the population of a Contient
      * @return a Country object
      */
-    public Country getPopulationOf(String Continent)
-    {
+    public Country getPopulationOf(String Continent) {
+
+        if (Continent == null) {
+            throw new IllegalArgumentException("Continent must be specified");
+        }
+
         try {
 
 
@@ -1248,6 +1157,152 @@ public class Query {
     }
 
     /**
+     * Helper Functions
+     */
+
+    /**
+     * Prints a list of Capital Cities
+     * @param cap_cities
+     * @param type
+     */
+    public static void printCapitalCities(ArrayList<Country> cap_cities, String type) {
+
+        if (type.equals("World")) {
+            // Print header
+            System.out.println(String.format("%-10s %10s ", "Capital City", "Population"));
+            // Loop over all employees in the list
+            for (Country cou : cap_cities) {
+                String cou_string =
+                        String.format("%-10s %10s ",
+                                cou.Name, cou.Population);
+                System.out.println(cou_string);
+            }
+        } else if (type.equals("Continent")) {
+            // Print Header
+            System.out.println(String.format("%-10s %10s %10s ", "Capital City", "Continent", "Population"));
+            // Loop over all employees in the list
+            for (Country cou : cap_cities) {
+                String cou_string =
+                        String.format("%-10s %10s %10s ",
+                                cou.Name, cou.Continent, cou.Population);
+                System.out.println(cou_string);
+            }
+        }  else {
+            // Print Header
+            System.out.println(String.format("%-10s %10s %10s %10s ", "Capital City", "Continent", "Region", "Population"));
+            // Loop over all employees in the list
+            for (Country cou : cap_cities) {
+                String cou_string =
+                        String.format("%-10s %10s %10s %10s ",
+                                cou.Name, cou.Continent, cou.Region, cou.Population);
+                System.out.println(cou_string);
+            }
+        }
+    }
+
+    /**
+     * Prints a list of Cities
+     */
+    public static void printCities(ArrayList<City> cities, String type) {
+
+        if (type.equals("World")) {
+            // Print header
+            System.out.println(String.format("%-10s %10s ", "City", "Population"));
+            // Loop over all cities in the list
+            for (City cit : cities) {
+                String cit_string =
+                        String.format("%-10s %10s ",
+                                cit.Name, cit.Population);
+                System.out.println(cit_string);
+            }
+
+        } else if (type.equals("Continent")) {
+            // Print Header
+            System.out.println(String.format("%-10s %10s %10s ", "City", "Continent", "Population"));
+            // Loop over all cities in the list
+            for (City cit : cities) {
+                String cit_string =
+                        String.format("%-10s %10s %10s ",
+                                cit.Name, cit.Continent, cit.Population);
+                System.out.println(cit_string);
+            }
+
+        } else if (type.equals("Region")) {
+            // Print Header
+            System.out.println(String.format("%-10s %10s %10s %10s ", "City", "Continent", "Region", "Population"));
+            // Loop over all cities in the list
+            for (City cit : cities) {
+                String cit_string =
+                        String.format("%-10s %10s %10s %10s",
+                                cit.Name, cit.Continent, cit.Region, cit.Population);
+                System.out.println(cit_string);
+            }
+
+        } else if (type.equals("Country")) {
+            // Print Header
+            System.out.println(String.format("%-10s %10s %10s %10s %10s ", "City", "Continent", "Region", "Country", "Population"));
+            // Loop over all cities in the list
+            for (City cit : cities) {
+                String cit_string =
+                        String.format("%-10s %10s %10s %10s %10s",
+                                cit.Name, cit.Continent, cit.Region, cit.Country, cit.Population);
+                System.out.println(cit_string);
+            }
+
+        }  else {
+            // Print Header
+            System.out.println(String.format("%-10s %10s %10s %10s %10s %10s ", "City", "Continent", "Region", "Country", "District", "Population"));
+            // Loop over all employees in the list
+            for (City cit : cities) {
+                String cit_string =
+                        String.format("%-10s %10s %10s %10s %10s %10s ",
+                                cit.Name, cit.Continent, cit.Region, cit.Country, cit.District, cit.Population);
+                System.out.println(cit_string);
+            }
+        }
+    }
+
+    /**
+     * Prints a list of countries
+     * @param countries
+     * @param type
+     */
+    public static void printCountries(ArrayList<Country> countries, String type) {
+
+        if (type.equals("World")) {
+            // Print header
+            System.out.println(String.format("%-10s %10s ", "Country", "Population"));
+            // Loop over all employees in the list
+            for (Country cou : countries) {
+                String cou_string =
+                        String.format("%-10s %10s ",
+                                cou.Name, cou.Population);
+                System.out.println(cou_string);
+            }
+        } else if (type.equals("Continent")) {
+            // Print Header
+            System.out.println(String.format("%-10s %10s %10s ", "Country", "Continent", "Population"));
+            // Loop over all employees in the list
+            for (Country cou : countries) {
+                String cou_string =
+                        String.format("%-10s %10s %10s ",
+                                cou.Name, cou.Continent, cou.Population);
+                System.out.println(cou_string);
+            }
+        }  else {
+            // Print Header
+            System.out.println(String.format("%-10s %10s %10s %10s ", "Country", "Continent", "Region", "Population"));
+            // Loop over all employees in the list
+            for (Country cou : countries) {
+                String cou_string =
+                        String.format("%-10s %10s %10s %10s ",
+                                cou.Name, cou.Continent, cou.Region, cou.Population);
+                System.out.println(cou_string);
+            }
+        }
+    }
+
+    /**
      * Gets list of countries
      * @return a Country object
      */
@@ -1282,6 +1337,10 @@ public class Query {
     }
 
     public Country getCountry(String code) {
+
+        if (code == null) {
+            throw new IllegalArgumentException("code must be specified");
+        }
         try {
             // Create an SQL statement
             Statement stmt = connection.createStatement();
