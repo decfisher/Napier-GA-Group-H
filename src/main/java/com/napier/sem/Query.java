@@ -1340,7 +1340,7 @@ public class Query {
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT A.Language, concat(SUM((A.Percentage/100) * B.Population)/1000000,'M') AS TotalSpeakers, concat(round((SUM(A.Percentage * B.Population)/SUM(B.Population)),2,'%') AS PercentOfWorldPop "
+                    "SELECT A.Language, concat(SUM((A.Percentage/100) * B.Population)/1000000,'M') AS TotalSpeakers, concat(round((SUM(A.Percentage * B.Population)/SUM(B.Population)),2,'%')) AS PercentOfWorldPop "
                             + "FROM countrylanguage A "
                             + "LEFT JOIN (SELECT Code, sum(Population) as Population from country group by 1) B ON A.CountryCode = B.Code "
                             //+ "(SELECT code,sum(Population) from country group by 1;) B"
