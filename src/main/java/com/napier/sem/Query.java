@@ -1322,7 +1322,7 @@ public class Query {
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT A.Language, SUM(A.Percentage * B.Population) AS TotalSpeakers, (SUM(A.Percentage * B.Population)/(SUM(B.Population))) AS PercentOfWorldPop "
+                    "SELECT A.Language, SUM(A.Percentage * B.Population) AS TotalSpeakers, (SUM(A.Percentage * B.Population)/(SELECT SUM(Population) FROM country)) AS PercentOfWorldPop "
                             + "FROM countrylanguage A "
                             + "LEFT JOIN country B ON A.CountryCode = B.Code "
                             + "WHERE A.Language IN('Chinese', 'English', 'Hindi', 'Spanish', 'Arabic') "
