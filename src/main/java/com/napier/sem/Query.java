@@ -965,7 +965,7 @@ public class Query {
     public static void printLangRank(ArrayList<Language> lang_rank) {
 
         // Print header
-        System.out.println(String.format("%-10s %10s %10s", "Language", "TotalSpeakers", "PercentOfWorldPop"));
+        System.out.println(String.format("%-10s %10s %10s", "Language", "TotalSpeakers (M)", "PercentOfWorldPop (%)"));
         // Loop over all languages in the list
         for (Language lang : lang_rank) {
             String lang_string =
@@ -1340,7 +1340,7 @@ public class Query {
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT A.Language, round(SUM((A.Percentage/100) * B.Population)/1000000,2) AS TotalSpeakers, concat(format((SUM(A.Percentage * B.Population)/SUM(B.Population)),2),'%') AS PercentOfWorldPop "
+                    "SELECT A.Language, round(SUM((A.Percentage/100) * B.Population)/1000000,2) AS TotalSpeakers, round((SUM(A.Percentage * B.Population)/SUM(B.Population)),2) AS PercentOfWorldPop "
                             + "FROM countrylanguage A "
                             + "LEFT JOIN (SELECT Code, sum(Population) as Population from country group by 1) B ON A.CountryCode = B.Code "
                             //+ "(SELECT code,sum(Population) from country group by 1;) B"
