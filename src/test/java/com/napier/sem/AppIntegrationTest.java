@@ -185,7 +185,6 @@ public class AppIntegrationTest {
         City cit = cities.get(0);
         assertEquals(cit.Name, "Jakarta");
         assertEquals(cit.Population, 9604900);
-        assertEquals(cit.Continent, "Asia");
         assertEquals(cit.Region, "Southeast Asia");
     }
     @Test
@@ -194,7 +193,6 @@ public class AppIntegrationTest {
         City cit = cities.get(0);
         assertEquals(cit.Name, "Mumbai (Bombay)");
         assertEquals(cit.Population, 10500000);
-        assertEquals(cit.Continent, "Asia");
         assertEquals(cit.Region, "Southeast Asia");
         assertEquals(cit.Country, "India");
     }
@@ -204,7 +202,6 @@ public class AppIntegrationTest {
         City cit = cities.get(0);
         assertEquals(cit.Name, "Mumbai (Bombay)");
         assertEquals(cit.Population, 10500000);
-        assertEquals(cit.Continent, "Asia");
         assertEquals(cit.Region, "Southeast Asia");
         assertEquals(cit.Country, "India");
         assertEquals(cit.District, "Maharashtra");
