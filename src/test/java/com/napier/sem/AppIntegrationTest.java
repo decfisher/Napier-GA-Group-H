@@ -135,4 +135,77 @@ public class AppIntegrationTest {
         assertEquals(cou.Continent,"Asia");
         assertEquals(cou.Region,"Southeast Asia");
     }
+    
+        @Test
+    void topNPopulatedCapitalCities() {
+        ArrayList<Country> countries = query.topNPopulatedCapitalCities(1);
+        Country cou = countries.get(0);
+        assertEquals(cou.Name,"Seoul");
+        assertEquals(cou.Population,9981619);
+    }
+
+    @Test
+    void topNPopulatedCapitalCities1() {
+        ArrayList<Country> countries = query.topNPopulatedCapitalCities("Asia",1);
+        Country cou = countries.get(0);
+        assertEquals(cou.Name,"Seoul");
+        assertEquals(cou.Population,9981619);
+        assertEquals(cou.Continent,"Asia");
+    }
+
+    @Test
+    void topNPopulatedCapitalCities2() {
+        ArrayList<Country> countries = query.topNPopulatedCapitalCities("Asia", "Southeast Asia", 1);
+        Country cou = countries.get(0);
+        assertEquals(cou.Name,"Jakarta");
+        assertEquals(cou.Population,9604900);
+        assertEquals(cou.Continent,"Asia");
+        assertEquals(cou.Region,"Southeast Asia");
+    }
+// Integration tests TP
+    @Test
+    void largeToSmallCityPopulation() {
+        ArrayList<City> cities = query.largeToSmallCityPopulation();
+        City cit = cities.get(0);
+        assertEquals(cit.Name,"Seoul");
+        assertEquals(cit.Population,9981619);
+    }
+
+    @Test
+    void largeToSmallCityPopulation1() {
+        ArrayList<City> cities = query.largeToSmallCityPopulation("Asia", "Continent");
+        City cit = cities.get(0);
+        assertEquals(cit.Name,"Jakarta");
+        assertEquals(cit.Population,9604900);
+        assertEquals(cit.Continent,"Asia");
+    }
+    @Test
+    void largeToSmallCityPopulation2() {
+        ArrayList<City> cities = query.largeToSmallCityPopulation("Southeast Asia", "Region");
+        City cit = cities.get(0);
+        assertEquals(cit.Name, "Jakarta");
+        assertEquals(cit.Population, 9604900);
+        assertEquals(cit.Continent, "Asia");
+        assertEquals(cit.Region, "Southeast Asia");
+    }
+    @Test
+    void largeToSmallCityPopulation3() {
+        ArrayList<City> cities = query.largeToSmallCityPopulation("Indonesia", "Country");
+        City cit = cities.get(0);
+        assertEquals(cit.Name, "Jakarta");
+        assertEquals(cit.Population, 9604900);
+        assertEquals(cit.Continent, "Asia");
+        assertEquals(cit.Region, "Southeast Asia");
+        assertEquals(cit.Country, "Indonesia");
+    }
+    @Test
+    void largeToSmallCityPopulation4() {
+        ArrayList<City> cities = query.largeToSmallCityPopulation("Jakarta Raya", "District");
+        City cit = cities.get(0);
+        assertEquals(cit.Name, "Jakarta");
+        assertEquals(cit.Population, 9604900);
+        assertEquals(cit.Continent, "Asia");
+        assertEquals(cit.Region, "Southeast Asia");
+        assertEquals(cit.Country, "Indonesia");
+        assertEquals(cit.District, "Jakarta Raya");
 }
