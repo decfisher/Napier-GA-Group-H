@@ -1,4 +1,8 @@
-package com.napier.sem;
+package com.napier.application.logic;
+
+import com.napier.application.data.City;
+import com.napier.application.data.Country;
+import com.napier.application.data.Language;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -24,10 +28,8 @@ public class Query {
      * Gets list of countries by their population count
      * @return an ArrayList of Country objects
      */
-    public ArrayList<Country> getCountriesByPopulation()
-    {
-        try
-        {
+    public ArrayList<Country> getCountriesByPopulation() {
+        try {
             // Create an SQL statement
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
@@ -41,8 +43,7 @@ public class Query {
             // Return query result if query is successful
             // Check one is returned
             ArrayList<Country> countries = new ArrayList<Country>();
-            while (rset.next())
-            {
+            while (rset.next()) {
                 Country cou = new Country();
                 cou.Name = rset.getString("NAME");
                 cou.Population = rset.getInt("Population");
@@ -51,8 +52,7 @@ public class Query {
             printCountries(countries, "World");
             return countries;
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get Country details");
             return null;
@@ -85,8 +85,7 @@ public class Query {
             // Return query result if query is successful
             // Check one is returned
             ArrayList<Country> countries = new ArrayList<Country>();
-            while (rset.next())
-            {
+            while (rset.next()) {
                 Country cou = new Country();
                 cou.Name = rset.getString("NAME");
                 cou.Population = rset.getInt("Population");
@@ -96,8 +95,7 @@ public class Query {
             printCountries(countries, "Continent");
             return countries;
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get Country details");
             return null;
@@ -131,8 +129,7 @@ public class Query {
             // Return query result if query is successful
             // Check one is returned
             ArrayList<Country> countries = new ArrayList<Country>();
-            while (rset.next())
-            {
+            while (rset.next()) {
                 Country cou = new Country();
                 cou.Name = rset.getString("NAME");
                 cou.Population = rset.getInt("Population");
@@ -143,8 +140,7 @@ public class Query {
             printCountries(countries, "Region");
             return countries;
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get Country details");
             return null;
@@ -181,8 +177,7 @@ public class Query {
             // Return query result if query is successful
             // Check one is returned
             ArrayList<Country> countries = new ArrayList<Country>();
-            while (rset.next())
-            {
+            while (rset.next()) {
                 Country country = new Country();
                 country.Name = rset.getString("NAME");
                 country.Population = rset.getInt("Population");
@@ -232,8 +227,7 @@ public class Query {
                 // Return query result if query is successful
                 // Check one is returned
                 ArrayList<Country> countries = new ArrayList<Country>();
-                while (rset.next())
-                {
+                while (rset.next()) {
                     Country country = new Country();
                     country.Name = rset.getString("NAME");
                     country.Continent = rset.getString("Continent");
@@ -302,8 +296,7 @@ public class Query {
             // Return query result if query is successful
             // Check one is returned
             ArrayList<City> cities = new ArrayList<City>();
-            while (rset.next())
-            {
+            while (rset.next()) {
                 City city = new City();
                 city.Name = rset.getString("NAME");
                 city.Population = rset.getInt("Population");
@@ -348,8 +341,7 @@ public class Query {
                 // Return query result if query is successful
                 // Check one is returned
                 ArrayList<City> cities = new ArrayList<City>();
-                while (rset.next())
-                {
+                while (rset.next()) {
                     City city = new City();
                     city.Name = rset.getString("NAME");
                     city.Continent = rset.getString("Continent");
@@ -375,8 +367,7 @@ public class Query {
                 // Return query result if query is successful
                 // Check one is returned
                 ArrayList<City> cities = new ArrayList<City>();
-                while (rset.next())
-                {
+                while (rset.next()) {
                     City city = new City();
                     city.Name = rset.getString("NAME");
                     city.Region = rset.getString("Region");
@@ -482,8 +473,7 @@ public class Query {
                 // Return query result if query is successful
                 // Check one is returned
                 ArrayList<Country> countries = new ArrayList<Country>();
-                while (rset.next())
-                {
+                while (rset.next()) {
                     Country country = new Country();
                     country.Continent = rset.getString("Continent");
                     country.Population = rset.getLong("Population");
@@ -514,8 +504,7 @@ public class Query {
                 // Return query result if query is successful
                 // Check one is returned
                 ArrayList<Country> countries = new ArrayList<Country>();
-                while (rset.next())
-                {
+                while (rset.next()) {
                     Country country = new Country();
                     country.Region = rset.getString("Region");
                     country.Population = rset.getLong("Population");
@@ -545,8 +534,7 @@ public class Query {
                 // Return query result if query is successful
                 // Check one is returned
                 ArrayList<Country> countries = new ArrayList<Country>();
-                while (rset.next())
-                {
+                while (rset.next()) {
                     Country country = new Country();
                     country.Name = rset.getString("NAME");
                     country.Population = rset.getLong("Population");
@@ -575,10 +563,8 @@ public class Query {
      * Gets list of Capital Cities by their population count
      * @return an ArrayList of Country objects
      */
-    public ArrayList<Country> getCapitalCitiesByPopulation()
-    {
-        try
-        {
+    public ArrayList<Country> getCapitalCitiesByPopulation() {
+        try {
             // Create an SQL statement
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
@@ -593,8 +579,7 @@ public class Query {
             // Return query result if query is sucessful
             // Check one is returned
             ArrayList<Country> cap_cities = new ArrayList<Country>();
-            while (rset.next())
-            {
+            while (rset.next()) {
                 Country cou = new Country();
                 cou.Name = rset.getString("NAME");
                 cou.Population = rset.getInt("Population");
@@ -603,8 +588,7 @@ public class Query {
             printCapitalCities(cap_cities, "World");
             return cap_cities;
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get Capital City details");
             return null;
@@ -638,8 +622,7 @@ public class Query {
             // Return query result if query is successful
             // Check one is returned
             ArrayList<Country> cap_cities = new ArrayList<Country>();
-            while (rset.next())
-            {
+            while (rset.next()) {
                 Country cou = new Country();
                 cou.Name = rset.getString("NAME");
                 cou.Population = rset.getInt("Population");
@@ -648,9 +631,7 @@ public class Query {
             }
             printCapitalCities(cap_cities, "Continent");
             return cap_cities;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get Capital City  details");
             return null;
@@ -685,8 +666,7 @@ public class Query {
             // Return query result if query is successful
             // Check one is returned
             ArrayList<Country> cap_cities = new ArrayList<Country>();
-            while (rset.next())
-            {
+            while (rset.next()) {
                 Country cou = new Country();
                 cou.Name = rset.getString("NAME");
                 cou.Population = rset.getInt("Population");
@@ -696,9 +676,7 @@ public class Query {
             }
             printCapitalCities(cap_cities, "Region");
             return cap_cities;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get Capital City  details");
             return null;
@@ -734,8 +712,7 @@ public class Query {
             // Return query result if query is sucessful
             // Check one is returned
             ArrayList<Country> cap_cities = new ArrayList<Country>();
-            while (rset.next())
-            {
+            while (rset.next()) {
                 Country cou = new Country();
                 cou.Name = rset.getString("NAME");
                 cou.Population = rset.getInt("Population");
@@ -743,9 +720,7 @@ public class Query {
             }
             printCapitalCities(cap_cities, "World");
             return cap_cities;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to execute query topNPopulatedCapitalCities");
             return null;
@@ -785,8 +760,7 @@ public class Query {
             // Return query result if query is successful
             // Check one is returned
             ArrayList<Country> cap_cities = new ArrayList<Country>();
-            while (rset.next())
-            {
+            while (rset.next()) {
                 Country cou = new Country();
                 cou.Name = rset.getString("NAME");
                 cou.Population = rset.getInt("Population");
@@ -795,9 +769,7 @@ public class Query {
             }
             printCapitalCities(cap_cities, "Continent");
             return cap_cities;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to execute query topNPopulatedCapitalCities");
             return null;
@@ -850,9 +822,7 @@ public class Query {
             }
             printCapitalCities(cap_cities, "Region");
             return cap_cities;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to execute query topNPopulatedCapitalCities");
             return null;
@@ -885,11 +855,8 @@ public class Query {
      * Gets the population of the world
      * @return a Country object
      */
-    public Country getPopulationOf()
-    {
+    public Country getPopulationOf() {
         try {
-
-
             // Create an SQL statement
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
@@ -916,9 +883,7 @@ public class Query {
                 return null;
             }
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to execute query getPopulationOf with 0 parameters");
             return null;
@@ -935,8 +900,6 @@ public class Query {
         }
 
         try {
-
-
             // Create an SQL statement
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
@@ -964,9 +927,7 @@ public class Query {
                 return null;
             }
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to execute query getPopulationOf with 1 parameter");
             return null;
@@ -977,8 +938,7 @@ public class Query {
      * Gets the population of a Region
      * @return a Country object
      */
-    public Country getPopulationOf(String Continent, String Region)
-    {
+    public Country getPopulationOf(String Continent, String Region) {
         try {
 
 
@@ -1008,10 +968,7 @@ public class Query {
             } else {
                 return null;
             }
-
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to execute query getPopulationOf with 2 parameters");
             return null;
@@ -1023,11 +980,8 @@ public class Query {
      * Gets the population of a Country
      * @return a Country object
      */
-    public Country getPopulationOf(String Continent, String Region, String aCountry)
-    {
+    public Country getPopulationOf(String Continent, String Region, String aCountry) {
         try {
-
-
             // Create an SQL statement
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
@@ -1054,10 +1008,7 @@ public class Query {
             } else {
                 return null;
             }
-
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to execute query getPopulationOf with 3 parameters");
             return null;
@@ -1068,11 +1019,8 @@ public class Query {
      * Gets the population of a District
      * @return a Country object
      */
-    public Country getPopulationOf(String Continent, String Region, String aCountry, String District)
-    {
+    public Country getPopulationOf(String Continent, String Region, String aCountry, String District) {
         try {
-
-
             // Create an SQL statement
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
@@ -1100,10 +1048,7 @@ public class Query {
             } else {
                 return null;
             }
-
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to execute query getPopulationOf with 4 parameters");
             return null;
@@ -1114,11 +1059,8 @@ public class Query {
      * Gets the population of a City
      * @return a Country object
      */
-    public Country getPopulationOf(String Continent, String Region, String aCountry, String District, String City)
-    {
+    public Country getPopulationOf(String Continent, String Region, String aCountry, String District, String City) {
         try {
-
-
             // Create an SQL statement
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
@@ -1147,9 +1089,7 @@ public class Query {
                 return null;
             }
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to execute query getPopulationOf with 5 parameters");
             return null;
@@ -1341,6 +1281,7 @@ public class Query {
         if (code == null) {
             throw new IllegalArgumentException("code must be specified");
         }
+
         try {
             // Create an SQL statement
             Statement stmt = connection.createStatement();
@@ -1391,10 +1332,8 @@ public class Query {
      * Gets list of top 5 languages based on numbers of speakers
      * @return an ArrayList of Language objects
      */
-    public ArrayList<Language> getLanguagePopularity()
-    {
-        try
-        {
+    public ArrayList<Language> getLanguagePopularity() {
+        try {
             // Create an SQL statement
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
@@ -1421,9 +1360,7 @@ public class Query {
             }
                 printLangRank(languages);
                 return languages;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get Population details");
             return null;

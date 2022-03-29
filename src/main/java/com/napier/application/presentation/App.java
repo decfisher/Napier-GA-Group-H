@@ -1,4 +1,6 @@
-package com.napier.sem;
+package com.napier.application.presentation;
+
+import com.napier.application.logic.Query;
 
 import java.sql.*;
 
@@ -6,7 +8,6 @@ import java.sql.*;
  * Runs the database application
  */
 public class App {
-
     /**
      * Connection to MySQL database.
      */
@@ -19,54 +20,50 @@ public class App {
         } else {
             a.connect(args[0], Integer.parseInt(args[1]));
         }
-
-        //Report report = new Report(a.connection);
-        //report.capitalCityReport();
-
         // Create query object to initialise queries
         Query query = new Query(a.connection);
-        //query.getLanguagePopularity();
         query.getLanguagePopularity();
 
         a.disconnect(); // Disconnect from database
     }
 
     /**
+     * Gets connection status for test classes to utilise
+     * @return Connection
+     */
+    public Connection getConnection() {
+        return connection;
+    }
+
+    /**
      * Connect to the MySQL database.
      */
-    public void connect(String location, int delay)
-    {
-        try
-        {
+    public void connect(String location, int delay) {
+        try {
             // Load Database driver
             Class.forName("com.mysql.cj.jdbc.Driver");
         }
-        catch (ClassNotFoundException e)
-        {
+        catch (ClassNotFoundException e) {
             System.out.println("Could not load SQL driver");
             System.exit(-1);
         }
 
         int retries = 10;
-        for (int i = 0; i < retries; ++i)
-        {
+        for (int i = 0; i < retries; ++i) {
             System.out.println("Connecting to database...");
-            try
-            {
+            try {
                 // Wait a bit for db to start
-                Thread.sleep(30000);
+                Thread.sleep(delay);
                 // Connect to database
                 connection = DriverManager.getConnection("jdbc:mysql://" + location + "/world?allowPublicKeyRetrieval=true&useSSL=false", "root", "example");
                 System.out.println("Successfully connected");
                 break;
             }
-            catch (SQLException sqle)
-            {
-                System.out.println("Failed to connect to database attempt " + Integer.toString(i));
-                System.out.println(sqle.getMessage());
+            catch (SQLException e) {
+                System.out.println("Failed to connect to database attempt " + i);
+                System.out.println(e.getMessage());
             }
-            catch (InterruptedException ie)
-            {
+            catch (InterruptedException e) {
                 System.out.println("Thread interrupted? Should not happen.");
             }
         }
@@ -75,23 +72,15 @@ public class App {
     /**
      * Disconnect from the MySQL database.
      */
-    public void disconnect()
-    {
-        if (connection != null)
-        {
-            try
-            {
-                // Close connection
+    public void disconnect() {
+        if (connection != null) {
+            try {
                 connection.close();
             }
-            catch (Exception e)
-            {
+            catch (Exception e) {
                 System.out.println("Error closing connection to database");
             }
         }
     }
 
-    public Connection getConnection() {
-        return connection;
-    }
 }

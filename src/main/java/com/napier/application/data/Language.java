@@ -1,4 +1,4 @@
-package com.napier.sem;
+package com.napier.application.data;
 
 public class Language {
     public String Language;

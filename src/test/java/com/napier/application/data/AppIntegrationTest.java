@@ -1,8 +1,10 @@
-package com.napier.sem;
+package com.napier.application.data;
 
+import com.napier.application.logic.Query;
+import com.napier.application.logic.Report;
+import com.napier.application.presentation.App;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 
 import java.util.ArrayList;
 
