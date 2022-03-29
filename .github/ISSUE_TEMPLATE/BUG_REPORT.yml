@@ -1,0 +1,58 @@
+name: Bug Report
+description: Create a bug report to highlight any defects in production code - this will make
+  the application better for everyone!
+title: "[BUG]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to help make this application better!
+  - type: input
+    id: contact
+    attributes:
+      label: Contact Details
+      description: What email address is best to get in touch should we require more information?
+      placeholder: email@example.com
+    validations:
+      required: false
+  - type: textarea
+    id: user-description
+    attributes:
+      label: Describe the bug
+      description: Explain in as much detail as possible to help us understand the severity of this bug
+      placeholder: Describe the bug here!
+    validations:
+      required: true
+  - type: dropdown
+    id: user-version
+    attributes:
+      label: Version
+      description: Tell us what version of our application you were running
+      options:
+        - 0.1-alpha-1 (Pre-release v1.0)
+        - 0.1-alpha-2 (Pre-release v2.0)
+        - 0.1-alpha-3 (Pre-release v3.0)
+        - 0.1-alpha-4 (Pre-release v4.0)
+        - 0.1-alpha-5 (Pre-release v5.0)
+    validations:
+      required: true
+  - type: textarea
+    id: user-extra
+    attributes:
+      label: Any additional information?
+      description: Let us know anything else you wish to tell us about the bug such as how to recreate it or important points surrounding the effects of the bug
+      placeholder: Add extra information here!
+    validations:
+      required: false
+  - type: checkboxes
+    id: user-acknowledge
+    attributes:
+      label: Code of Conduct Agreement
+      description: Please confirm you have read and understood this repository's code of conduct before submitting this bug report
+      options:
+        - label: I have read and acknowledged the [Code of Conduct](https://github.com/decfisher/Napier-GA-Group-H/blob/master/CODE_OF_CONDUCT.md) for this project
+          required: true
+  - type: markdown
+    attributes:
+      value: "Thank you for helping us make this app better for everyone!"
