@@ -1,20 +1,32 @@
-package com.napier.sem;
+package com.napier.application.logic;
+
+import com.napier.application.data.City;
+import com.napier.application.data.Country;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+/**
+ * Generates reports pulled from database
+ */
 public class Report {
-
+    /**
+     * Connection to MySQL database
+     */
     private Connection connection;
 
     public Report(Connection connection) { this.connection = connection; }
 
+    /**
+     * Generates country report for all countries in database
+     * @return an ArrayList of Country
+     */
     public ArrayList<Country> countryReport() {
         try {
             // Create an SQL statement
-            Statement stmt = connection.createStatement();
+            Statement statement = connection.createStatement();
             // Create string for SQL statement
             String strSelect =
                     "SELECT Code, NAME, Continent, Region, Population, Capital "
@@ -22,32 +34,32 @@ public class Report {
                             + "ORDER BY NAME ASC ";
 
             // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Return query result if query is successful
-            // Check one is returned
+            ResultSet resultSet = statement.executeQuery(strSelect);
             ArrayList<Country> countries = new ArrayList<Country>();
-            while (rset.next())
-            {
+
+            while (resultSet.next()) {
                 Country country = new Country();
-                country.Code = rset.getString("Code");
-                country.Name = rset.getString("NAME");
-                country.Continent = rset.getString("Continent");
-                country.Region = rset.getString("Region");
-                country.Population = rset.getInt("Population");
-                country.Capital = rset.getInt("Capital");
+                country.Code = resultSet.getString("Code");
+                country.Name = resultSet.getString("NAME");
+                country.Continent = resultSet.getString("Continent");
+                country.Region = resultSet.getString("Region");
+                country.Population = resultSet.getInt("Population");
+                country.Capital = resultSet.getInt("Capital");
                 countries.add(country);
             }
             // Print header
             System.out.println("COUNTRY REPORT");
-            System.out.println(String.format("%-20s %20s %20s %20s %20s %20s ", "Code", "Name", "Continent", "Region", "Population", "Capital"));
+            System.out.println(String.format("%-20s %20s %20s %20s %20s %20s ",
+                                             "Code", "Name", "Continent", "Region", "Population", "Capital"));
             // Loop over all employees in the list
             for (Country country : countries) {
-                String s =
-                        String.format("%-20s %20s %20s %20s %20s %20s ",
-                                country.Code, country.Name, country.Continent, country.Region, country.Population, country.Capital);
-                System.out.println(s);
+                String string = String.format("%-20s %20s %20s %20s %20s %20s ",
+                                country.Code, country.Name, country.Continent, country.Region,
+                                country.Population, country.Capital);
+                System.out.println(string);
             }
             return countries;
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get country report");
@@ -58,7 +70,7 @@ public class Report {
     public ArrayList<City> cityReport() {
         try {
             // Create an SQL statement
-            Statement stmt = connection.createStatement();
+            Statement statement = connection.createStatement();
             // Create string for SQL statement
             String strSelect =
                     "SELECT ci.Name, co.Name AS Country, ci.District, ci.Population "
@@ -67,17 +79,15 @@ public class Report {
                             + "ORDER BY ci.Name ASC ";
 
             // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Return query result if query is successful
-            // Check one is returned
+            ResultSet resultSet = statement.executeQuery(strSelect);
             ArrayList<City> cities = new ArrayList<City>();
-            while (rset.next())
-            {
+
+            while (resultSet.next()) {
                 City city = new City();
-                city.Name = rset.getString("NAME");
-                city.Country = rset.getString("Country");
-                city.District = rset.getString("District");
-                city.Population = rset.getInt("Population");
+                city.Name = resultSet.getString("NAME");
+                city.Country = resultSet.getString("Country");
+                city.District = resultSet.getString("District");
+                city.Population = resultSet.getInt("Population");
                 cities.add(city);
             }
             // Print header
@@ -85,12 +95,12 @@ public class Report {
             System.out.println(String.format("%-20s %20s %20s %20s ", "Name", "Country", "District", "Population"));
             // Loop over all employees in the list
             for (City city : cities) {
-                String s =
-                        String.format("%-20s %20s %20s %20s ",
+                String string = String.format("%-20s %20s %20s %20s ",
                                 city.Name, city.Country, city.District, city.Population);
-                System.out.println(s);
+                System.out.println(string);
             }
             return cities;
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get city report");
@@ -101,7 +111,7 @@ public class Report {
     public ArrayList<City> capitalCityReport() {
         try {
             // Create an SQL statement
-            Statement stmt = connection.createStatement();
+            Statement statement = connection.createStatement();
             // Create string for SQL statement
             String strSelect =
                     "SELECT ci.Name, co.Name AS Country, ci.Population "
@@ -110,16 +120,14 @@ public class Report {
                             + "ORDER BY ci.Name ASC ";
 
             // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Return query result if query is successful
-            // Check one is returned
+            ResultSet resultSet = statement.executeQuery(strSelect);
             ArrayList<City> cities = new ArrayList<City>();
-            while (rset.next())
-            {
+
+            while (resultSet.next()) {
                 City city = new City();
-                city.Name = rset.getString("NAME");
-                city.Country = rset.getString("Country");
-                city.Population = rset.getInt("Population");
+                city.Name = resultSet.getString("NAME");
+                city.Country = resultSet.getString("Country");
+                city.Population = resultSet.getInt("Population");
                 cities.add(city);
             }
             // Print header
@@ -127,12 +135,12 @@ public class Report {
             System.out.println(String.format("%-20s %20s %20s ", "Name", "Country", "Population"));
             // Loop over all employees in the list
             for (City city : cities) {
-                String s =
-                        String.format("%-20s %20s %20s ",
+                String string = String.format("%-20s %20s %20s ",
                                 city.Name, city.Country, city.Population);
-                System.out.println(s);
+                System.out.println(string);
             }
             return cities;
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get city report");
