@@ -431,7 +431,6 @@ public class Query {
                 printCities(cities, "District");
                 return cities;
 
-
             } else {
                 throw new Exception();
             }
@@ -442,11 +441,312 @@ public class Query {
         }
     }
 
+    public ArrayList<Country> populationInAndOutOfCity(String option) {
+
+        if (option == null) {
+            throw new IllegalArgumentException("Option for this query must be specified");
+        }
+
+        try {
+            if (option.equals("Continent")) {
+                // Create an SQL statement
+                Statement stmt = connection.createStatement();
+                // Create string for SQL statement
+                String strSelect =
+                        "SELECT co.Continent AS Continent, SUM(co.Population) AS Total_Pop, " +
+                                "SUM(ci.Population) AS In_city, " +
+                                "SUM(co.Population)  - SUM(ci.Population) AS Out_city " +
+                                "FROM country co " +
+                                "JOIN (SELECT " +
+                                "ci.countrycode " +
+                                ",SUM(ci.population) AS Population " +
+                                "FROM city ci GROUP BY 1) ci ON ci.countrycode = co.code " +
+                                "GROUP BY Continent";
+                // Execute SQL statement
+                ResultSet rset = stmt.executeQuery(strSelect);
+                // Return query result if query is successful
+                // Check one is returned
+                ArrayList<Country> countries = new ArrayList<Country>();
+                while (rset.next()) {
+                    Country country = new Country();
+                    country.Continent = rset.getString("Continent");
+                    country.Population = rset.getLong("Total_Pop");
+                    country.InCityPop = rset.getLong("In_city");
+                    country.OutCityPop = rset.getLong("Out_city");
+                    countries.add(country);
+                }
+                System.out.println("Population In and Out of Cities By Continent");
+                System.out.println(String.format("%-10s %25s %25s %25s ",
+                        "Continent", "Total Population", "Population In Cities", "Population Out of Cities"));
+                // Loop over all employees in the list
+                for (Country country : countries) {
+                    String string = String.format("%-10s %25s %25s %25s ",
+                            country.Continent, country.Population, country.InCityPop, country.OutCityPop);
+                    System.out.println(string);
+                }
+                return countries;
+            } else if (option.equals("Region")) {
+                // Create an SQL statement
+                Statement stmt = connection.createStatement();
+                // Create string for SQL statement
+                String strSelect =
+                        "SELECT co.Region AS Region, SUM(co.Population) AS Total_Pop, " +
+                                "SUM(ci.Population) AS In_city, " +
+                                "SUM(co.Population)  - SUM(ci.Population) AS Out_city " +
+                                "FROM country co " +
+                                "JOIN (SELECT " +
+                                "ci.countrycode " +
+                                ",SUM(ci.population) AS Population " +
+                                "FROM city ci GROUP BY 1) ci ON ci.countrycode = co.code " +
+                                "GROUP BY Region";
+                // Execute SQL statement
+                ResultSet rset = stmt.executeQuery(strSelect);
+                // Return query result if query is successful
+                // Check one is returned
+                ArrayList<Country> countries = new ArrayList<Country>();
+                while (rset.next()) {
+                    Country country = new Country();
+                    country.Region = rset.getString("Region");
+                    country.Population = rset.getLong("Total_Pop");
+                    country.InCityPop = rset.getLong("In_city");
+                    country.OutCityPop = rset.getLong("Out_city");
+                    countries.add(country);
+                }
+                System.out.println("Population In and Out of Cities By Region");
+                System.out.println(String.format("%-10s %25s %25s %25s ",
+                        "Region", "Total Population", "Population In Cities", "Population Out of Cities"));
+                // Loop over all employees in the list
+                for (Country country : countries) {
+                    String string = String.format("%-10s %25s %25s %25s ",
+                            country.Region, country.Population, country.InCityPop, country.OutCityPop);
+                    System.out.println(string);
+                }
+                return countries;
+            } else if (option.equals("Country")) {
+                // Create an SQL statement
+                Statement stmt = connection.createStatement();
+                // Create string for SQL statement
+                String strSelect =
+                        "SELECT co.Name AS Name, SUM(co.Population) AS Total_Pop, " +
+                                "SUM(ci.Population) AS In_city, " +
+                                "SUM(co.Population)  - SUM(ci.Population) AS Out_city " +
+                                "FROM country co " +
+                                "JOIN (SELECT " +
+                                "ci.countrycode " +
+                                ",SUM(ci.population) AS Population " +
+                                "FROM city ci GROUP BY 1) ci ON ci.countrycode = co.code " +
+                                "GROUP BY Name";
+                // Execute SQL statement
+                ResultSet rset = stmt.executeQuery(strSelect);
+                // Return query result if query is successful
+                // Check one is returned
+                ArrayList<Country> countries = new ArrayList<Country>();
+                while (rset.next()) {
+                    Country country = new Country();
+                    country.Name = rset.getString("Name");
+                    country.Population = rset.getLong("Total_Pop");
+                    country.InCityPop = rset.getLong("In_city");
+                    country.OutCityPop = rset.getLong("Out_city");
+                    countries.add(country);
+                }
+                System.out.println("Population In and Out of Cities By Country");
+                System.out.println(String.format("%-10s %25s %25s %25s ",
+                        "Country", "Total Population", "Population In Cities", "Population Out of Cities"));
+                // Loop over all employees in the list
+                for (Country country : countries) {
+                    String string = String.format("%-10s %25s %25s %25s ",
+                            country.Name, country.Population, country.InCityPop, country.OutCityPop);
+                    System.out.println(string);
+                }
+                return countries;
+            } else {
+                throw new IllegalArgumentException("Invalid option specified");
+            }
+
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return null;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to execute populationInAndOutOfCities");
+            return null;
+        }
+    }
+
     /**
      * Top N City Population
      */
 
-    //MISSING
+    public ArrayList<City> getTopNCityPopulation(int n) {
+
+        if (n < 1) {
+            throw new IllegalArgumentException("N must be greater than 0");
+        }
+
+        try {
+            // Create an SQL statement
+            Statement statement = connection.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT NAME, population "
+                            + "FROM city c "
+                            + " ORDER BY population DESC"
+                            + " LIMIT " + n;
+
+            // Execute SQL statement
+            ResultSet resultSet = statement.executeQuery(strSelect);
+            // Return query result if query is successful
+            // Check one is returned
+            ArrayList<City> cities = new ArrayList<City>();
+            while (resultSet.next()) {
+                City city = new City();
+                city.Name = resultSet.getString("NAME");
+                city.Population = resultSet.getInt("population");
+                cities.add(city);
+            }
+            System.out.println("Top " + n + " Most Populated Countries in the World");
+            printCities(cities, "World");
+            return cities;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to execute query");
+            return null;
+        }
+    }
+
+    public ArrayList<City> getTopNCityPopulation(int n, String option, String name) {
+
+        if (n < 1) {
+            throw new IllegalArgumentException("N must be greater than 0");
+        }
+
+        if (option == null) {
+            throw new IllegalArgumentException("Option must be specified for this query");
+        }
+
+        try {
+
+            if (option.equals("Continent")) {
+                // Create an SQL statement
+                Statement statement = connection.createStatement();
+                // Create string for SQL statement
+                String strSelect =
+                        "SELECT ci.Name AS Name, co.Continent AS Continent, ci.Population AS Population "
+                                + "FROM city ci "
+                                + "LEFT JOIN country co ON ci.CountryCode = co.Code "
+                                + "WHERE Continent = '" + name + "' "
+                                + "ORDER BY Population DESC "
+                                + " LIMIT " + n + ";";
+
+                // Execute SQL statement
+                ResultSet resultSet = statement.executeQuery(strSelect);
+                // Return query result if query is successful
+                // Check one is returned
+                ArrayList<City> cities = new ArrayList<City>();
+                while (resultSet.next()) {
+                    City city = new City();
+                    city.Name = resultSet.getString("NAME");
+                    city.Population = resultSet.getInt("population");
+                    cities.add(city);
+                }
+                System.out.println("Top " + n + " Most Populated Countries in " + name);
+                printCityPopulation(cities);
+                return cities;
+
+            } else if (option.equals("Region")) {
+                // Create an SQL statement
+                Statement statement = connection.createStatement();
+                // Create string for SQL statement
+                String strSelect =
+                        "SELECT ci.Name AS Name, co.Region AS Region, ci.Population AS Population "
+                                + "FROM city ci "
+                                + "LEFT JOIN country co ON ci.CountryCode = co.Code "
+                                + "WHERE Region = '" + name + "' "
+                                + "ORDER BY Population DESC "
+                                + " LIMIT " + n + ";";
+
+                // Execute SQL statement
+                ResultSet resultSet = statement.executeQuery(strSelect);
+                // Return query result if query is successful
+                // Check one is returned
+                ArrayList<City> cities = new ArrayList<City>();
+                while (resultSet.next()) {
+                    City city = new City();
+                    city.Name = resultSet.getString("NAME");
+                    city.Population = resultSet.getInt("population");
+                    cities.add(city);
+                }
+                System.out.println("Top " + n + " Most Populated Countries in " + name);
+                printCityPopulation(cities);
+                return cities;
+
+            } else if (option.equals("Country")) {
+                // Create an SQL statement
+                Statement statement = connection.createStatement();
+                // Create string for SQL statement
+                String strSelect =
+                        "SELECT ci.Name AS Name, co.Name AS Country, ci.Population AS Population "
+                                + "FROM city ci "
+                                + "LEFT JOIN country co ON ci.CountryCode = co.Code "
+                                + "WHERE co.Name = '" + name + "' "
+                                + "ORDER BY Population DESC "
+                                + " LIMIT " + n + ";";
+
+                // Execute SQL statement
+                ResultSet resultSet = statement.executeQuery(strSelect);
+                // Return query result if query is successful
+                // Check one is returned
+                ArrayList<City> cities = new ArrayList<City>();
+                while (resultSet.next()) {
+                    City city = new City();
+                    city.Name = resultSet.getString("NAME");
+                    city.Population = resultSet.getInt("population");
+                    cities.add(city);
+                }
+                System.out.println("Top " + n + " Most Populated Countries in " + name);
+                printCityPopulation(cities);
+                return cities;
+
+            } else if (option.equals("District")) {
+                // Create an SQL statement
+                Statement statement = connection.createStatement();
+                // Create string for SQL statement
+                String strSelect =
+                        "SELECT NAME, District, population "
+                                + "FROM city c "
+                                + "WHERE District = '" + name + "' "
+                                + "ORDER BY population DESC "
+                                + "LIMIT " + n;
+
+                // Execute SQL statement
+                ResultSet resultSet = statement.executeQuery(strSelect);
+                // Return query result if query is successful
+                // Check one is returned
+                ArrayList<City> cities = new ArrayList<City>();
+                while (resultSet.next()) {
+                    City city = new City();
+                    city.Name = resultSet.getString("NAME");
+                    city.Population = resultSet.getInt("population");
+                    cities.add(city);
+                }
+                System.out.println("Top " + n + " Most Populated Countries in " + name);
+                printCityPopulation(cities);
+                return cities;
+
+            } else {
+                throw new IllegalArgumentException("Option specified is invalid");
+            }
+
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return null;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to execute query");
+            return null;
+        }
+    }
 
     /**
      * Gets the total population of a continent/region/country
@@ -941,7 +1241,6 @@ public class Query {
     public Country getPopulationOf(String Continent, String Region) {
         try {
 
-
             // Create an SQL statement
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
@@ -974,7 +1273,6 @@ public class Query {
             return null;
         }
     }
-
 
     /**
      * Gets the population of a Country
@@ -1199,6 +1497,17 @@ public class Query {
                                 cit.Name, cit.Continent, cit.Region, cit.Country, cit.District, cit.Population);
                 System.out.println(cit_string);
             }
+        }
+    }
+
+    public static void printCityPopulation(ArrayList<City> cities) {
+        // Print header
+        System.out.println(String.format("%-10s %10s ", "City", "Population"));
+        // Loop over all cities in the list
+        for (City city : cities) {
+            String cit_string = String.format("%-10s %10s ",
+                                            city.Name, city.Population);
+            System.out.println(cit_string);
         }
     }
 

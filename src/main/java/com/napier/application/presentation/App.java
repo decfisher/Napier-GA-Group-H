@@ -1,6 +1,7 @@
 package com.napier.application.presentation;
 
 import com.napier.application.logic.Query;
+import com.napier.application.logic.Report;
 
 import java.sql.*;
 
@@ -21,14 +22,16 @@ public class App {
             a.connect(args[0], Integer.parseInt(args[1]));
         }
         // Create query object to initialise queries
-        Query query = new Query(a.connection);
-        query.getLanguagePopularity();
+        Query query = new Query(a.getConnection());
+        query.getTopNCityPopulation(5, "Country", "Mexico");
+//        Report report = new Report(a.getConnection());
+//        report.populationReport("Country");
 
         a.disconnect(); // Disconnect from database
     }
 
     /**
-     * Gets connection status for test classes to utilise
+     * Gets connection status for outside classes to utilise
      * @return Connection
      */
     public Connection getConnection() {
