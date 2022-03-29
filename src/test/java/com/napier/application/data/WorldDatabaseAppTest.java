@@ -1,5 +1,8 @@
-package com.napier.sem;
+package com.napier.application.data;
 
+import com.napier.application.logic.Query;
+import com.napier.application.logic.Report;
+import com.napier.application.presentation.App;
 import org.junit.jupiter.api.*;
 
 class WorldDatabaseAppTest {
