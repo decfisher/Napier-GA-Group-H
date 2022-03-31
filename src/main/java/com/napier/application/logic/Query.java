@@ -4,10 +4,6 @@ import com.napier.application.data.City;
 import com.napier.application.data.Country;
 import com.napier.application.data.Language;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -18,6 +14,7 @@ import java.util.ArrayList;
  */
 public class Query {
 
+    private Reporter reporter = new Reporter();
     private Connection connection;
 
     public Query(Connection connection) {
@@ -608,7 +605,8 @@ public class Query {
                 city.Population = resultSet.getInt("population");
                 cities.add(city);
             }
-            outputCityPopulation(cities, "Top" + n + "MostPopulatedCitiesInTheWorld.md");
+            Reporter reporter = new Reporter();
+            reporter.outputCityPopulation(cities, "Top" + n + "MostPopulatedCitiesInTheWorld.md");
             return cities;
 
         } catch (Exception e) {
@@ -653,7 +651,8 @@ public class Query {
                     city.Population = resultSet.getInt("population");
                     cities.add(city);
                 }
-                outputCityPopulation(cities, "Top" + n + "MostPopulatedCitiesIn" + name + ".md");
+                String outName = reporter.concatString(name);
+                reporter.outputCityPopulation(cities, "Top" + n + "MostPopulatedCitiesIn" + outName + ".md");
                 return cities;
 
             } else if (option.equals("Region")) {
@@ -679,7 +678,8 @@ public class Query {
                     city.Population = resultSet.getInt("population");
                     cities.add(city);
                 }
-                outputCityPopulation(cities, "Top" + n + "MostPopulatedCitiesIn" + name + ".md");
+                String outName = reporter.concatString(name);
+                reporter.outputCityPopulation(cities, "Top" + n + "MostPopulatedCitiesIn" + outName + ".md");
                 return cities;
 
             } else if (option.equals("Country")) {
@@ -705,7 +705,8 @@ public class Query {
                     city.Population = resultSet.getInt("population");
                     cities.add(city);
                 }
-                outputCityPopulation(cities, "Top" + n + "MostPopulatedCitiesIn" + name + ".md");
+                String outName = reporter.concatString(name);
+                reporter.outputCityPopulation(cities, "Top" + n + "MostPopulatedCitiesIn" + outName + ".md");
                 return cities;
 
             } else if (option.equals("District")) {
@@ -730,7 +731,8 @@ public class Query {
                     city.Population = resultSet.getInt("population");
                     cities.add(city);
                 }
-                outputCityPopulation(cities, "Top" + n + "MostPopulatedCitiesIn" + name + ".md");
+                String outName = reporter.concatString(name);
+                reporter.outputCityPopulation(cities, "Top" + n + "MostPopulatedCitiesIn" + outName + ".md");
                 return cities;
 
             } else {
@@ -1507,39 +1509,6 @@ public class Query {
             String cit_string = String.format("%-10s %10s ",
                                             city.Name, city.Population);
             System.out.println(cit_string);
-        }
-    }
-
-    public static void outputCityPopulation(ArrayList<City> cities, String fileName) {
-        // Check array is not null
-        if (cities.isEmpty()) {
-            System.out.println("No cities!");
-            return;
-        }
-
-        StringBuilder sb = new StringBuilder();
-        // Print header
-        sb.append("| City | Population |\r\n");
-        sb.append("| ---- | ---------- |\r\n");
-
-        // Loop over all cities in the list
-        for (City city : cities) {
-            if (city == null) {
-                continue;
-            }
-            sb.append("| " + city.Name + " | " + city.Population + " |\r\n");
-        }
-
-        // Generate report directory and markdown file
-        try {
-            new File("./reports/").mkdir();
-            BufferedWriter writer = new BufferedWriter(new FileWriter("./reports/" + fileName));
-            writer.write(sb.toString());
-            writer.close();
-            System.out.println("Report \"" + fileName + "\" generated successfully!");
-        } catch (IOException e) {
-            System.out.println("Could not generate report \"" + fileName + "\"!");
-            System.out.println(e.getMessage());
         }
     }
 
