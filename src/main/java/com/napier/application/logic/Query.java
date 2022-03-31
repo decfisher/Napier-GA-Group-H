@@ -1527,13 +1527,16 @@ public class Query {
             sb.append("| " + city.Name + " | " + city.Population + " |\r\n");
         }
 
+        // Generate report directory and markdown file
         try {
             new File("./reports/").mkdir();
-            BufferedWriter writer = new BufferedWriter(new FileWriter(new File("./reports/" + fileName)));
+            BufferedWriter writer = new BufferedWriter(new FileWriter("./reports/" + fileName));
             writer.write(sb.toString());
             writer.close();
+            System.out.println("Report \"" + fileName + "\" generated successfully!");
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Could not generate report \"" + fileName + "\"!");
+            System.out.println(e.getMessage());
         }
     }
 

@@ -1,5 +1,3 @@
-package com.napier.application.data;
-
 import com.napier.application.logic.Query;
 import com.napier.application.logic.Report;
 import com.napier.application.presentation.App;
