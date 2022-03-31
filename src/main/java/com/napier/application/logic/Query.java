@@ -50,7 +50,7 @@ public class Query {
                 cou.Population = rset.getInt("Population");
                 countries.add(cou);
             }
-            printCountries(countries, "World");
+            reporter.outputCountries(countries, "World", "AllCountryPopulation.md");
             return countries;
         }
         catch (Exception e) {
@@ -93,7 +93,7 @@ public class Query {
                 cou.Continent = rset.getString("Continent");
                 countries.add(cou);
             }
-            printCountries(countries, "Continent");
+            reporter.outputCountries(countries, "Continent", "AllCountryPopulationIn" + reporter.concatString(Continent) + ".md");
             return countries;
         }
         catch (Exception e) {
@@ -138,7 +138,7 @@ public class Query {
                 cou.Region = rset.getString("Region");
                 countries.add(cou);
             }
-            printCountries(countries, "Region");
+            reporter.outputCountries(countries, "Region", "AllCountryPopulationIn" + reporter.concatString(Region) + ".md");
             return countries;
         }
         catch (Exception e) {
@@ -605,7 +605,6 @@ public class Query {
                 city.Population = resultSet.getInt("population");
                 cities.add(city);
             }
-            Reporter reporter = new Reporter();
             reporter.outputCityPopulation(cities, "Top" + n + "MostPopulatedCitiesInTheWorld.md");
             return cities;
 
@@ -651,8 +650,7 @@ public class Query {
                     city.Population = resultSet.getInt("population");
                     cities.add(city);
                 }
-                String outName = reporter.concatString(name);
-                reporter.outputCityPopulation(cities, "Top" + n + "MostPopulatedCitiesIn" + outName + ".md");
+                reporter.outputCityPopulation(cities, "Top" + n + "MostPopulatedCitiesIn" + reporter.concatString(name) + ".md");
                 return cities;
 
             } else if (option.equals("Region")) {
@@ -678,8 +676,7 @@ public class Query {
                     city.Population = resultSet.getInt("population");
                     cities.add(city);
                 }
-                String outName = reporter.concatString(name);
-                reporter.outputCityPopulation(cities, "Top" + n + "MostPopulatedCitiesIn" + outName + ".md");
+                reporter.outputCityPopulation(cities, "Top" + n + "MostPopulatedCitiesIn" + reporter.concatString(name) + ".md");
                 return cities;
 
             } else if (option.equals("Country")) {
@@ -705,8 +702,7 @@ public class Query {
                     city.Population = resultSet.getInt("population");
                     cities.add(city);
                 }
-                String outName = reporter.concatString(name);
-                reporter.outputCityPopulation(cities, "Top" + n + "MostPopulatedCitiesIn" + outName + ".md");
+                reporter.outputCityPopulation(cities, "Top" + n + "MostPopulatedCitiesIn" + reporter.concatString(name) + ".md");
                 return cities;
 
             } else if (option.equals("District")) {
@@ -731,8 +727,7 @@ public class Query {
                     city.Population = resultSet.getInt("population");
                     cities.add(city);
                 }
-                String outName = reporter.concatString(name);
-                reporter.outputCityPopulation(cities, "Top" + n + "MostPopulatedCitiesIn" + outName + ".md");
+                reporter.outputCityPopulation(cities, "Top" + n + "MostPopulatedCitiesIn" + reporter.concatString(name) + ".md");
                 return cities;
 
             } else {
