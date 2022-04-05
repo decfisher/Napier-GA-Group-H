@@ -436,8 +436,6 @@ public class Query {
         }
     }
 
-    // Still needs reporting function
-
     public ArrayList<Country> populationInAndOutOfCity(String option) {
 
         if (option == null) {
