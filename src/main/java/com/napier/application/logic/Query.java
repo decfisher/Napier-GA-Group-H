@@ -1109,7 +1109,6 @@ public class Query {
      * Population Queries
      */
 
-    // NEEDS REPORTER FUNCTION!!!
     /**
      * Gets the population of the world
      * @return a Country object
@@ -1128,28 +1127,22 @@ public class Query {
             // Return query result if query is successful
             // Check one is returned
             if (rset.next()) {
-                Country cou = new Country();
-                cou.Name = "World";
-                cou.Population = rset.getLong("Population");
-                System.out.println("The Population of the world is " + cou.Population);
-                // Print Header
-                System.out.println(String.format("%-10s %10s ", "Name", "Population"));
-                String cou_string =
-                        String.format("%-10s %10s ", cou.Name, cou.Population);
-                System.out.println(cou_string);
-                return cou;
+                Country country = new Country();
+                country.Name = "World";
+                country.Population = rset.getLong("Population");
+                reporter.outputPopulation(country, "World", "PopulationOfTheWorld.md");
+                return country;
             } else {
                 return null;
             }
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Failed to execute query getPopulationOf with 0 parameters");
+            System.out.println("Failed to execute query getPopulationOfWorld");
             return null;
         }
     }
 
-    // NEEDS REPORTER FUNCTION!!!
     /**
      * Gets the population of a Continent
      * @return a Country object
@@ -1174,28 +1167,22 @@ public class Query {
             // Return query result if query is successful
             // Check one is returned
             if (rset.next()) {
-                Country cou = new Country();
-                cou.Name = Continent;
-                cou.Population = rset.getLong("Population");
-                System.out.println("The Population of " + Continent + " is " + cou.Population);
-                // Print Header
-                System.out.println(String.format("%-10s %10s ", "Name", "Population"));
-                String cou_string =
-                        String.format("%-10s %10s ", cou.Name, cou.Population);
-                System.out.println(cou_string);
-                return cou;
+                Country country = new Country();
+                country.Name = Continent;
+                country.Population = rset.getLong("Population");
+                reporter.outputPopulation(country, "Continent", "PopulationOf" + reporter.concatString(Continent) + ".md");
+                return country;
             } else {
                 return null;
             }
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Failed to execute query getPopulationOf with 1 parameter");
+            System.out.println("Failed to execute query getPopulationOfContinent");
             return null;
         }
     }
 
-    // NEEDS REPORTER FUNCTION!!!
     /**
      * Gets the population of a Region
      * @return a Country object
@@ -1216,27 +1203,21 @@ public class Query {
             // Return query result if query is successful
             // Check one is returned
             if (rset.next()) {
-                Country cou = new Country();
-                cou.Name = Region;
-                cou.Population = rset.getLong("Population");
-                System.out.println("The Population of " + Region + " is " + cou.Population);
-                // Print Header
-                System.out.println(String.format("%-10s %10s ", "Name", "Population"));
-                String cou_string =
-                        String.format("%-10s %10s ", cou.Name, cou.Population);
-                System.out.println(cou_string);
-                return cou;
+                Country country = new Country();
+                country.Name = Region;
+                country.Population = rset.getLong("Population");
+                reporter.outputPopulation(country, "Region", "PopulationOf" + reporter.concatString(Region) + ".md");
+                return country;
             } else {
                 return null;
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Failed to execute query getPopulationOf with 2 parameters");
+            System.out.println("Failed to execute query getPopulationOfRegion");
             return null;
         }
     }
 
-    // NEEDS REPORTER FUNCTION!!!
     /**
      * Gets the population of a Country
      * @return a Country object
@@ -1256,27 +1237,21 @@ public class Query {
             // Return query result if query is successful
             // Check one is returned
             if (rset.next()) {
-                Country cou = new Country();
-                cou.Name = aCountry;
-                cou.Population = rset.getLong("Population");
-                System.out.println("The Population of " + aCountry + " is " + cou.Population);
-                // Print Header
-                System.out.println(String.format("%-10s %10s ", "Name", "Population"));
-                String cou_string =
-                        String.format("%-10s %10s ", cou.Name, cou.Population);
-                System.out.println(cou_string);
-                return cou;
+                Country country = new Country();
+                country.Name = aCountry;
+                country.Population = rset.getLong("Population");
+                reporter.outputPopulation(country, "Country", "PopulationOf" + reporter.concatString(aCountry) + ".md");
+                return country;
             } else {
                 return null;
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Failed to execute query getPopulationOf with 3 parameters");
+            System.out.println("Failed to execute query getPopulationOfCountry");
             return null;
         }
     }
 
-    // NEEDS REPORTER FUNCTION!!!
     /**
      * Gets the population of a District
      * @return a Country object
@@ -1297,27 +1272,21 @@ public class Query {
             // Return query result if query is successful
             // Check one is returned
             if (rset.next()) {
-                Country cou = new Country();
-                cou.Name = District;
-                cou.Population = rset.getLong("Population");
-                System.out.println("The Population of " + District + " is " + cou.Population);
-                // Print Header
-                System.out.println(String.format("%-10s %10s ", "Name", "Population"));
-                String cou_string =
-                        String.format("%-10s %10s ", cou.Name, cou.Population);
-                System.out.println(cou_string);
-                return cou;
+                Country country = new Country();
+                country.Name = District;
+                country.Population = rset.getLong("Population");
+                reporter.outputPopulation(country, "District", "PopulationOf" + reporter.concatString(District) + ".md");
+                return country;
             } else {
                 return null;
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Failed to execute query getPopulationOf with 4 parameters");
+            System.out.println("Failed to execute query getPopulationOfDistrict");
             return null;
         }
     }
 
-    // NEEDS REPORTER FUNCTION!!!
     /**
      * Gets the population of a City
      * @return a Country object
@@ -1338,23 +1307,18 @@ public class Query {
             // Return query result if query is successful
             // Check one is returned
             if (rset.next()) {
-                Country cou = new Country();
-                cou.Name = City;
-                cou.Population = rset.getLong("Population");
-                System.out.println("The Population of " + City + " is " + cou.Population);
-                // Print Header
-                System.out.println(String.format("%-10s %10s ", "Name", "Population"));
-                String cou_string =
-                        String.format("%-10s %10s ", cou.Name, cou.Population);
-                System.out.println(cou_string);
-                return cou;
+                Country country = new Country();
+                country.Name = City;
+                country.Population = rset.getLong("Population");
+                reporter.outputPopulation(country, "City", "PopulationOf" + reporter.concatString(City) + ".md");
+                return country;
             } else {
                 return null;
             }
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Failed to execute query getPopulationOf with 5 parameters");
+            System.out.println("Failed to execute query getPopulationOfCity");
             return null;
         }
     }

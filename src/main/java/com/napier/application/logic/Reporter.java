@@ -311,6 +311,62 @@ public final class Reporter {
         }
     }
 
+    public void outputPopulation(Country country, String type, String fileName) {
+
+        if (country == null) {
+            System.out.println("No country!");
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        if (type.equals("World")) {
+            // Print header
+            sb.append("|   | Population |\r\n");
+            sb.append("| - | ---------- |\r\n");
+            sb.append("| " + country.Name + " | " + country.Population + " |\r\n");
+        }
+
+        if (type.equals("Continent")) {
+            // Print header
+            sb.append("| Continent | Population |\r\n");
+            sb.append("| --------- | ---------- |\r\n");
+            sb.append("| " + country.Continent + " | " + country.Population + " |\r\n");
+        }
+
+        if (type.equals("Region")) {
+            // Print header
+            sb.append("| Region | Population |\r\n");
+            sb.append("| ------ | ---------- |\r\n");
+            sb.append("| " + country.Region + " | " + country.Population + " |\r\n");
+        }
+
+        if (type.equals("Country")) {
+            // Print header
+            sb.append("| Country | Population |\r\n");
+            sb.append("| ------- | ---------- |\r\n");
+            sb.append("| " + country.Name + " | " + country.Population + " |\r\n");
+        }
+
+        if (type.equals("District")) {
+            // Print header
+            sb.append("| District | Population |\r\n");
+            sb.append("| -------- | ---------- |\r\n");
+            sb.append("| " + country.Name + " | " + country.Population + " |\r\n");
+        }
+
+        if (type.equals("City")) {
+            // Print header
+            sb.append("| City | Population |\r\n");
+            sb.append("| ---- | ---------- |\r\n");
+            sb.append("| " + country.Name + " | " + country.Population + " |\r\n");
+        }
+
+        if (!(sb.length() == 0)) {
+            generateReport(sb, fileName);
+        }
+    }
+
     public void outputLanguageRanks(ArrayList<Language> languageRanks, String fileName) {
         // Check array is not null
         if (languageRanks.isEmpty()) {
