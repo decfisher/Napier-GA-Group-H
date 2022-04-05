@@ -2,6 +2,7 @@ package com.napier.application.logic;
 
 import com.napier.application.data.City;
 import com.napier.application.data.Country;
+import com.napier.application.data.Language;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -86,6 +87,92 @@ public final class Reporter {
         }
     }
 
+    public void outputCities(ArrayList<City> cities, String type, String fileName) {
+        // Check array is not null
+        if (cities.isEmpty()) {
+            System.out.println("No cities!");
+            return;
+        }
+
+        // Create output string builder
+        StringBuilder sb = new StringBuilder();
+
+        if (type.equals("World")) {
+            // Print header
+            sb.append("| Country | Population |\r\n");
+            sb.append("| ------- | ---------- |\r\n");
+
+            // Loop over all cities in the list
+            for (City city : cities) {
+                if (city == null) {
+                    continue;
+                }
+                sb.append("| " + city.Name + " | " + city.Population + " |\r\n");
+            }
+        }
+
+        if (type.equals("Continent")) {
+            // Print header
+            sb.append("| Country | Continent | Population |\r\n");
+            sb.append("| ------- | --------- | ---------- |\r\n");
+
+            // Loop over all cities in the list
+            for (City city : cities) {
+                if (city == null) {
+                    continue;
+                }
+                sb.append("| " + city.Name + " | " + city.Continent + " | " + city.Population + " |\r\n");
+            }
+        }
+
+        if (type.equals("Region")) {
+            // Print header
+            sb.append("| Country | Continent | Region | Population |\r\n");
+            sb.append("| ------- | --------- | ------ | ---------- |\r\n");
+
+            // Loop over all cities in the list
+            for (City city : cities) {
+                if (city == null) {
+                    continue;
+                }
+                sb.append("| " + city.Name + " | " + city.Continent + " | " + city.Region + " | " + city.Population + " |\r\n");
+            }
+        }
+
+        if (type.equals("Country")) {
+            // Print header
+            sb.append("| Country | Continent | Region | Country | Population |\r\n");
+            sb.append("| ------- | --------- | ------ | ------- | ---------- |\r\n");
+
+            // Loop over all cities in the list
+            for (City city : cities) {
+                if (city == null) {
+                    continue;
+                }
+                sb.append("| " + city.Name + " | " + city.Continent + " | " + city.Region + " | " + city.Country + " | " + city.Population + " |\r\n");
+            }
+        }
+
+        if (type.equals("District")) {
+            // Print header
+            sb.append("| Country | Continent | Region | Country | District | Population |\r\n");
+            sb.append("| ------- | --------- | ------ | ------- | -------- | ---------- |\r\n");
+
+            // Loop over all cities in the list
+            for (City city : cities) {
+                if (city == null) {
+                    continue;
+                }
+                sb.append("| " + city.Name + " | " + city.Continent + " | " + city.Region + " | " + city.Country + " | " + city.District + " | " + city.Population + " |\r\n");
+            }
+        }
+
+        if (!(sb.length() == 0)) {
+            // Generate report directory and markdown file
+            generateReport(sb, fileName);
+        }
+    }
+
     public void outputCityPopulation(ArrayList<City> cities, String fileName) {
         // Check array is not null
         if (cities.isEmpty()) {
@@ -104,6 +191,143 @@ public final class Reporter {
                 continue;
             }
             sb.append("| " + city.Name + " | " + city.Population + " |\r\n");
+        }
+
+        // Generate report directory and markdown file
+        generateReport(sb, fileName);
+    }
+
+    public void outputCapitalCities(ArrayList<Country> capitalCities, String type, String fileName) {
+        // Check array is not null
+        if (capitalCities.isEmpty()) {
+            System.out.println("No capital cities!");
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        if (type.equals("World")) {
+            // Print header
+            sb.append("| Capital City | Population |\r\n");
+            sb.append("| ------------ | ---------- |\r\n");
+
+            // Loop over all cities in the list
+            for (Country capitalCity : capitalCities) {
+                if (capitalCity == null) {
+                    continue;
+                }
+                sb.append("| " + capitalCity.Name + " | " + capitalCity.Population + " |\r\n");
+            }
+        }
+
+        if (type.equals("Continent")) {
+            // Print header
+            sb.append("| Capital City | Continent | Population |\r\n");
+            sb.append("| ------------ | --------- | ---------- |\r\n");
+
+            // Loop over all cities in the list
+            for (Country capitalCity : capitalCities) {
+                if (capitalCity == null) {
+                    continue;
+                }
+                sb.append("| " + capitalCity.Name + " | " + capitalCity.Continent + " | " + capitalCity.Population + " |\r\n");
+            }
+        }
+
+        if (type.equals("Region")) {
+            // Print header
+            sb.append("| Capital City | Continent | Region | Population |\r\n");
+            sb.append("| ------------ | --------- | ------ | ---------- |\r\n");
+
+            // Loop over all cities in the list
+            for (Country capitalCity : capitalCities) {
+                if (capitalCity == null) {
+                    continue;
+                }
+                sb.append("| " + capitalCity.Name + " | " + capitalCity.Continent + " | " + capitalCity.Region + " | " + capitalCity.Population + " |\r\n");
+            }
+        }
+
+        if (!(sb.length() == 0)) {
+            // Generate report directory and markdown file
+            generateReport(sb, fileName);
+        }
+    }
+
+    public void outputPopulation(ArrayList<Country> countries, String type, String fileName) {
+        // Check array is not null
+        if (countries.isEmpty()) {
+            System.out.println("No countries!");
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        if (type.equals("Continent")) {
+            // Print header
+            sb.append("| Continent | Population |\r\n");
+            sb.append("| --------- | ---------- |\r\n");
+
+            // Loop over all cities in the list
+            for (Country country : countries) {
+                if (country == null) {
+                    continue;
+                }
+                sb.append("| " + country.Continent + " | " + country.Population + " |\r\n");
+            }
+        }
+
+        if (type.equals("Region")) {
+            // Print header
+            sb.append("| Region | Population |\r\n");
+            sb.append("| ------ | ---------- |\r\n");
+
+            // Loop over all cities in the list
+            for (Country country : countries) {
+                if (country == null) {
+                    continue;
+                }
+                sb.append("| " + country.Region + " | " + country.Population + " |\r\n");
+            }
+        }
+
+        if (type.equals("Country")) {
+            // Print header
+            sb.append("| Country | Population |\r\n");
+            sb.append("| ------- | ---------- |\r\n");
+
+            // Loop over all cities in the list
+            for (Country country : countries) {
+                if (country == null) {
+                    continue;
+                }
+                sb.append("| " + country.Name + " | " + country.Population + " |\r\n");
+            }
+        }
+
+        if (!(sb.length() == 0)) {
+            // Generate report directory and markdown file
+            generateReport(sb, fileName);
+        }
+    }
+
+    public void outputLanguageRanks(ArrayList<Language> languageRanks, String fileName) {
+        // Check array is not null
+        if (languageRanks.isEmpty()) {
+            System.out.println("No languages!");
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        // Print header
+        sb.append("| Language | Total Speakers (M) | Percent Of World Population (%) |\r\n");
+        sb.append("| -------- | ------------------ | ------------------------------- |\r\n");
+
+        for (Language language : languageRanks) {
+            if (language == null) {
+                continue;
+            }
+            sb.append("| " + language.Language + " | " + language.TotalSpeakers + " | " + language.PercentOfWorldPop + " |\r\n");
         }
 
         // Generate report directory and markdown file
