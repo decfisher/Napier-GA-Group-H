@@ -197,6 +197,64 @@ public final class Reporter {
         generateReport(sb, fileName);
     }
 
+    public void outputCityPopulationInAndOut(ArrayList<Country> countries, String type, String fileName) {
+        // Check array is not null
+        if (countries.isEmpty()) {
+            System.out.println("No cities!");
+            return;
+        }
+
+        // Create output string builder
+        StringBuilder sb = new StringBuilder();
+
+        if (type.equals("Continent")) {
+            // Print header
+            sb.append("| Continent | Total Population | In City | Out Of City |\r\n");
+            sb.append("| --------- | ---------------- | ------- | ----------- |\r\n");
+
+            // Loop over all cities in the list
+            for (Country country : countries) {
+                if (country == null) {
+                    continue;
+                }
+                sb.append("| " + country.Continent + " | " + country.Population + " | " + country.InCityPop + " | " + country.OutCityPop + " |\r\n");
+            }
+        }
+
+        if (type.equals("Region")) {
+            // Print header
+            sb.append("| Region | Total Population | In City | Out Of City |\r\n");
+            sb.append("| ------ | ---------------- | ------- | ----------- |\r\n");
+
+            // Loop over all cities in the list
+            for (Country country : countries) {
+                if (country == null) {
+                    continue;
+                }
+                sb.append("| " + country.Region + " | " + country.Population + " | " + country.InCityPop + " | " + country.OutCityPop + " |\r\n");
+            }
+        }
+
+        if (type.equals("Country")) {
+            // Print header
+            sb.append("| Country | Total Population | In City | Out Of City |\r\n");
+            sb.append("| ------- | ---------------- | ------- | ----------- |\r\n");
+
+            // Loop over all cities in the list
+            for (Country country : countries) {
+                if (country == null) {
+                    continue;
+                }
+                sb.append("| " + country.Name + " | " + country.Population + " | " + country.InCityPop + " | " + country.OutCityPop + " |\r\n");
+            }
+        }
+
+        if (!(sb.length() == 0)) {
+            // Generate report directory and markdown file
+            generateReport(sb, fileName);
+        }
+    }
+
     public void outputCapitalCities(ArrayList<Country> capitalCities, String type, String fileName) {
         // Check array is not null
         if (capitalCities.isEmpty()) {

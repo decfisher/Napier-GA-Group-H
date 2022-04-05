@@ -472,16 +472,10 @@ public class Query {
                     country.OutCityPop = rset.getLong("Out_city");
                     countries.add(country);
                 }
-                System.out.println("Population In and Out of Cities By Continent");
-                System.out.println(String.format("%-10s %25s %25s %25s ",
-                        "Continent", "Total Population", "Population In Cities", "Population Out of Cities"));
-                // Loop over all employees in the list
-                for (Country country : countries) {
-                    String string = String.format("%-10s %25s %25s %25s ",
-                            country.Continent, country.Population, country.InCityPop, country.OutCityPop);
-                    System.out.println(string);
-                }
+                // Generate report
+                reporter.outputCityPopulationInAndOut(countries, "Continent", "PopulationInAndOutOfCitiesInEachContinent.md");
                 return countries;
+
             } else if (option.equals("Region")) {
                 // Create an SQL statement
                 Statement stmt = connection.createStatement();
@@ -509,16 +503,10 @@ public class Query {
                     country.OutCityPop = rset.getLong("Out_city");
                     countries.add(country);
                 }
-                System.out.println("Population In and Out of Cities By Region");
-                System.out.println(String.format("%-10s %25s %25s %25s ",
-                        "Region", "Total Population", "Population In Cities", "Population Out of Cities"));
-                // Loop over all employees in the list
-                for (Country country : countries) {
-                    String string = String.format("%-10s %25s %25s %25s ",
-                            country.Region, country.Population, country.InCityPop, country.OutCityPop);
-                    System.out.println(string);
-                }
+                // Generate report
+                reporter.outputCityPopulationInAndOut(countries, "Region", "PopulationInAndOutOfCitiesInEachRegion.md");
                 return countries;
+
             } else if (option.equals("Country")) {
                 // Create an SQL statement
                 Statement stmt = connection.createStatement();
@@ -546,16 +534,10 @@ public class Query {
                     country.OutCityPop = rset.getLong("Out_city");
                     countries.add(country);
                 }
-                System.out.println("Population In and Out of Cities By Country");
-                System.out.println(String.format("%-10s %25s %25s %25s ",
-                        "Country", "Total Population", "Population In Cities", "Population Out of Cities"));
-                // Loop over all employees in the list
-                for (Country country : countries) {
-                    String string = String.format("%-10s %25s %25s %25s ",
-                            country.Name, country.Population, country.InCityPop, country.OutCityPop);
-                    System.out.println(string);
-                }
+                // Generate report
+                reporter.outputCityPopulationInAndOut(countries, "Country", "PopulationInAndOutOfCitiesInEachCountry.md");
                 return countries;
+
             } else {
                 throw new IllegalArgumentException("Invalid option specified");
             }
@@ -601,6 +583,7 @@ public class Query {
                 city.Population = resultSet.getInt("population");
                 cities.add(city);
             }
+            // Generate report
             reporter.outputCityPopulation(cities, "Top" + n + "MostPopulatedCitiesInTheWorld.md");
             return cities;
 
@@ -646,6 +629,7 @@ public class Query {
                     city.Population = resultSet.getInt("population");
                     cities.add(city);
                 }
+                // Generate report
                 reporter.outputCityPopulation(cities, "Top" + n + "MostPopulatedCitiesIn" + reporter.concatString(name) + ".md");
                 return cities;
 
@@ -672,6 +656,7 @@ public class Query {
                     city.Population = resultSet.getInt("population");
                     cities.add(city);
                 }
+                // Generate report
                 reporter.outputCityPopulation(cities, "Top" + n + "MostPopulatedCitiesIn" + reporter.concatString(name) + ".md");
                 return cities;
 
@@ -698,6 +683,7 @@ public class Query {
                     city.Population = resultSet.getInt("population");
                     cities.add(city);
                 }
+                // Generate report
                 reporter.outputCityPopulation(cities, "Top" + n + "MostPopulatedCitiesIn" + reporter.concatString(name) + ".md");
                 return cities;
 
@@ -723,6 +709,7 @@ public class Query {
                     city.Population = resultSet.getInt("population");
                     cities.add(city);
                 }
+                // Generate report
                 reporter.outputCityPopulation(cities, "Top" + n + "MostPopulatedCitiesIn" + reporter.concatString(name) + ".md");
                 return cities;
 
