@@ -1346,7 +1346,7 @@ public class Query {
                     ///        + "WHERE A.Language IN('Chinese', 'English', 'Hindi', 'Spanish', 'Arabic') "
                     ///        + "GROUP BY A.Language "
                     ///        + "ORDER BY 2 DESC;";
-            "SELECT A.Language, (A.Percentage/100) * (B.Population/1000000) AS TotalSpeakers, B.Population/1000000 AS PercentOfWorldPop "
+            "SELECT A.Language, SUM((A.Percentage/100) * (B.Population/1000000)) AS TotalSpeakers, SUM(B.Population/1000000) AS PercentOfWorldPop "
                     + "FROM countrylanguage A "
                     + "LEFT JOIN country B ON A.CountryCode = B.Code "
                     + "WHERE A.Language IN('Chinese', 'English', 'Hindi', 'Spanish', 'Arabic') "
