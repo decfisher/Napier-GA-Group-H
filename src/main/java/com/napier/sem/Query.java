@@ -965,12 +965,12 @@ public class Query {
     public static void printLangRank(ArrayList<Language> lang_rank) {
 
         // Print header
-        System.out.println(String.format("%-10s %10s %10s %10s", "Language", "Code", "TotalSpeakers (M)", "PercentOfWorldPop (%)"));
+        System.out.println(String.format("%-10s %10s %10s %10s %10s", "Language", "Code", "Percentage", "TotalSpeakers (M)", "PercentOfWorldPop (%)"));
         // Loop over all languages in the list
         for (Language lang : lang_rank) {
             String lang_string =
-                    String.format("%-10s %10s %10s %10s",
-                            lang.Language, lang.Code, lang.TotalSpeakers, lang.PercentOfWorldPop);
+                    String.format("%-10s %10s %10s %10s %10s",
+                            lang.Language, lang.Code, lang.Percentage, lang.TotalSpeakers, lang.PercentOfWorldPop);
             System.out.println(lang_string);
         }
 
@@ -1346,7 +1346,7 @@ public class Query {
                     ///        + "WHERE A.Language IN('Chinese', 'English', 'Hindi', 'Spanish', 'Arabic') "
                     ///        + "GROUP BY A.Language "
                     ///        + "ORDER BY 2 DESC;";
-            "SELECT A.Language, B.Code, A.Percentage AS TotalSpeakers, B.Population AS PercentOfWorldPop "
+            "SELECT A.Language, B.Code, A.Percentage AS Percentage, B.Population AS PercentOfWorldPop, (A.Percentage/100) * B.Population AS TotalSpeakers "
                     + "FROM countrylanguage A "
                     + "LEFT JOIN country B ON A.CountryCode = B.Code "
                     + "WHERE A.Language IN('Chinese', 'English', 'Hindi', 'Spanish', 'Arabic');";
@@ -1360,8 +1360,9 @@ public class Query {
                 Language lang = new Language();
                 lang.Language = rset.getString("Language");
                 lang.Code = rset.getString("Code");
-                lang.TotalSpeakers = rset.getDouble("TotalSpeakers");
+                lang.Percentage = rset.getDouble("Percentage");
                 lang.PercentOfWorldPop = rset.getDouble("PercentOfWorldPop");
+                lang.TotalSpeakers = rset.getDouble("TotalSpeakers");
                 languages.add(lang);
             }
                 printLangRank(languages);
