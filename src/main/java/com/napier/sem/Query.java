@@ -970,7 +970,7 @@ public class Query {
         for (Language lang : lang_rank) {
             String lang_string =
                     String.format("%-10s %10s %10s %10s %10s",
-                            lang.Language, lang.Code, lang.Percentage, lang.TotalSpeakers, lang.PercentOfWorldPop);
+                            lang.Language, lang.Code, lang.Percentage, lang.PercentOfWorldPop, lang.TotalSpeakers);
             System.out.println(lang_string);
         }
 
