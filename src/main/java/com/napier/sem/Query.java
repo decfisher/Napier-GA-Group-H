@@ -1340,18 +1340,12 @@ public class Query {
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    ///"SELECT A.Language, round(SUM((A.Percentage/100) * B.Population)/1000000,2) AS TotalSpeakers, round((SUM(A.Percentage * B.Population)/SUM(B.Population)),2) AS PercentOfWorldPop "
-                    ///        + "FROM countrylanguage A "
-                    ///        + "LEFT JOIN (SELECT Code, sum(Population) as Population from country group by 1) B ON A.CountryCode = B.Code "
-                    ///        + "WHERE A.Language IN('Chinese', 'English', 'Hindi', 'Spanish', 'Arabic') "
-                    ///        + "GROUP BY A.Language "
-                    ///        + "ORDER BY 2 DESC;";
-            "SELECT A.Language, ROUND(SUM((A.Percentage/100) * (B.Population/1000000)),2) AS TotalSpeakers, ROUND((SUM((A.Percentage/100) * (B.Population/1000000))/(SELECT SUM(Population/1000000) from country))*100,2) AS PercentOfWorldPop "
-                    + "FROM countrylanguage A "
-                    + "LEFT JOIN country B ON A.CountryCode = B.Code "
-                    + "WHERE A.Language IN('Chinese', 'English', 'Hindi', 'Spanish', 'Arabic') "
-                    + "GROUP BY A.Language "
-                    + "ORDER BY 2 DESC;";
+                    "SELECT A.Language, ROUND(SUM((A.Percentage/100) * (B.Population/1000000)),2) AS TotalSpeakers, ROUND((SUM((A.Percentage/100) * (B.Population/1000000))/(SELECT SUM(Population/1000000) from country))*100,2) AS PercentOfWorldPop "
+                            + "FROM countrylanguage A "
+                            + "LEFT JOIN country B ON A.CountryCode = B.Code "
+                            + "WHERE A.Language IN('Chinese', 'English', 'Hindi', 'Spanish', 'Arabic') "
+                            + "GROUP BY A.Language "
+                            + "ORDER BY 2 DESC;";
 
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
