@@ -1350,7 +1350,7 @@ public class Query {
                     + "FROM countrylanguage A "
                     + "LEFT JOIN country B ON A.CountryCode = B.Code "
                     + "WHERE A.Language IN('Chinese', 'English', 'Hindi', 'Spanish', 'Arabic') "
-                    + "GROUP BY A.Language";
+                    + "GROUP BY A.Language;";
 
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
