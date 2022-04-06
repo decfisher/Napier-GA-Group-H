@@ -965,12 +965,12 @@ public class Query {
     public static void printLangRank(ArrayList<Language> lang_rank) {
 
         // Print header
-        System.out.println(String.format("%-10s %10s %10s", "Language", "TotalSpeakers (M)", "PercentOfWorldPop (%)"));
+        System.out.println(String.format("%-10s %10s %10s %10s", "Language", "Code", "TotalSpeakers (M)", "PercentOfWorldPop (%)"));
         // Loop over all languages in the list
         for (Language lang : lang_rank) {
             String lang_string =
-                    String.format("%-10s %10s %10s",
-                            lang.Language, lang.TotalSpeakers, lang.PercentOfWorldPop);
+                    String.format("%-10s %10s %10s %10s",
+                            lang.Language, lang.Code, lang.TotalSpeakers, lang.PercentOfWorldPop);
             System.out.println(lang_string);
         }
 
@@ -1359,6 +1359,7 @@ public class Query {
             while (rset.next()) {
                 Language lang = new Language();
                 lang.Language = rset.getString("Language");
+                lang.Code = rset.getString("Code");
                 lang.TotalSpeakers = rset.getDouble("TotalSpeakers");
                 lang.PercentOfWorldPop = rset.getDouble("PercentOfWorldPop");
                 languages.add(lang);
