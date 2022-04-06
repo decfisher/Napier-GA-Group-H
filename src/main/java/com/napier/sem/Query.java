@@ -1346,11 +1346,10 @@ public class Query {
                     ///        + "WHERE A.Language IN('Chinese', 'English', 'Hindi', 'Spanish', 'Arabic') "
                     ///        + "GROUP BY A.Language "
                     ///        + "ORDER BY 2 DESC;";
-            "SELECT A.Language, (A.Percentage/100) * B.Population AS TotalSpeakers, SUM(B.Population) AS PercentOfWorldPop "
+            "SELECT A.Language, (A.Percentage/100) * B.Population AS TotalSpeakers, B.Population AS PercentOfWorldPop "
                     + "FROM countrylanguage A "
                     + "LEFT JOIN country B ON A.CountryCode = B.Code "
-                    + "WHERE A.Language IN('Chinese', 'English', 'Hindi', 'Spanish', 'Arabic') "
-                    + "GROUP BY A.Language;";
+                    + "WHERE A.Language IN('Chinese', 'English', 'Hindi', 'Spanish', 'Arabic');";
 
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
