@@ -6,6 +6,7 @@ import com.napier.application.data.Language;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
@@ -604,9 +605,11 @@ public class Query {
 
         try {
 
+            // Create an SQL statement
+            Statement statement = connection.createStatement();
+            ResultSet resultSet;
+
             if (option.equals("Continent")) {
-                // Create an SQL statement
-                Statement statement = connection.createStatement();
                 // Create string for SQL statement
                 String strSelect =
                         "SELECT ci.Name AS Name, co.Continent AS Continent, ci.Population AS Population "
@@ -617,7 +620,7 @@ public class Query {
                                 + " LIMIT " + n + ";";
 
                 // Execute SQL statement
-                ResultSet resultSet = statement.executeQuery(strSelect);
+                resultSet = getResultSet(statement, strSelect);
                 // Return query result if query is successful
                 // Check one is returned
                 ArrayList<City> cities = new ArrayList<City>();
@@ -632,8 +635,6 @@ public class Query {
                 return cities;
 
             } else if (option.equals("Region")) {
-                // Create an SQL statement
-                Statement statement = connection.createStatement();
                 // Create string for SQL statement
                 String strSelect =
                         "SELECT ci.Name AS Name, co.Region AS Region, ci.Population AS Population "
@@ -644,7 +645,7 @@ public class Query {
                                 + " LIMIT " + n + ";";
 
                 // Execute SQL statement
-                ResultSet resultSet = statement.executeQuery(strSelect);
+                resultSet = getResultSet(statement, strSelect);
                 // Return query result if query is successful
                 // Check one is returned
                 ArrayList<City> cities = new ArrayList<City>();
@@ -659,8 +660,6 @@ public class Query {
                 return cities;
 
             } else if (option.equals("Country")) {
-                // Create an SQL statement
-                Statement statement = connection.createStatement();
                 // Create string for SQL statement
                 String strSelect =
                         "SELECT ci.Name AS Name, co.Name AS Country, ci.Population AS Population "
@@ -671,7 +670,7 @@ public class Query {
                                 + " LIMIT " + n + ";";
 
                 // Execute SQL statement
-                ResultSet resultSet = statement.executeQuery(strSelect);
+                resultSet = getResultSet(statement, strSelect);
                 // Return query result if query is successful
                 // Check one is returned
                 ArrayList<City> cities = new ArrayList<City>();
@@ -686,8 +685,6 @@ public class Query {
                 return cities;
 
             } else if (option.equals("District")) {
-                // Create an SQL statement
-                Statement statement = connection.createStatement();
                 // Create string for SQL statement
                 String strSelect =
                         "SELECT NAME, District, population "
@@ -697,7 +694,7 @@ public class Query {
                                 + "LIMIT " + n;
 
                 // Execute SQL statement
-                ResultSet resultSet = statement.executeQuery(strSelect);
+                resultSet = getResultSet(statement, strSelect);
                 // Return query result if query is successful
                 // Check one is returned
                 ArrayList<City> cities = new ArrayList<City>();
@@ -1605,5 +1602,9 @@ public class Query {
             System.out.println("Failed to get Population details");
             return null;
         }
+    }
+
+    public ResultSet getResultSet(Statement statement, String query) throws SQLException {
+        return statement.executeQuery(query);
     }
 }
