@@ -31,6 +31,7 @@ public class Query {
      * @return an ArrayList of Country objects
      */
     public ArrayList<Country> getCountriesByPopulation() {
+
         try {
             // Create an SQL statement
             Statement stmt = connection.createStatement();
@@ -41,7 +42,7 @@ public class Query {
                             + "ORDER BY 2 DESC ";
 
             // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
+            ResultSet rset = getResultSet(stmt, strSelect);
             // Return query result if query is successful
             // Check one is returned
             ArrayList<Country> countries = new ArrayList<Country>();
@@ -83,7 +84,7 @@ public class Query {
                             + " ORDER BY 2 DESC";
 
             // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
+            ResultSet rset = getResultSet(stmt, strSelect);
             // Return query result if query is successful
             // Check one is returned
             ArrayList<Country> countries = new ArrayList<Country>();
@@ -127,7 +128,7 @@ public class Query {
                             + " ORDER BY 2 DESC ";
 
             // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
+            ResultSet rset = getResultSet(stmt, strSelect);
             // Return query result if query is successful
             // Check one is returned
             ArrayList<Country> countries = new ArrayList<Country>();
@@ -175,7 +176,7 @@ public class Query {
                             + " LIMIT " + n;
 
             // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
+            ResultSet rset = getResultSet(stmt, strSelect);
             // Return query result if query is successful
             // Check one is returned
             ArrayList<Country> countries = new ArrayList<Country>();
@@ -212,9 +213,12 @@ public class Query {
         }
 
         try {
+            // Create an SQL statement
+            Statement stmt = connection.createStatement();
+            ResultSet rset;
+
             if (queryType.equals("Continent")) {
-                // Create an SQL statement
-                Statement stmt = connection.createStatement();
+
                 // Create string for SQL statement
                 String strSelect =
                         "SELECT NAME, continent, population "
@@ -224,7 +228,7 @@ public class Query {
                                 + " LIMIT " + n;
 
                 // Execute SQL statement
-                ResultSet rset = stmt.executeQuery(strSelect);
+                rset = getResultSet(stmt, strSelect);
                 // Return query result if query is successful
                 // Check one is returned
                 ArrayList<Country> countries = new ArrayList<Country>();
@@ -238,8 +242,6 @@ public class Query {
                 reporter.outputCountries(countries, "Continent", "Top" + n + "MostPopulatedCountriesIn" + reporter.concatString(name));
                 return countries;
             } else if (queryType.equals("Region")) {
-                // Create an SQL statement
-                Statement stmt = connection.createStatement();
                 // Create string for SQL statement
                 String strSelect =
                         "SELECT NAME, region, population "
@@ -248,7 +250,7 @@ public class Query {
                                 + " ORDER BY population DESC"
                                 + " LIMIT " + n;
                 // Execute SQL statement
-                ResultSet rset = stmt.executeQuery(strSelect);
+                rset = getResultSet(stmt, strSelect);
                 // Return query result if query is successful
                 // Check one is returned
                 ArrayList<Country> countries = new ArrayList<Country>();
@@ -323,9 +325,11 @@ public class Query {
         }
 
         try {
+            // Create an SQL statement
+            Statement stmt = connection.createStatement();
+            ResultSet rset;
+
             if (queryType.equals("Continent")) {
-                // Create an SQL statement
-                Statement stmt = connection.createStatement();
                 // Create string for SQL statement
                 String strSelect =
                         "SELECT c.NAME, co.continent, c.population "
@@ -335,7 +339,7 @@ public class Query {
                                 + " ORDER BY population DESC";
 
                 // Execute SQL statement
-                ResultSet rset = stmt.executeQuery(strSelect);
+                rset = getResultSet(stmt, strSelect);
                 // Return query result if query is successful
                 // Check one is returned
                 ArrayList<City> cities = new ArrayList<City>();
@@ -352,8 +356,6 @@ public class Query {
                 return cities;
 
             } else if (queryType.equals("Region")) {
-                // Create an SQL statement
-                Statement stmt = connection.createStatement();
                 // Create string for SQL statement
                 String strSelect =
                         "SELECT c.NAME, co.Region, c.population "
@@ -362,7 +364,7 @@ public class Query {
                                 + "WHERE co.Region = '" + name + "'"
                                 + " ORDER BY population DESC";
                 // Execute SQL statement
-                ResultSet rset = stmt.executeQuery(strSelect);
+                rset = getResultSet(stmt, strSelect);
                 // Return query result if query is successful
                 // Check one is returned
                 ArrayList<City> cities = new ArrayList<City>();
@@ -377,8 +379,6 @@ public class Query {
                 return cities;
 
             } else if (queryType.equals("Country")) {
-                // Create an SQL statement
-                Statement stmt = connection.createStatement();
                 // Create string for SQL statement
                 String strSelect =
                         "SELECT c.NAME, co.Name as Country, c.population "
@@ -387,7 +387,7 @@ public class Query {
                                 + "WHERE co.Name = '" + name + "'"
                                 + " ORDER BY population DESC";
                 // Execute SQL statement
-                ResultSet rset = stmt.executeQuery(strSelect);
+                rset = getResultSet(stmt, strSelect);
                 // Return query result if query is successful
                 // Check one is returned
                 ArrayList<City> cities = new ArrayList<City>();
@@ -403,8 +403,6 @@ public class Query {
                 return cities;
 
             } else if (queryType.equals("District")) {
-                // Create an SQL statement
-                Statement stmt = connection.createStatement();
                 // Create string for SQL statement
                 String strSelect =
                         "SELECT NAME, district, population "
@@ -412,7 +410,7 @@ public class Query {
                                 + "WHERE district = '" + name + "'"
                                 + " ORDER BY population DESC";
                 // Execute SQL statement
-                ResultSet rset = stmt.executeQuery(strSelect);
+                rset = getResultSet(stmt, strSelect);
                 // Return query result if query is successful
                 // Check one is returned
                 ArrayList<City> cities = new ArrayList<City>();
@@ -444,9 +442,11 @@ public class Query {
         }
 
         try {
+            // Create an SQL statement
+            Statement stmt = connection.createStatement();
+            ResultSet rset;
+
             if (option.equals("Continent")) {
-                // Create an SQL statement
-                Statement stmt = connection.createStatement();
                 // Create string for SQL statement
                 String strSelect =
                         "SELECT co.Continent AS Continent, SUM(co.Population) AS Total_Pop, " +
@@ -459,7 +459,7 @@ public class Query {
                                 "FROM city ci GROUP BY 1) ci ON ci.countrycode = co.code " +
                                 "GROUP BY Continent";
                 // Execute SQL statement
-                ResultSet rset = stmt.executeQuery(strSelect);
+                rset = getResultSet(stmt, strSelect);
                 // Return query result if query is successful
                 // Check one is returned
                 ArrayList<Country> countries = new ArrayList<Country>();
@@ -476,8 +476,6 @@ public class Query {
                 return countries;
 
             } else if (option.equals("Region")) {
-                // Create an SQL statement
-                Statement stmt = connection.createStatement();
                 // Create string for SQL statement
                 String strSelect =
                         "SELECT co.Region AS Region, SUM(co.Population) AS Total_Pop, " +
@@ -490,7 +488,7 @@ public class Query {
                                 "FROM city ci GROUP BY 1) ci ON ci.countrycode = co.code " +
                                 "GROUP BY Region";
                 // Execute SQL statement
-                ResultSet rset = stmt.executeQuery(strSelect);
+                rset = getResultSet(stmt, strSelect);
                 // Return query result if query is successful
                 // Check one is returned
                 ArrayList<Country> countries = new ArrayList<Country>();
@@ -507,8 +505,6 @@ public class Query {
                 return countries;
 
             } else if (option.equals("Country")) {
-                // Create an SQL statement
-                Statement stmt = connection.createStatement();
                 // Create string for SQL statement
                 String strSelect =
                         "SELECT co.Name AS Name, SUM(co.Population) AS Total_Pop, " +
@@ -521,7 +517,7 @@ public class Query {
                                 "FROM city ci GROUP BY 1) ci ON ci.countrycode = co.code " +
                                 "GROUP BY Name";
                 // Execute SQL statement
-                ResultSet rset = stmt.executeQuery(strSelect);
+                rset = getResultSet(stmt, strSelect);
                 // Return query result if query is successful
                 // Check one is returned
                 ArrayList<Country> countries = new ArrayList<Country>();
@@ -604,7 +600,6 @@ public class Query {
         }
 
         try {
-
             // Create an SQL statement
             Statement statement = connection.createStatement();
             ResultSet resultSet;
@@ -733,9 +728,11 @@ public class Query {
         }
 
         try {
+            // Create an SQL statement
+            Statement stmt = connection.createStatement();
+            ResultSet rset;
+
             if (queryType.equals("Continent")) {
-                // Create an SQL statement
-                Statement stmt = connection.createStatement();
                 // Create string for SQL statement
                 String strSelect =
                         "SELECT continent, SUM(population) AS Population " +
@@ -743,7 +740,7 @@ public class Query {
                                 "GROUP BY 1 " +
                                 "ORDER BY Population DESC";
                 // Execute SQL statement
-                ResultSet rset = stmt.executeQuery(strSelect);
+                rset = getResultSet(stmt, strSelect);
                 // Return query result if query is successful
                 // Check one is returned
                 ArrayList<Country> countries = new ArrayList<Country>();
@@ -757,8 +754,6 @@ public class Query {
                 reporter.outputPopulation(countries, "Continent", "TotalPopulationInAllContinents.md");
 
             } else if (queryType.equals("Region")) {
-                // Create an SQL statement
-                Statement stmt = connection.createStatement();
                 // Create string for SQL statement
                 String strSelect =
                         "SELECT region, SUM(population) AS Population " +
@@ -766,7 +761,7 @@ public class Query {
                                 "GROUP BY 1 " +
                                 "ORDER BY Population DESC";
                 // Execute SQL statement
-                ResultSet rset = stmt.executeQuery(strSelect);
+                rset = getResultSet(stmt, strSelect);
                 // Return query result if query is successful
                 // Check one is returned
                 ArrayList<Country> countries = new ArrayList<Country>();
@@ -780,8 +775,6 @@ public class Query {
                 reporter.outputPopulation(countries, "Region", "TotalPopulationInAllRegions.md");
 
             } else if (queryType.equals("Country")) {
-                // Create an SQL statement
-                Statement stmt = connection.createStatement();
                 // Create string for SQL statement
                 String strSelect =
                         "SELECT NAME, SUM(population) AS Population " +
@@ -789,7 +782,7 @@ public class Query {
                                 "GROUP BY 1 " +
                                 "ORDER BY Population DESC";
                 // Execute SQL statement
-                ResultSet rset = stmt.executeQuery(strSelect);
+                rset = getResultSet(stmt, strSelect);
                 // Return query result if query is successful
                 // Check one is returned
                 ArrayList<Country> countries = new ArrayList<Country>();
@@ -827,7 +820,7 @@ public class Query {
                             + "ORDER BY 2 DESC; ";
 
             // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
+            ResultSet rset = getResultSet(stmt, strSelect);
             // Return query result if query is successful
             // Check one is returned
             ArrayList<Country> cap_cities = new ArrayList<Country>();
@@ -871,7 +864,7 @@ public class Query {
                             + "ORDER BY 3 DESC; ";
 
             // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
+            ResultSet rset = getResultSet(stmt, strSelect);
             // Return query result if query is successful
             // Check one is returned
             ArrayList<Country> cap_cities = new ArrayList<Country>();
@@ -916,7 +909,7 @@ public class Query {
                             + "ORDER BY 4 DESC; ";
 
             // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
+            ResultSet rset = getResultSet(stmt, strSelect);
             // Return query result if query is successful
             // Check one is returned
             ArrayList<Country> capitalCities = new ArrayList<Country>();
@@ -963,7 +956,7 @@ public class Query {
                             + " LIMIT " + n + ";";
 
             // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
+            ResultSet rset = getResultSet(stmt, strSelect);
             // Return query result if query is sucessful
             // Check one is returned
             ArrayList<Country> cap_cities = new ArrayList<Country>();
@@ -1012,7 +1005,7 @@ public class Query {
                             + " LIMIT " + n + ";";
 
             // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
+            ResultSet rset = getResultSet(stmt, strSelect);
             // Return query result if query is successful
             // Check one is returned
             ArrayList<Country> cap_cities = new ArrayList<Country>();
@@ -1064,7 +1057,7 @@ public class Query {
                             + " LIMIT " + n + ";";
 
             // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
+            ResultSet rset = getResultSet(stmt, strSelect);
             // Return query result if query is successful
             // Check one is returned
             ArrayList<Country> cap_cities = new ArrayList<Country>();
@@ -1105,7 +1098,7 @@ public class Query {
                             + "FROM country co ;";
 
             // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
+            ResultSet rset = getResultSet(stmt, strSelect);
             // Return query result if query is successful
             // Check one is returned
             if (rset.next()) {
@@ -1145,7 +1138,7 @@ public class Query {
                             + "WHERE co.continent = '" + Continent + "';";
 
             // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
+            ResultSet rset = getResultSet(stmt, strSelect);
             // Return query result if query is successful
             // Check one is returned
             if (rset.next()) {
@@ -1181,7 +1174,7 @@ public class Query {
                             + "WHERE co.continent = '" + Continent + "' AND co.Region = '" + Region + "' ;";
 
             // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
+            ResultSet rset = getResultSet(stmt, strSelect);
             // Return query result if query is successful
             // Check one is returned
             if (rset.next()) {
@@ -1215,7 +1208,7 @@ public class Query {
                             + "WHERE co.Name = '" + aCountry + "';";
 
             // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
+            ResultSet rset = getResultSet(stmt, strSelect);
             // Return query result if query is successful
             // Check one is returned
             if (rset.next()) {
@@ -1250,7 +1243,7 @@ public class Query {
                             + "WHERE co.Name = '" + aCountry + "' AND ci.District = '" + District +"';";
 
             // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
+            ResultSet rset = getResultSet(stmt, strSelect);
             // Return query result if query is successful
             // Check one is returned
             if (rset.next()) {
@@ -1285,7 +1278,7 @@ public class Query {
                             + "WHERE ci.Name = '" + City + "' AND ci.District = '" + District +"';";
 
             // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
+            ResultSet rset = getResultSet(stmt, strSelect);
             // Return query result if query is successful
             // Check one is returned
             if (rset.next()) {
