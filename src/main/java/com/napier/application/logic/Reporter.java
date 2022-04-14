@@ -15,11 +15,17 @@ import java.util.ArrayList;
  */
 public final class Reporter {
 
-    public void outputCountries(ArrayList<Country> countries, String type, String fileName) {
+    public boolean outputCountries(ArrayList<Country> countries, String type, String fileName) {
+        // Check option strings are not null
+        if (type == null || fileName == null) {
+            System.out.println("Input cannot be null!");
+            return false;
+        }
+
         // Check array is not null
         if (countries.isEmpty()) {
             System.out.println("No countries!");
-            return;
+            return false;
         }
 
         // Create output string builder
@@ -70,14 +76,17 @@ public final class Reporter {
         if (!(sb.length() == 0)) {
             // Generate report directory and markdown file
             generateReport(sb, fileName);
+            return true;
         }
+
+        return false;
     }
 
-    public void outputCities(ArrayList<City> cities, String type, String fileName) {
+    public boolean outputCities(ArrayList<City> cities, String type, String fileName) {
         // Check array is not null
         if (cities.isEmpty()) {
             System.out.println("No cities!");
-            return;
+            return false;
         }
 
         // Create output string builder
@@ -156,7 +165,10 @@ public final class Reporter {
         if (!(sb.length() == 0)) {
             // Generate report directory and markdown file
             generateReport(sb, fileName);
+            return true;
         }
+
+        return false;
     }
 
     public void outputCityPopulation(ArrayList<City> cities, String fileName) {
@@ -241,11 +253,11 @@ public final class Reporter {
         }
     }
 
-    public void outputCapitalCities(ArrayList<Country> capitalCities, String type, String fileName) {
+    public boolean outputCapitalCities(ArrayList<Country> capitalCities, String type, String fileName) {
         // Check array is not null
         if (capitalCities.isEmpty()) {
             System.out.println("No capital cities!");
-            return;
+            return false;
         }
 
         StringBuilder sb = new StringBuilder();
@@ -295,7 +307,10 @@ public final class Reporter {
         if (!(sb.length() == 0)) {
             // Generate report directory and markdown file
             generateReport(sb, fileName);
+            return true;
         }
+
+        return false;
     }
 
     public void outputPopulation(ArrayList<Country> countries, String type, String fileName) {
