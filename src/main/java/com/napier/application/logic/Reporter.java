@@ -16,15 +16,16 @@ import java.util.ArrayList;
 public final class Reporter {
 
     public void outputCountries(ArrayList<Country> countries, String type, String fileName) {
+        // Check array is not null
+        if (countries.isEmpty()) {
+            System.out.println("No countries!");
+            return;
+        }
+
+        // Create output string builder
+        StringBuilder sb = new StringBuilder();
 
         if (type.equals("World")) {
-            // Check array is not null
-            if (countries.isEmpty()) {
-                System.out.println("No countries!");
-                return;
-            }
-
-            StringBuilder sb = new StringBuilder();
             // Print header
             sb.append("| Country | Population |\r\n");
             sb.append("| ------- | ---------- |\r\n");
@@ -36,18 +37,9 @@ public final class Reporter {
                 }
                 sb.append("| " + country.Name + " | " + country.Population + " |\r\n");
             }
-            // Generate report directory and markdown file
-            generateReport(sb, fileName);
         }
 
         if (type.equals("Continent")) {
-            // Check array is not null
-            if (countries.isEmpty()) {
-                System.out.println("No countries!");
-                return;
-            }
-
-            StringBuilder sb = new StringBuilder();
             // Print header
             sb.append("| Country | Continent | Population |\r\n");
             sb.append("| ------- | --------- | ---------- |\r\n");
@@ -59,18 +51,9 @@ public final class Reporter {
                 }
                 sb.append("| " + country.Name + " | " + country.Continent + " | " + country.Population + " |\r\n");
             }
-            // Generate report directory and markdown file
-            generateReport(sb, fileName);
         }
 
         if (type.equals("Region")) {
-            // Check array is not null
-            if (countries.isEmpty()) {
-                System.out.println("No countries!");
-                return;
-            }
-
-            StringBuilder sb = new StringBuilder();
             // Print header
             sb.append("| Country | Continent | Region | Population |\r\n");
             sb.append("| ------- | --------- | ------ | ---------- |\r\n");
@@ -82,6 +65,9 @@ public final class Reporter {
                 }
                 sb.append("| " + country.Name + " | " + country.Continent + " | " + country.Region + " | " + country.Population + " |\r\n");
             }
+        }
+
+        if (!(sb.length() == 0)) {
             // Generate report directory and markdown file
             generateReport(sb, fileName);
         }
