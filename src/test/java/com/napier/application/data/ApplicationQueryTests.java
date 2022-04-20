@@ -5,7 +5,7 @@ import com.napier.application.logic.Report;
 import com.napier.application.presentation.App;
 import org.junit.jupiter.api.*;
 
-class WorldDatabaseAppTest {
+class ApplicationQueryTests {
     static App app;
     static Report report;
     static Query query;

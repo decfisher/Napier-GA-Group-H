@@ -4,12 +4,9 @@ import com.napier.application.data.City;
 import com.napier.application.data.Country;
 import com.napier.application.data.Language;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
@@ -18,6 +15,7 @@ import java.util.ArrayList;
  */
 public class Query {
 
+    private Reporter reporter = new Reporter();
     private Connection connection;
 
     public Query(Connection connection) {
@@ -33,6 +31,7 @@ public class Query {
      * @return an ArrayList of Country objects
      */
     public ArrayList<Country> getCountriesByPopulation() {
+
         try {
             // Create an SQL statement
             Statement stmt = connection.createStatement();
@@ -43,7 +42,7 @@ public class Query {
                             + "ORDER BY 2 DESC ";
 
             // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
+            ResultSet rset = getResultSet(stmt, strSelect);
             // Return query result if query is successful
             // Check one is returned
             ArrayList<Country> countries = new ArrayList<Country>();
@@ -53,12 +52,10 @@ public class Query {
                 cou.Population = rset.getInt("Population");
                 countries.add(cou);
             }
-            //Passes the array to a new method to print the array
-            printCountries(countries, "World");
+            reporter.outputCountries(countries, "World", "AllCountryPopulation.md");
             return countries;
         }
         catch (Exception e) {
-            //if no country can be identified then an error message is displayed
             System.out.println(e.getMessage());
             System.out.println("Failed to get Country details");
             return null;
@@ -71,7 +68,7 @@ public class Query {
      * @return an ArrayList of Country objects
      */
     public ArrayList<Country> getCountriesByPopulation(String Continent) {
-        //Check the parameter passed into the method is not null
+
         if (Continent == null) {
             throw new IllegalArgumentException("Continent must be specified");
         }
@@ -87,7 +84,7 @@ public class Query {
                             + " ORDER BY 2 DESC";
 
             // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
+            ResultSet rset = getResultSet(stmt, strSelect);
             // Return query result if query is successful
             // Check one is returned
             ArrayList<Country> countries = new ArrayList<Country>();
@@ -98,12 +95,10 @@ public class Query {
                 cou.Continent = rset.getString("Continent");
                 countries.add(cou);
             }
-            //Passes the array to a new method to print the array
-            printCountries(countries, "Continent");
+            reporter.outputCountries(countries, "Continent", "AllCountryPopulationIn" + reporter.concatString(Continent) + ".md");
             return countries;
         }
         catch (Exception e) {
-            //if no country can be identified then an error message is displayed
             System.out.println(e.getMessage());
             System.out.println("Failed to get Country details");
             return null;
@@ -117,7 +112,7 @@ public class Query {
      * @return an ArrayList of Country objects
      */
     public ArrayList<Country> getCountriesByPopulation(String Continent, String Region) {
-        //Check the parameter passed into the method is not null
+
         if (Continent == null || Region == null) {
             throw new IllegalArgumentException("Continent or Region must be specified");
         }
@@ -133,7 +128,7 @@ public class Query {
                             + " ORDER BY 2 DESC ";
 
             // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
+            ResultSet rset = getResultSet(stmt, strSelect);
             // Return query result if query is successful
             // Check one is returned
             ArrayList<Country> countries = new ArrayList<Country>();
@@ -145,12 +140,10 @@ public class Query {
                 cou.Region = rset.getString("Region");
                 countries.add(cou);
             }
-            //Passes the array to a new method to print the array
-            printCountries(countries, "Region");
+            reporter.outputCountries(countries, "Region", "AllCountryPopulationIn" + reporter.concatString(Region) + ".md");
             return countries;
         }
         catch (Exception e) {
-            //if no country can be identified then an error message is displayed
             System.out.println(e.getMessage());
             System.out.println("Failed to get Country details");
             return null;
@@ -183,7 +176,7 @@ public class Query {
                             + " LIMIT " + n;
 
             // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
+            ResultSet rset = getResultSet(stmt, strSelect);
             // Return query result if query is successful
             // Check one is returned
             ArrayList<Country> countries = new ArrayList<Country>();
@@ -193,8 +186,7 @@ public class Query {
                 country.Population = rset.getInt("Population");
                 countries.add(country);
             }
-            System.out.println("Top " + n + " Most Populated Countries in the World");
-            printCountries(countries, "World");
+            reporter.outputCountries(countries, "World", "Top" + n + "MostPopulatedCountriesInTheWorld.md");
             return countries;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -221,9 +213,12 @@ public class Query {
         }
 
         try {
+            // Create an SQL statement
+            Statement stmt = connection.createStatement();
+            ResultSet rset;
+
             if (queryType.equals("Continent")) {
-                // Create an SQL statement
-                Statement stmt = connection.createStatement();
+
                 // Create string for SQL statement
                 String strSelect =
                         "SELECT NAME, continent, population "
@@ -233,7 +228,7 @@ public class Query {
                                 + " LIMIT " + n;
 
                 // Execute SQL statement
-                ResultSet rset = stmt.executeQuery(strSelect);
+                rset = getResultSet(stmt, strSelect);
                 // Return query result if query is successful
                 // Check one is returned
                 ArrayList<Country> countries = new ArrayList<Country>();
@@ -244,12 +239,9 @@ public class Query {
                     country.Population = rset.getInt("Population");
                     countries.add(country);
                 }
-                System.out.println("Top " + n + " Most Populated Countries in " + name);
-                printCountries(countries, "Continent");
+                reporter.outputCountries(countries, "Continent", "Top" + n + "MostPopulatedCountriesIn" + reporter.concatString(name));
                 return countries;
             } else if (queryType.equals("Region")) {
-                // Create an SQL statement
-                Statement stmt = connection.createStatement();
                 // Create string for SQL statement
                 String strSelect =
                         "SELECT NAME, region, population "
@@ -258,7 +250,7 @@ public class Query {
                                 + " ORDER BY population DESC"
                                 + " LIMIT " + n;
                 // Execute SQL statement
-                ResultSet rset = stmt.executeQuery(strSelect);
+                rset = getResultSet(stmt, strSelect);
                 // Return query result if query is successful
                 // Check one is returned
                 ArrayList<Country> countries = new ArrayList<Country>();
@@ -270,8 +262,7 @@ public class Query {
                     country.Population = rset.getInt("Population");
                     countries.add(country);
                 }
-                System.out.println("Top " + n + " Most Populated Countries in " + name);
-                printCountries(countries, "Region");
+                reporter.outputCountries(countries, "Region", "Top" + n + "MostPopulatedCountriesIn" + reporter.concatString(name));
                 return countries;
             } else {
                 return null;
@@ -312,8 +303,7 @@ public class Query {
                 city.Population = rset.getInt("Population");
                 cities.add(city);
             }
-            System.out.println("Most populated cities in the World from largest to smallest");
-            printCities(cities, "World");
+            reporter.outputCities(cities, "World", "MostPopularCitiesInTheWorldLargeToSmall.md");
             return cities;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -335,9 +325,11 @@ public class Query {
         }
 
         try {
+            // Create an SQL statement
+            Statement stmt = connection.createStatement();
+            ResultSet rset;
+
             if (queryType.equals("Continent")) {
-                // Create an SQL statement
-                Statement stmt = connection.createStatement();
                 // Create string for SQL statement
                 String strSelect =
                         "SELECT c.NAME, co.continent, c.population "
@@ -347,7 +339,7 @@ public class Query {
                                 + " ORDER BY population DESC";
 
                 // Execute SQL statement
-                ResultSet rset = stmt.executeQuery(strSelect);
+                rset = getResultSet(stmt, strSelect);
                 // Return query result if query is successful
                 // Check one is returned
                 ArrayList<City> cities = new ArrayList<City>();
@@ -360,11 +352,10 @@ public class Query {
                 }
                 System.out.println("Largest to smallest populated cities in " + name);
                 printCities(cities, "Continent");
+                reporter.outputCities(cities, "Continent", "MostPopularCitiesIn" + reporter.concatString(name) + "LargeToSmall.md");
                 return cities;
 
             } else if (queryType.equals("Region")) {
-                // Create an SQL statement
-                Statement stmt = connection.createStatement();
                 // Create string for SQL statement
                 String strSelect =
                         "SELECT c.NAME, co.Region, c.population "
@@ -373,7 +364,7 @@ public class Query {
                                 + "WHERE co.Region = '" + name + "'"
                                 + " ORDER BY population DESC";
                 // Execute SQL statement
-                ResultSet rset = stmt.executeQuery(strSelect);
+                rset = getResultSet(stmt, strSelect);
                 // Return query result if query is successful
                 // Check one is returned
                 ArrayList<City> cities = new ArrayList<City>();
@@ -384,13 +375,10 @@ public class Query {
                     city.Population = rset.getInt("Population");
                     cities.add(city);
                 }
-                System.out.println("Largest to smallest populated cities in " + name);
-                printCities(cities, "Region");
+                reporter.outputCities(cities, "Region", "MostPopularCitiesIn" + reporter.concatString(name) + "LargeToSmall.md");
                 return cities;
 
             } else if (queryType.equals("Country")) {
-                // Create an SQL statement
-                Statement stmt = connection.createStatement();
                 // Create string for SQL statement
                 String strSelect =
                         "SELECT c.NAME, co.Name as Country, c.population "
@@ -399,7 +387,7 @@ public class Query {
                                 + "WHERE co.Name = '" + name + "'"
                                 + " ORDER BY population DESC";
                 // Execute SQL statement
-                ResultSet rset = stmt.executeQuery(strSelect);
+                rset = getResultSet(stmt, strSelect);
                 // Return query result if query is successful
                 // Check one is returned
                 ArrayList<City> cities = new ArrayList<City>();
@@ -411,13 +399,10 @@ public class Query {
                     city.Population = rset.getInt("Population");
                     cities.add(city);
                 }
-                System.out.println("Largest to smallest populated cities in " + name);
-                printCities(cities, "Country");
+                reporter.outputCities(cities, "Country", "MostPopularCitiesIn" + reporter.concatString(name) + "LargeToSmall.md");
                 return cities;
 
             } else if (queryType.equals("District")) {
-                // Create an SQL statement
-                Statement stmt = connection.createStatement();
                 // Create string for SQL statement
                 String strSelect =
                         "SELECT NAME, district, population "
@@ -425,7 +410,7 @@ public class Query {
                                 + "WHERE district = '" + name + "'"
                                 + " ORDER BY population DESC";
                 // Execute SQL statement
-                ResultSet rset = stmt.executeQuery(strSelect);
+                rset = getResultSet(stmt, strSelect);
                 // Return query result if query is successful
                 // Check one is returned
                 ArrayList<City> cities = new ArrayList<City>();
@@ -437,8 +422,7 @@ public class Query {
                     city.Population = rset.getInt("Population");
                     cities.add(city);
                 }
-                System.out.println("Largest to smallest populated cities in " + name);
-                printCities(cities, "District");
+                reporter.outputCities(cities, "District", "MostPopularCitiesIn" + reporter.concatString(name) + "LargeToSmall.md");
                 return cities;
 
             } else {
@@ -458,9 +442,11 @@ public class Query {
         }
 
         try {
+            // Create an SQL statement
+            Statement stmt = connection.createStatement();
+            ResultSet rset;
+
             if (option.equals("Continent")) {
-                // Create an SQL statement
-                Statement stmt = connection.createStatement();
                 // Create string for SQL statement
                 String strSelect =
                         "SELECT co.Continent AS Continent, SUM(co.Population) AS Total_Pop, " +
@@ -473,7 +459,7 @@ public class Query {
                                 "FROM city ci GROUP BY 1) ci ON ci.countrycode = co.code " +
                                 "GROUP BY Continent";
                 // Execute SQL statement
-                ResultSet rset = stmt.executeQuery(strSelect);
+                rset = getResultSet(stmt, strSelect);
                 // Return query result if query is successful
                 // Check one is returned
                 ArrayList<Country> countries = new ArrayList<Country>();
@@ -485,19 +471,11 @@ public class Query {
                     country.OutCityPop = rset.getLong("Out_city");
                     countries.add(country);
                 }
-                System.out.println("Population In and Out of Cities By Continent");
-                System.out.println(String.format("%-10s %25s %25s %25s ",
-                        "Continent", "Total Population", "Population In Cities", "Population Out of Cities"));
-                // Loop over all employees in the list
-                for (Country country : countries) {
-                    String string = String.format("%-10s %25s %25s %25s ",
-                            country.Continent, country.Population, country.InCityPop, country.OutCityPop);
-                    System.out.println(string);
-                }
+                // Generate report
+                reporter.outputCityPopulationInAndOut(countries, "Continent", "PopulationInAndOutOfCitiesInEachContinent.md");
                 return countries;
+
             } else if (option.equals("Region")) {
-                // Create an SQL statement
-                Statement stmt = connection.createStatement();
                 // Create string for SQL statement
                 String strSelect =
                         "SELECT co.Region AS Region, SUM(co.Population) AS Total_Pop, " +
@@ -510,7 +488,7 @@ public class Query {
                                 "FROM city ci GROUP BY 1) ci ON ci.countrycode = co.code " +
                                 "GROUP BY Region";
                 // Execute SQL statement
-                ResultSet rset = stmt.executeQuery(strSelect);
+                rset = getResultSet(stmt, strSelect);
                 // Return query result if query is successful
                 // Check one is returned
                 ArrayList<Country> countries = new ArrayList<Country>();
@@ -522,19 +500,11 @@ public class Query {
                     country.OutCityPop = rset.getLong("Out_city");
                     countries.add(country);
                 }
-                System.out.println("Population In and Out of Cities By Region");
-                System.out.println(String.format("%-10s %25s %25s %25s ",
-                        "Region", "Total Population", "Population In Cities", "Population Out of Cities"));
-                // Loop over all employees in the list
-                for (Country country : countries) {
-                    String string = String.format("%-10s %25s %25s %25s ",
-                            country.Region, country.Population, country.InCityPop, country.OutCityPop);
-                    System.out.println(string);
-                }
+                // Generate report
+                reporter.outputCityPopulationInAndOut(countries, "Region", "PopulationInAndOutOfCitiesInEachRegion.md");
                 return countries;
+
             } else if (option.equals("Country")) {
-                // Create an SQL statement
-                Statement stmt = connection.createStatement();
                 // Create string for SQL statement
                 String strSelect =
                         "SELECT co.Name AS Name, SUM(co.Population) AS Total_Pop, " +
@@ -547,7 +517,7 @@ public class Query {
                                 "FROM city ci GROUP BY 1) ci ON ci.countrycode = co.code " +
                                 "GROUP BY Name";
                 // Execute SQL statement
-                ResultSet rset = stmt.executeQuery(strSelect);
+                rset = getResultSet(stmt, strSelect);
                 // Return query result if query is successful
                 // Check one is returned
                 ArrayList<Country> countries = new ArrayList<Country>();
@@ -559,16 +529,10 @@ public class Query {
                     country.OutCityPop = rset.getLong("Out_city");
                     countries.add(country);
                 }
-                System.out.println("Population In and Out of Cities By Country");
-                System.out.println(String.format("%-10s %25s %25s %25s ",
-                        "Country", "Total Population", "Population In Cities", "Population Out of Cities"));
-                // Loop over all employees in the list
-                for (Country country : countries) {
-                    String string = String.format("%-10s %25s %25s %25s ",
-                            country.Name, country.Population, country.InCityPop, country.OutCityPop);
-                    System.out.println(string);
-                }
+                // Generate report
+                reporter.outputCityPopulationInAndOut(countries, "Country", "PopulationInAndOutOfCitiesInEachCountry.md");
                 return countries;
+
             } else {
                 throw new IllegalArgumentException("Invalid option specified");
             }
@@ -614,7 +578,8 @@ public class Query {
                 city.Population = resultSet.getInt("population");
                 cities.add(city);
             }
-            outputCityPopulation(cities, "Top" + n + "MostPopulatedCitiesInTheWorld.md");
+            // Generate report
+            reporter.outputCityPopulation(cities, "Top" + n + "MostPopulatedCitiesInTheWorld.md");
             return cities;
 
         } catch (Exception e) {
@@ -635,10 +600,11 @@ public class Query {
         }
 
         try {
+            // Create an SQL statement
+            Statement statement = connection.createStatement();
+            ResultSet resultSet;
 
             if (option.equals("Continent")) {
-                // Create an SQL statement
-                Statement statement = connection.createStatement();
                 // Create string for SQL statement
                 String strSelect =
                         "SELECT ci.Name AS Name, co.Continent AS Continent, ci.Population AS Population "
@@ -649,7 +615,7 @@ public class Query {
                                 + " LIMIT " + n + ";";
 
                 // Execute SQL statement
-                ResultSet resultSet = statement.executeQuery(strSelect);
+                resultSet = getResultSet(statement, strSelect);
                 // Return query result if query is successful
                 // Check one is returned
                 ArrayList<City> cities = new ArrayList<City>();
@@ -659,12 +625,11 @@ public class Query {
                     city.Population = resultSet.getInt("population");
                     cities.add(city);
                 }
-                outputCityPopulation(cities, "Top" + n + "MostPopulatedCitiesIn" + name + ".md");
+                // Generate report
+                reporter.outputCityPopulation(cities, "Top" + n + "MostPopulatedCitiesIn" + reporter.concatString(name) + ".md");
                 return cities;
 
             } else if (option.equals("Region")) {
-                // Create an SQL statement
-                Statement statement = connection.createStatement();
                 // Create string for SQL statement
                 String strSelect =
                         "SELECT ci.Name AS Name, co.Region AS Region, ci.Population AS Population "
@@ -675,7 +640,7 @@ public class Query {
                                 + " LIMIT " + n + ";";
 
                 // Execute SQL statement
-                ResultSet resultSet = statement.executeQuery(strSelect);
+                resultSet = getResultSet(statement, strSelect);
                 // Return query result if query is successful
                 // Check one is returned
                 ArrayList<City> cities = new ArrayList<City>();
@@ -685,12 +650,11 @@ public class Query {
                     city.Population = resultSet.getInt("population");
                     cities.add(city);
                 }
-                outputCityPopulation(cities, "Top" + n + "MostPopulatedCitiesIn" + name + ".md");
+                // Generate report
+                reporter.outputCityPopulation(cities, "Top" + n + "MostPopulatedCitiesIn" + reporter.concatString(name) + ".md");
                 return cities;
 
             } else if (option.equals("Country")) {
-                // Create an SQL statement
-                Statement statement = connection.createStatement();
                 // Create string for SQL statement
                 String strSelect =
                         "SELECT ci.Name AS Name, co.Name AS Country, ci.Population AS Population "
@@ -701,7 +665,7 @@ public class Query {
                                 + " LIMIT " + n + ";";
 
                 // Execute SQL statement
-                ResultSet resultSet = statement.executeQuery(strSelect);
+                resultSet = getResultSet(statement, strSelect);
                 // Return query result if query is successful
                 // Check one is returned
                 ArrayList<City> cities = new ArrayList<City>();
@@ -711,12 +675,11 @@ public class Query {
                     city.Population = resultSet.getInt("population");
                     cities.add(city);
                 }
-                outputCityPopulation(cities, "Top" + n + "MostPopulatedCitiesIn" + name + ".md");
+                // Generate report
+                reporter.outputCityPopulation(cities, "Top" + n + "MostPopulatedCitiesIn" + reporter.concatString(name) + ".md");
                 return cities;
 
             } else if (option.equals("District")) {
-                // Create an SQL statement
-                Statement statement = connection.createStatement();
                 // Create string for SQL statement
                 String strSelect =
                         "SELECT NAME, District, population "
@@ -726,7 +689,7 @@ public class Query {
                                 + "LIMIT " + n;
 
                 // Execute SQL statement
-                ResultSet resultSet = statement.executeQuery(strSelect);
+                resultSet = getResultSet(statement, strSelect);
                 // Return query result if query is successful
                 // Check one is returned
                 ArrayList<City> cities = new ArrayList<City>();
@@ -736,7 +699,8 @@ public class Query {
                     city.Population = resultSet.getInt("population");
                     cities.add(city);
                 }
-                outputCityPopulation(cities, "Top" + n + "MostPopulatedCitiesIn" + name + ".md");
+                // Generate report
+                reporter.outputCityPopulation(cities, "Top" + n + "MostPopulatedCitiesIn" + reporter.concatString(name) + ".md");
                 return cities;
 
             } else {
@@ -764,9 +728,11 @@ public class Query {
         }
 
         try {
+            // Create an SQL statement
+            Statement stmt = connection.createStatement();
+            ResultSet rset;
+
             if (queryType.equals("Continent")) {
-                // Create an SQL statement
-                Statement stmt = connection.createStatement();
                 // Create string for SQL statement
                 String strSelect =
                         "SELECT continent, SUM(population) AS Population " +
@@ -774,7 +740,7 @@ public class Query {
                                 "GROUP BY 1 " +
                                 "ORDER BY Population DESC";
                 // Execute SQL statement
-                ResultSet rset = stmt.executeQuery(strSelect);
+                rset = getResultSet(stmt, strSelect);
                 // Return query result if query is successful
                 // Check one is returned
                 ArrayList<Country> countries = new ArrayList<Country>();
@@ -784,20 +750,10 @@ public class Query {
                     country.Population = rset.getLong("Population");
                     countries.add(country);
                 }
-                System.out.println("Population in each continent");
-                // Print Header
-                System.out.println(String.format("%-10s %10s ", "Continent", "Population"));
-                // Loop over all countries in the list
-                for (Country cou : countries) {
-                    String cou_string =
-                            String.format("%-10s %10s ",
-                                    cou.Continent, cou.Population);
-                    System.out.println(cou_string);
-                }
+                // Generate report
+                reporter.outputPopulation(countries, "Continent", "TotalPopulationInAllContinents.md");
 
             } else if (queryType.equals("Region")) {
-                // Create an SQL statement
-                Statement stmt = connection.createStatement();
                 // Create string for SQL statement
                 String strSelect =
                         "SELECT region, SUM(population) AS Population " +
@@ -805,7 +761,7 @@ public class Query {
                                 "GROUP BY 1 " +
                                 "ORDER BY Population DESC";
                 // Execute SQL statement
-                ResultSet rset = stmt.executeQuery(strSelect);
+                rset = getResultSet(stmt, strSelect);
                 // Return query result if query is successful
                 // Check one is returned
                 ArrayList<Country> countries = new ArrayList<Country>();
@@ -815,19 +771,10 @@ public class Query {
                     country.Population = rset.getLong("Population");
                     countries.add(country);
                 }
-                System.out.println("Population in each region");
-                // Print Header
-                System.out.println(String.format("%-10s %10s ", "Region", "Population"));
-                // Loop over all countries in the list
-                for (Country cou : countries) {
-                    String cou_string =
-                            String.format("%-10s %10s ",
-                                    cou.Region, cou.Population);
-                    System.out.println(cou_string);
-                }
+                // Generate report
+                reporter.outputPopulation(countries, "Region", "TotalPopulationInAllRegions.md");
+
             } else if (queryType.equals("Country")) {
-                // Create an SQL statement
-                Statement stmt = connection.createStatement();
                 // Create string for SQL statement
                 String strSelect =
                         "SELECT NAME, SUM(population) AS Population " +
@@ -835,7 +782,7 @@ public class Query {
                                 "GROUP BY 1 " +
                                 "ORDER BY Population DESC";
                 // Execute SQL statement
-                ResultSet rset = stmt.executeQuery(strSelect);
+                rset = getResultSet(stmt, strSelect);
                 // Return query result if query is successful
                 // Check one is returned
                 ArrayList<Country> countries = new ArrayList<Country>();
@@ -845,22 +792,15 @@ public class Query {
                     country.Population = rset.getLong("Population");
                     countries.add(country);
                 }
-                System.out.println("Population in each region");
-                // Print Header
-                System.out.println(String.format("%-10s %10s ", "Country", "Population"));
-                // Loop over all countries in the list
-                for (Country cou : countries) {
-                    String cou_string =
-                            String.format("%-10s %10s ",
-                                    cou.Name, cou.Population);
-                    System.out.println(cou_string);
-                }
+                // Generate report
+                reporter.outputPopulation(countries, "Country", "TotalPopulationInAllCountries.md");
+
             } else {
                 throw new Exception();
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Failed to print");
+            System.out.println("Failed to get population");
         }
     }
 
@@ -880,8 +820,8 @@ public class Query {
                             + "ORDER BY 2 DESC; ";
 
             // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Return query result if query is sucessful
+            ResultSet rset = getResultSet(stmt, strSelect);
+            // Return query result if query is successful
             // Check one is returned
             ArrayList<Country> cap_cities = new ArrayList<Country>();
             while (rset.next()) {
@@ -890,7 +830,8 @@ public class Query {
                 cou.Population = rset.getInt("Population");
                 cap_cities.add(cou);
             }
-            printCapitalCities(cap_cities, "World");
+            // Generate report
+            reporter.outputCapitalCities(cap_cities, "World", "CapitalCityPopulationInTheWorld.md");
             return cap_cities;
         }
         catch (Exception e) {
@@ -923,18 +864,19 @@ public class Query {
                             + "ORDER BY 3 DESC; ";
 
             // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
+            ResultSet rset = getResultSet(stmt, strSelect);
             // Return query result if query is successful
             // Check one is returned
             ArrayList<Country> cap_cities = new ArrayList<Country>();
             while (rset.next()) {
                 Country cou = new Country();
                 cou.Name = rset.getString("NAME");
-                cou.Population = rset.getInt("Population");
                 cou.Continent = rset.getString("Continent");
+                cou.Population = rset.getInt("Population");
                 cap_cities.add(cou);
             }
-            printCapitalCities(cap_cities, "Continent");
+            // Generate report
+            reporter.outputCapitalCities(cap_cities, "Continent", "CapitalCityPopulationIn" + reporter.concatString(Continent) + ".md");
             return cap_cities;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -967,20 +909,21 @@ public class Query {
                             + "ORDER BY 4 DESC; ";
 
             // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
+            ResultSet rset = getResultSet(stmt, strSelect);
             // Return query result if query is successful
             // Check one is returned
-            ArrayList<Country> cap_cities = new ArrayList<Country>();
+            ArrayList<Country> capitalCities = new ArrayList<Country>();
             while (rset.next()) {
-                Country cou = new Country();
-                cou.Name = rset.getString("NAME");
-                cou.Population = rset.getInt("Population");
-                cou.Continent = rset.getString("Continent");
-                cou.Region = rset.getString("Region");
-                cap_cities.add(cou);
+                Country country = new Country();
+                country.Name = rset.getString("NAME");
+                country.Population = rset.getInt("Population");
+                country.Continent = rset.getString("Continent");
+                country.Region = rset.getString("Region");
+                capitalCities.add(country);
             }
-            printCapitalCities(cap_cities, "Region");
-            return cap_cities;
+            // Generate report
+            reporter.outputCapitalCities(capitalCities, "Region", "CapitalCityPopulationIn" + reporter.concatString(Region) + ".md");
+            return capitalCities;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get Capital City  details");
@@ -1013,7 +956,7 @@ public class Query {
                             + " LIMIT " + n + ";";
 
             // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
+            ResultSet rset = getResultSet(stmt, strSelect);
             // Return query result if query is sucessful
             // Check one is returned
             ArrayList<Country> cap_cities = new ArrayList<Country>();
@@ -1023,7 +966,8 @@ public class Query {
                 cou.Population = rset.getInt("Population");
                 cap_cities.add(cou);
             }
-            printCapitalCities(cap_cities, "World");
+            // Generate report
+            reporter.outputCapitalCities(cap_cities, "World", "Top" + n + "CapitalCitiesInTheWorld.md");
             return cap_cities;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -1061,7 +1005,7 @@ public class Query {
                             + " LIMIT " + n + ";";
 
             // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
+            ResultSet rset = getResultSet(stmt, strSelect);
             // Return query result if query is successful
             // Check one is returned
             ArrayList<Country> cap_cities = new ArrayList<Country>();
@@ -1072,7 +1016,8 @@ public class Query {
                 cou.Continent = rset.getString("Continent");
                 cap_cities.add(cou);
             }
-            printCapitalCities(cap_cities, "Continent");
+            // Generate report
+            reporter.outputCapitalCities(cap_cities, "Continent", "Top" + n + "CapitalCitiesIn" + reporter.concatString(Continent) + ".md");
             return cap_cities;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -1112,7 +1057,7 @@ public class Query {
                             + " LIMIT " + n + ";";
 
             // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
+            ResultSet rset = getResultSet(stmt, strSelect);
             // Return query result if query is successful
             // Check one is returned
             ArrayList<Country> cap_cities = new ArrayList<Country>();
@@ -1125,7 +1070,8 @@ public class Query {
                 country.Region = rset.getString("Region");
                 cap_cities.add(country);
             }
-            printCapitalCities(cap_cities, "Region");
+            // Generate report
+            reporter.outputCapitalCities(cap_cities, "Region", "Top" + n + "CapitalCitiesIn" + reporter.concatString(region) + ".md");
             return cap_cities;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -1137,24 +1083,6 @@ public class Query {
     /**
      * Population Queries
      */
-
-    /**
-     * Prints a list of Languages ranked by total number of speakers
-     * @param lang_rank
-     */
-    public static void printLangRank(ArrayList<Language> lang_rank) {
-
-        // Print header
-        System.out.println(String.format("%-10s %10s %10s", "Language", "TotalSpeakers (M)", "PercentOfWorldPop (%)"));
-        // Loop over all languages in the list
-        for (Language lang : lang_rank) {
-            String lang_string =
-                    String.format("%-10s %10s %10s",
-                            lang.Language, lang.TotalSpeakers, lang.PercentOfWorldPop);
-            System.out.println(lang_string);
-        }
-
-    }
 
     /**
      * Gets the population of the world
@@ -1170,32 +1098,28 @@ public class Query {
                             + "FROM country co ;";
 
             // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
+            ResultSet rset = getResultSet(stmt, strSelect);
             // Return query result if query is successful
             // Check one is returned
             if (rset.next()) {
-                Country cou = new Country();
-                cou.Name = "World";
-                cou.Population = rset.getLong("Population");
-                System.out.println("The Population of the world is " + cou.Population);
-                // Print Header
-                System.out.println(String.format("%-10s %10s ", "Name", "Population"));
-                String cou_string =
-                        String.format("%-10s %10s ", cou.Name, cou.Population);
-                System.out.println(cou_string);
-                return cou;
+                Country country = new Country();
+                country.Name = "World";
+                country.Population = rset.getLong("Population");
+                reporter.outputPopulation(country, "World", "PopulationOfTheWorld.md");
+                return country;
             } else {
                 return null;
             }
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Failed to execute query getPopulationOf with 0 parameters");
+            System.out.println("Failed to execute query getPopulationOfWorld");
             return null;
         }
     }
+
     /**
-     * Gets the population of a Contient
+     * Gets the population of a Continent
      * @return a Country object
      */
     public Country getPopulationOf(String Continent) {
@@ -1214,27 +1138,22 @@ public class Query {
                             + "WHERE co.continent = '" + Continent + "';";
 
             // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
+            ResultSet rset = getResultSet(stmt, strSelect);
             // Return query result if query is successful
             // Check one is returned
             if (rset.next()) {
-                Country cou = new Country();
-                cou.Name = Continent;
-                cou.Population = rset.getLong("Population");
-                System.out.println("The Population of " + Continent + " is " + cou.Population);
-                // Print Header
-                System.out.println(String.format("%-10s %10s ", "Name", "Population"));
-                String cou_string =
-                        String.format("%-10s %10s ", cou.Name, cou.Population);
-                System.out.println(cou_string);
-                return cou;
+                Country country = new Country();
+                country.Name = Continent;
+                country.Population = rset.getLong("Population");
+                reporter.outputPopulation(country, "Continent", "PopulationOf" + reporter.concatString(Continent) + ".md");
+                return country;
             } else {
                 return null;
             }
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Failed to execute query getPopulationOf with 1 parameter");
+            System.out.println("Failed to execute query getPopulationOfContinent");
             return null;
         }
     }
@@ -1255,26 +1174,21 @@ public class Query {
                             + "WHERE co.continent = '" + Continent + "' AND co.Region = '" + Region + "' ;";
 
             // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
+            ResultSet rset = getResultSet(stmt, strSelect);
             // Return query result if query is successful
             // Check one is returned
             if (rset.next()) {
-                Country cou = new Country();
-                cou.Name = Region;
-                cou.Population = rset.getLong("Population");
-                System.out.println("The Population of " + Region + " is " + cou.Population);
-                // Print Header
-                System.out.println(String.format("%-10s %10s ", "Name", "Population"));
-                String cou_string =
-                        String.format("%-10s %10s ", cou.Name, cou.Population);
-                System.out.println(cou_string);
-                return cou;
+                Country country = new Country();
+                country.Name = Region;
+                country.Population = rset.getLong("Population");
+                reporter.outputPopulation(country, "Region", "PopulationOf" + reporter.concatString(Region) + ".md");
+                return country;
             } else {
                 return null;
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Failed to execute query getPopulationOf with 2 parameters");
+            System.out.println("Failed to execute query getPopulationOfRegion");
             return null;
         }
     }
@@ -1294,26 +1208,21 @@ public class Query {
                             + "WHERE co.Name = '" + aCountry + "';";
 
             // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
+            ResultSet rset = getResultSet(stmt, strSelect);
             // Return query result if query is successful
             // Check one is returned
             if (rset.next()) {
-                Country cou = new Country();
-                cou.Name = aCountry;
-                cou.Population = rset.getLong("Population");
-                System.out.println("The Population of " + aCountry + " is " + cou.Population);
-                // Print Header
-                System.out.println(String.format("%-10s %10s ", "Name", "Population"));
-                String cou_string =
-                        String.format("%-10s %10s ", cou.Name, cou.Population);
-                System.out.println(cou_string);
-                return cou;
+                Country country = new Country();
+                country.Name = aCountry;
+                country.Population = rset.getLong("Population");
+                reporter.outputPopulation(country, "Country", "PopulationOf" + reporter.concatString(aCountry) + ".md");
+                return country;
             } else {
                 return null;
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Failed to execute query getPopulationOf with 3 parameters");
+            System.out.println("Failed to execute query getPopulationOfCountry");
             return null;
         }
     }
@@ -1334,26 +1243,21 @@ public class Query {
                             + "WHERE co.Name = '" + aCountry + "' AND ci.District = '" + District +"';";
 
             // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
+            ResultSet rset = getResultSet(stmt, strSelect);
             // Return query result if query is successful
             // Check one is returned
             if (rset.next()) {
-                Country cou = new Country();
-                cou.Name = District;
-                cou.Population = rset.getLong("Population");
-                System.out.println("The Population of " + District + " is " + cou.Population);
-                // Print Header
-                System.out.println(String.format("%-10s %10s ", "Name", "Population"));
-                String cou_string =
-                        String.format("%-10s %10s ", cou.Name, cou.Population);
-                System.out.println(cou_string);
-                return cou;
+                Country country = new Country();
+                country.Name = District;
+                country.Population = rset.getLong("Population");
+                reporter.outputPopulation(country, "District", "PopulationOf" + reporter.concatString(District) + ".md");
+                return country;
             } else {
                 return null;
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Failed to execute query getPopulationOf with 4 parameters");
+            System.out.println("Failed to execute query getPopulationOfDistrict");
             return null;
         }
     }
@@ -1374,27 +1278,22 @@ public class Query {
                             + "WHERE ci.Name = '" + City + "' AND ci.District = '" + District +"';";
 
             // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
+            ResultSet rset = getResultSet(stmt, strSelect);
             // Return query result if query is successful
             // Check one is returned
             if (rset.next()) {
-                Country cou = new Country();
-                cou.Name = City;
-                cou.Population = rset.getLong("Population");
-                System.out.println("The Population of " + City + " is " + cou.Population);
-                // Print Header
-                System.out.println(String.format("%-10s %10s ", "Name", "Population"));
-                String cou_string =
-                        String.format("%-10s %10s ", cou.Name, cou.Population);
-                System.out.println(cou_string);
-                return cou;
+                Country country = new Country();
+                country.Name = City;
+                country.Population = rset.getLong("Population");
+                reporter.outputPopulation(country, "City", "PopulationOf" + reporter.concatString(City) + ".md");
+                return country;
             } else {
                 return null;
             }
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Failed to execute query getPopulationOf with 5 parameters");
+            System.out.println("Failed to execute query getPopulationOfCity");
             return null;
         }
     }
@@ -1516,39 +1415,6 @@ public class Query {
         }
     }
 
-    public static void outputCityPopulation(ArrayList<City> cities, String fileName) {
-        // Check array is not null
-        if (cities.isEmpty()) {
-            System.out.println("No cities!");
-            return;
-        }
-
-        StringBuilder sb = new StringBuilder();
-        // Print header
-        sb.append("| City | Population |\r\n");
-        sb.append("| ---- | ---------- |\r\n");
-
-        // Loop over all cities in the list
-        for (City city : cities) {
-            if (city == null) {
-                continue;
-            }
-            sb.append("| " + city.Name + " | " + city.Population + " |\r\n");
-        }
-
-        // Generate report directory and markdown file
-        try {
-            new File("./reports/").mkdir();
-            BufferedWriter writer = new BufferedWriter(new FileWriter("./reports/" + fileName));
-            writer.write(sb.toString());
-            writer.close();
-            System.out.println("Report \"" + fileName + "\" generated successfully!");
-        } catch (IOException e) {
-            System.out.println("Could not generate report \"" + fileName + "\"!");
-            System.out.println(e.getMessage());
-        }
-    }
-
     /**
      * Prints a list of countries
      * @param countries
@@ -1620,6 +1486,22 @@ public class Query {
             System.out.println(e.getMessage());
             System.out.println("Failed to get Country details");
             return null;
+        }
+    }
+
+    /**
+     * Prints a list of Languages ranked by total number of speakers
+     * @param lang_rank
+     */
+    public static void printLangRank(ArrayList<Language> lang_rank) {
+        // Print header
+        System.out.println(String.format("%-10s %10s %10s", "Language", "TotalSpeakers (M)", "PercentOfWorldPop (%)"));
+        // Loop over all languages in the list
+        for (Language lang : lang_rank) {
+            String lang_string =
+                    String.format("%-10s %10s %10s",
+                            lang.Language, lang.TotalSpeakers, lang.PercentOfWorldPop);
+            System.out.println(lang_string);
         }
     }
 
@@ -1705,12 +1587,17 @@ public class Query {
                 lang.PercentOfWorldPop = rset.getDouble("PercentOfWorldPop");
                 languages.add(lang);
             }
-                printLangRank(languages);
-                return languages;
+            // Generate report
+            reporter.outputLanguageRanks(languages, "LanguagePopularity.md");
+            return languages;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get Population details");
             return null;
         }
+    }
+
+    public ResultSet getResultSet(Statement statement, String query) throws SQLException {
+        return statement.executeQuery(query);
     }
 }

@@ -23,7 +23,7 @@ public class App {
         }
         // Create query object to initialise queries
         Query query = new Query(a.getConnection());
-        query.getTopNCityPopulation(5, "Country", "Mexico");
+        query.getTopNCityPopulation(5, "Country", "Côte d’Ivoire");
 //        Report report = new Report(a.getConnection());
 //        report.populationReport("Country");
 
