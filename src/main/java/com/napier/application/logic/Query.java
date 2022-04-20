@@ -53,10 +53,12 @@ public class Query {
                 cou.Population = rset.getInt("Population");
                 countries.add(cou);
             }
+            //Passes the array to a new method to print the array
             printCountries(countries, "World");
             return countries;
         }
         catch (Exception e) {
+            //if no country can be identified then an error message is displayed
             System.out.println(e.getMessage());
             System.out.println("Failed to get Country details");
             return null;
@@ -69,7 +71,7 @@ public class Query {
      * @return an ArrayList of Country objects
      */
     public ArrayList<Country> getCountriesByPopulation(String Continent) {
-
+        //Check the parameter passed into the method is not null
         if (Continent == null) {
             throw new IllegalArgumentException("Continent must be specified");
         }
@@ -96,10 +98,12 @@ public class Query {
                 cou.Continent = rset.getString("Continent");
                 countries.add(cou);
             }
+            //Passes the array to a new method to print the array
             printCountries(countries, "Continent");
             return countries;
         }
         catch (Exception e) {
+            //if no country can be identified then an error message is displayed
             System.out.println(e.getMessage());
             System.out.println("Failed to get Country details");
             return null;
@@ -113,7 +117,7 @@ public class Query {
      * @return an ArrayList of Country objects
      */
     public ArrayList<Country> getCountriesByPopulation(String Continent, String Region) {
-
+        //Check the parameter passed into the method is not null
         if (Continent == null || Region == null) {
             throw new IllegalArgumentException("Continent or Region must be specified");
         }
@@ -141,10 +145,12 @@ public class Query {
                 cou.Region = rset.getString("Region");
                 countries.add(cou);
             }
+            //Passes the array to a new method to print the array
             printCountries(countries, "Region");
             return countries;
         }
         catch (Exception e) {
+            //if no country can be identified then an error message is displayed
             System.out.println(e.getMessage());
             System.out.println("Failed to get Country details");
             return null;
