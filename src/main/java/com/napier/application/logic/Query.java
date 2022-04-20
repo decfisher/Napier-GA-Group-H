@@ -52,10 +52,12 @@ public class Query {
                 cou.Population = rset.getInt("Population");
                 countries.add(cou);
             }
+            //Generates a report for the countries by population for all countries in the world, saved as a markdown file
             reporter.outputCountries(countries, "World", "AllCountryPopulation.md");
             return countries;
         }
         catch (Exception e) {
+            //If an error no information is found an error message is displayed
             System.out.println(e.getMessage());
             System.out.println("Failed to get Country details");
             return null;
@@ -95,10 +97,12 @@ public class Query {
                 cou.Continent = rset.getString("Continent");
                 countries.add(cou);
             }
+            //Generates a report for the countries by population for all countries in a contient, saved as a markdown file
             reporter.outputCountries(countries, "Continent", "AllCountryPopulationIn" + reporter.concatString(Continent) + ".md");
             return countries;
         }
         catch (Exception e) {
+            //If an error no information is found an error message is displayed
             System.out.println(e.getMessage());
             System.out.println("Failed to get Country details");
             return null;
@@ -140,10 +144,12 @@ public class Query {
                 cou.Region = rset.getString("Region");
                 countries.add(cou);
             }
+            //Generates a report for the countries by population for all countries in a region, saved as a markdown file
             reporter.outputCountries(countries, "Region", "AllCountryPopulationIn" + reporter.concatString(Region) + ".md");
             return countries;
         }
         catch (Exception e) {
+            //If an error no information is found an error message is displayed
             System.out.println(e.getMessage());
             System.out.println("Failed to get Country details");
             return null;
