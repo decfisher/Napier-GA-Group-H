@@ -188,14 +188,22 @@ public class AppIntegrationTest {
         assertEquals(cit.Name, "Jakarta");
         assertEquals(cit.Population, 9604900);
         assertEquals(cit.Region, "Southeast Asia");
-        
     }
     @Test
-    void largeToSmallCityPopulation4() {
+    void largeToSmallCityPopulation3() {
         ArrayList<City> cities = query.largeToSmallCityPopulation("District", "Maharashtra");
         City cit = cities.get(0);
         assertEquals(cit.Name, "Mumbai (Bombay)");
         assertEquals(cit.Population, 10500000);
-        assertEquals(cit.District, "Maharashtra");
+        assertEquals(cit.District, "Maharashtra");    
+    }
+    @Test
+    void largeToSmallCityPopulation4() {
+        ArrayList<City> cities = query.largeToSmallCityPopulation("Country", "India");
+        City cit = cities.get(0);
+        assertEquals(cit.Name, "Mumbai (Bombay)");
+        assertEquals(cit.Population, 10500000);
+        assertEquals(cit.Country, "India");
+
     }
 }
