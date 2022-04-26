@@ -1,7 +1,0 @@
-| City | Population |
-| ---- | ---------- |
-| Abidjan | 2500000 |
-| Bouaké | 329850 |
-| Yamoussoukro | 130000 |
-| Daloa | 121842 |
-| Korhogo | 109445 |
