@@ -82,6 +82,43 @@ public final class Reporter {
         return false;
     }
 
+    public boolean outputNameOnly(ArrayList<Country> countries, String fileName) {
+        // Check option strings are not null
+        if (fileName == null) {
+            System.out.println("Input cannot be null!");
+            return false;
+        }
+
+        // Check array is not null
+        if (countries.isEmpty()) {
+            System.out.println("No countries!");
+            return false;
+        }
+
+        // Create output string builder
+        StringBuilder sb = new StringBuilder();
+
+        // Print header
+        sb.append("| Country | Population |\r\n");
+        sb.append("| ------- | ---------- |\r\n");
+
+        // Loop over all cities in the list
+        for (Country country : countries) {
+            if (country == null) {
+                continue;
+            }
+            sb.append("| " + country.Name + " | " + country.Population + " |\r\n");
+        }
+
+        if (!(sb.length() == 0)) {
+            // Generate report directory and markdown file
+            generateReport(sb, fileName);
+            return true;
+        }
+
+        return false;
+    }
+
     public boolean outputCities(ArrayList<City> cities, String type, String fileName) {
         // Check array is not null
         if (cities.isEmpty()) {
@@ -381,8 +418,8 @@ public final class Reporter {
 
         if (type.equals("World")) {
             // Print header
-            sb.append("|   | Population |\r\n");
-            sb.append("| - | ---------- |\r\n");
+            sb.append("| Name | Population |\r\n");
+            sb.append("| ---- | ---------- |\r\n");
             sb.append("| " + country.Name + " | " + country.Population + " |\r\n");
         }
 

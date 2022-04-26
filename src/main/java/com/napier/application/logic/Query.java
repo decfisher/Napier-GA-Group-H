@@ -97,7 +97,7 @@ public class Query {
                 cou.Continent = rset.getString("Continent");
                 countries.add(cou);
             }
-            //Generates a report for the countries by population for all countries in a contient, saved as a markdown file
+            //Generates a report for the countries by population for all countries in a continent, saved as a markdown file
             reporter.outputCountries(countries, "Continent", "AllCountryPopulationIn" + reporter.concatString(Continent) + ".md");
             return countries;
         }
@@ -245,8 +245,9 @@ public class Query {
                     country.Population = rset.getInt("Population");
                     countries.add(country);
                 }
-                reporter.outputCountries(countries, "Continent", "Top" + n + "MostPopulatedCountriesIn" + reporter.concatString(name));
+                reporter.outputNameOnly(countries, "Top" + n + "MostPopulatedCountriesIn" + reporter.concatString(name) + ".md");
                 return countries;
+
             } else if (queryType.equals("Region")) {
                 // Create string for SQL statement
                 String strSelect =
@@ -268,7 +269,7 @@ public class Query {
                     country.Population = rset.getInt("Population");
                     countries.add(country);
                 }
-                reporter.outputCountries(countries, "Region", "Top" + n + "MostPopulatedCountriesIn" + reporter.concatString(name));
+                reporter.outputNameOnly(countries, "Top" + n + "MostPopulatedCountriesIn" + reporter.concatString(name) + ".md");
                 return countries;
             } else {
                 return null;
@@ -364,7 +365,7 @@ public class Query {
             } else if (queryType.equals("Region")) {
                 // Create string for SQL statement
                 String strSelect =
-                        "SELECT c.NAME, co.Region, c.population "
+                        "SELECT c.NAME, co.Continent, co.Region, c.population "
                                 + "FROM city c "
                                 + "LEFT JOIN country co ON c.CountryCode = co.Code "
                                 + "WHERE co.Region = '" + name + "'"
@@ -377,6 +378,7 @@ public class Query {
                 while (rset.next()) {
                     City city = new City();
                     city.Name = rset.getString("NAME");
+                    city.Continent = rset.getString("Continent");
                     city.Region = rset.getString("Region");
                     city.Population = rset.getInt("Population");
                     cities.add(city);
@@ -387,7 +389,7 @@ public class Query {
             } else if (queryType.equals("Country")) {
                 // Create string for SQL statement
                 String strSelect =
-                        "SELECT c.NAME, co.Name as Country, c.population "
+                        "SELECT c.NAME, co.Continent as Continent, co.Region as Region, co.Name as Country, c.population "
                                 + "FROM city c "
                                 + "LEFT JOIN country co ON c.CountryCode = co.Code "
                                 + "WHERE co.Name = '" + name + "'"
@@ -401,6 +403,8 @@ public class Query {
                 {
                     City city = new City();
                     city.Name = rset.getString("NAME");
+                    city.Continent = rset.getString("Continent");
+                    city.Region = rset.getString("Region");
                     city.Country = rset.getString("Country");
                     city.Population = rset.getInt("Population");
                     cities.add(city);
@@ -411,9 +415,10 @@ public class Query {
             } else if (queryType.equals("District")) {
                 // Create string for SQL statement
                 String strSelect =
-                        "SELECT NAME, district, population "
+                        "SELECT c.NAME, co.Continent as Continent, co.Region as Region, co.Name as Country, c.District, c.population "
                                 + "FROM city c "
-                                + "WHERE district = '" + name + "'"
+                                + "LEFT JOIN country co ON c.CountryCode = co.Code "
+                                + "WHERE c.District = '" + name + "'"
                                 + " ORDER BY population DESC";
                 // Execute SQL statement
                 rset = getResultSet(stmt, strSelect);
@@ -424,6 +429,9 @@ public class Query {
                 {
                     City city = new City();
                     city.Name = rset.getString("NAME");
+                    city.Continent = rset.getString("Continent");
+                    city.Region = rset.getString("Region");
+                    city.Country = rset.getString("Country");
                     city.District = rset.getString("District");
                     city.Population = rset.getInt("Population");
                     cities.add(city);
@@ -628,17 +636,18 @@ public class Query {
                 while (resultSet.next()) {
                     City city = new City();
                     city.Name = resultSet.getString("NAME");
+                    city.Continent = resultSet.getString("Continent");
                     city.Population = resultSet.getInt("population");
                     cities.add(city);
                 }
                 // Generate report
-                reporter.outputCityPopulation(cities, "Top" + n + "MostPopulatedCitiesIn" + reporter.concatString(name) + ".md");
+                reporter.outputCities(cities, "Continent", "Top" + n + "MostPopulatedCitiesIn" + reporter.concatString(name) + ".md");
                 return cities;
 
             } else if (option.equals("Region")) {
                 // Create string for SQL statement
                 String strSelect =
-                        "SELECT ci.Name AS Name, co.Region AS Region, ci.Population AS Population "
+                        "SELECT ci.Name AS Name, co.Continent AS Continent, co.Region AS Region, ci.Population AS Population "
                                 + "FROM city ci "
                                 + "LEFT JOIN country co ON ci.CountryCode = co.Code "
                                 + "WHERE Region = '" + name + "' "
@@ -653,17 +662,19 @@ public class Query {
                 while (resultSet.next()) {
                     City city = new City();
                     city.Name = resultSet.getString("NAME");
+                    city.Continent = resultSet.getString("Continent");
+                    city.Region = resultSet.getString("Region");
                     city.Population = resultSet.getInt("population");
                     cities.add(city);
                 }
                 // Generate report
-                reporter.outputCityPopulation(cities, "Top" + n + "MostPopulatedCitiesIn" + reporter.concatString(name) + ".md");
+                reporter.outputCities(cities, "Region", "Top" + n + "MostPopulatedCitiesIn" + reporter.concatString(name) + ".md");
                 return cities;
 
             } else if (option.equals("Country")) {
                 // Create string for SQL statement
                 String strSelect =
-                        "SELECT ci.Name AS Name, co.Name AS Country, ci.Population AS Population "
+                        "SELECT ci.Name AS Name, co.Continent AS Continent, co.Region AS Region, co.Name AS Country, ci.Population AS Population "
                                 + "FROM city ci "
                                 + "LEFT JOIN country co ON ci.CountryCode = co.Code "
                                 + "WHERE co.Name = '" + name + "' "
@@ -678,21 +689,25 @@ public class Query {
                 while (resultSet.next()) {
                     City city = new City();
                     city.Name = resultSet.getString("NAME");
+                    city.Continent = resultSet.getString("Continent");
+                    city.Region = resultSet.getString("Region");
+                    city.Country = resultSet.getString("Country");
                     city.Population = resultSet.getInt("population");
                     cities.add(city);
                 }
                 // Generate report
-                reporter.outputCityPopulation(cities, "Top" + n + "MostPopulatedCitiesIn" + reporter.concatString(name) + ".md");
+                reporter.outputCities(cities, "Country", "Top" + n + "MostPopulatedCitiesIn" + reporter.concatString(name) + ".md");
                 return cities;
 
             } else if (option.equals("District")) {
                 // Create string for SQL statement
                 String strSelect =
-                        "SELECT NAME, District, population "
-                                + "FROM city c "
-                                + "WHERE District = '" + name + "' "
-                                + "ORDER BY population DESC "
-                                + "LIMIT " + n;
+                        "SELECT ci.Name AS Name, co.Continent AS Continent, co.Region AS Region, co.Name AS Country, ci.District AS District, ci.Population AS Population "
+                                + "FROM city ci "
+                                + "LEFT JOIN country co ON ci.CountryCode = co.Code "
+                                + "WHERE ci.District = '" + name + "' "
+                                + "ORDER BY Population DESC "
+                                + " LIMIT " + n + ";";
 
                 // Execute SQL statement
                 resultSet = getResultSet(statement, strSelect);
@@ -702,11 +717,15 @@ public class Query {
                 while (resultSet.next()) {
                     City city = new City();
                     city.Name = resultSet.getString("NAME");
+                    city.Continent = resultSet.getString("Continent");
+                    city.Region = resultSet.getString("Region");
+                    city.Country = resultSet.getString("Country");
+                    city.District = resultSet.getString("District");
                     city.Population = resultSet.getInt("population");
                     cities.add(city);
                 }
                 // Generate report
-                reporter.outputCityPopulation(cities, "Top" + n + "MostPopulatedCitiesIn" + reporter.concatString(name) + ".md");
+                reporter.outputCities(cities, "District", "Top" + n + "MostPopulatedCitiesIn" + reporter.concatString(name) + ".md");
                 return cities;
 
             } else {
@@ -1139,7 +1158,7 @@ public class Query {
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT SUM(population) AS Population "
+                    "SELECT co.continent, SUM(population) AS Population "
                             + "FROM country co "
                             + "WHERE co.continent = '" + Continent + "';";
 
@@ -1149,7 +1168,7 @@ public class Query {
             // Check one is returned
             if (rset.next()) {
                 Country country = new Country();
-                country.Name = Continent;
+                country.Continent = rset.getString("Continent");
                 country.Population = rset.getLong("Population");
                 reporter.outputPopulation(country, "Continent", "PopulationOf" + reporter.concatString(Continent) + ".md");
                 return country;
@@ -1175,7 +1194,7 @@ public class Query {
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT SUM(population) AS Population "
+                    "SELECT co.Region, Population "
                             + "FROM country co "
                             + "WHERE co.continent = '" + Continent + "' AND co.Region = '" + Region + "' ;";
 
@@ -1185,7 +1204,7 @@ public class Query {
             // Check one is returned
             if (rset.next()) {
                 Country country = new Country();
-                country.Name = Region;
+                country.Region = rset.getString("Region");
                 country.Population = rset.getLong("Population");
                 reporter.outputPopulation(country, "Region", "PopulationOf" + reporter.concatString(Region) + ".md");
                 return country;
@@ -1603,7 +1622,7 @@ public class Query {
         }
     }
 
-    public ResultSet getResultSet(Statement statement, String query) throws SQLException {
+    private ResultSet getResultSet(Statement statement, String query) throws SQLException {
         return statement.executeQuery(query);
     }
 }

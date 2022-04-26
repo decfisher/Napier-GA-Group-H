@@ -22,10 +22,15 @@ public class App {
             a.connect(args[0], Integer.parseInt(args[1]));
         }
         // Create query object to initialise queries
-        Query query = new Query(a.getConnection());
-        query.getTopNCityPopulation(5, "Country", "Côte d’Ivoire");
-//        Report report = new Report(a.getConnection());
-//        report.populationReport("Country");
+//        Query query = new Query(a.getConnection());
+//        query.getLanguagePopularity();
+        Report report = new Report(a.getConnection());
+        report.countryReport();
+        report.cityReport();
+        report.capitalCityReport();
+        report.populationReport("Continent");
+        report.populationReport("Region");
+        report.populationReport("Country");
 
         a.disconnect(); // Disconnect from database
     }
