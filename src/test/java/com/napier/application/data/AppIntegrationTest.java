@@ -104,6 +104,7 @@ public class AppIntegrationTest {
         assertEquals(country.Name, "Peking");
         assertEquals(country.Population, 7472000);
     }
+
     @Test
     void getPopulationOf5param()
     {
@@ -140,6 +141,7 @@ public class AppIntegrationTest {
         assertEquals(cou.Continent,"Asia");
         assertEquals(cou.Region,"Southeast Asia");
     }
+
     // Integration tests TP final queries
         @Test
     void topNPopulatedCapitalCities() {
@@ -184,6 +186,7 @@ public class AppIntegrationTest {
         assertEquals(cit.Population,10500000);
         assertEquals(cit.Continent,"Asia");
     }
+
     @Test
     void largeToSmallCityPopulation2() {
         ArrayList<City> cities = query.largeToSmallCityPopulation("Region", "Southeast Asia");
@@ -192,6 +195,7 @@ public class AppIntegrationTest {
         assertEquals(cit.Population, 9604900);
         assertEquals(cit.Region, "Southeast Asia");
     }
+
     @Test
     void largeToSmallCityPopulation3() {
         ArrayList<City> cities = query.largeToSmallCityPopulation("Country", "India");
@@ -200,6 +204,7 @@ public class AppIntegrationTest {
         assertEquals(cit.Population, 10500000);
         assertEquals(cit.Country, "India");
     }
+
     @Test
     void largeToSmallCityPopulation4() {
         ArrayList<City> cities = query.largeToSmallCityPopulation("District", "Maharashtra");
