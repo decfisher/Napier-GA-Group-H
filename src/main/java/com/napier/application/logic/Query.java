@@ -324,6 +324,7 @@ public class Query {
      * @param name
      * @param queryType
      * @return an ArrayList of Cities
+     * Fix of bug returning incorrect output in unit test
      */
     public ArrayList<City> largeToSmallCityPopulation(String queryType, String name) {
 
