@@ -23,7 +23,7 @@ class ApplicationQueryTests {
     @Test
     void testTopNPopulatedCapitalCities() {
         Exception thrown = Assertions.assertThrows(Exception.class, () -> {
-            query.topNPopulatedCapitalCities(0);
+            query.getTopNCapitalCityPopulation(0);
         });
 
         Assertions.assertEquals("N must be greater than 0", thrown.getMessage());
@@ -32,7 +32,7 @@ class ApplicationQueryTests {
     @Test
     void testTopNPopulatedCapitalCities_Continent1() {
         Exception thrown = Assertions.assertThrows(Exception.class, () -> {
-            query.topNPopulatedCapitalCities(null,0);
+            query.getTopNCapitalCityPopulation(null,0);
         });
 
         Assertions.assertEquals("N must be greater than 0", thrown.getMessage());
@@ -41,7 +41,7 @@ class ApplicationQueryTests {
     @Test
     void testTopNPopulatedCapitalCities_Continent2() {
         Exception thrown = Assertions.assertThrows(Exception.class, () -> {
-            query.topNPopulatedCapitalCities(null,1);
+            query.getTopNCapitalCityPopulation(null,1);
         });
 
         Assertions.assertEquals("Continent must be specified", thrown.getMessage());
@@ -50,7 +50,7 @@ class ApplicationQueryTests {
     @Test
     void testTopNPopulatedCapitalCities_Region1() {
         Exception thrown = Assertions.assertThrows(Exception.class, () -> {
-            query.topNPopulatedCapitalCities(null,null,0);
+            query.getTopNCapitalCityPopulation(null,null,0);
         });
 
         Assertions.assertEquals("N must be greater than 0", thrown.getMessage());
@@ -59,7 +59,7 @@ class ApplicationQueryTests {
     @Test
     void testTopNPopulatedCapitalCities_Region2() {
         Exception thrown = Assertions.assertThrows(Exception.class, () -> {
-            query.topNPopulatedCapitalCities("Continent", null,1);
+            query.getTopNCapitalCityPopulation("Continent", null,1);
         });
 
         Assertions.assertEquals("Continent or region must be specified", thrown.getMessage());
@@ -68,7 +68,7 @@ class ApplicationQueryTests {
     @Test
     void testTopNPopulatedCapitalCities_Region3() {
         Exception thrown = Assertions.assertThrows(Exception.class, () -> {
-            query.topNPopulatedCapitalCities(null,"Region",1);
+            query.getTopNCapitalCityPopulation(null,"Region",1);
         });
 
         Assertions.assertEquals("Continent or region must be specified", thrown.getMessage());
@@ -203,7 +203,7 @@ class ApplicationQueryTests {
     @Test
     void testLargeToSmallCityPopulation1() {
         Exception thrown = Assertions.assertThrows(Exception.class, () -> {
-            query.largeToSmallCityPopulation(null,null);
+            query.getCitiesByPopulation(null,null);
         });
 
         Assertions.assertEquals("queryType or name must be specified", thrown.getMessage());
@@ -212,7 +212,7 @@ class ApplicationQueryTests {
     @Test
     void testLargeToSmallCityPopulation2() {
         Exception thrown = Assertions.assertThrows(Exception.class, () -> {
-            query.largeToSmallCityPopulation("queryType",null);
+            query.getCitiesByPopulation("queryType",null);
         });
 
         Assertions.assertEquals("queryType or name must be specified", thrown.getMessage());
@@ -221,7 +221,7 @@ class ApplicationQueryTests {
     @Test
     void testLargeToSmallCityPopulation3() {
         Exception thrown = Assertions.assertThrows(Exception.class, () -> {
-            query.largeToSmallCityPopulation(null,"name");
+            query.getCitiesByPopulation(null,"name");
         });
 
         Assertions.assertEquals("queryType or name must be specified", thrown.getMessage());

@@ -23,7 +23,7 @@ public class Report {
      * Generates country report for all countries in database
      * @return an ArrayList of Country
      */
-    public ArrayList<Country> countryReport() {
+    public ArrayList<Country> getCountryReport() {
         try {
             // Create an SQL statement
             Statement statement = connection.createStatement();
@@ -67,7 +67,7 @@ public class Report {
         }
     }
 
-    public ArrayList<City> cityReport() {
+    public ArrayList<City> getCityReport() {
         try {
             // Create an SQL statement
             Statement statement = connection.createStatement();
@@ -108,7 +108,7 @@ public class Report {
         }
     }
 
-    public ArrayList<City> capitalCityReport() {
+    public ArrayList<City> getCapitalCityReport() {
         try {
             // Create an SQL statement
             Statement statement = connection.createStatement();
@@ -148,7 +148,7 @@ public class Report {
         }
     }
 
-    public ArrayList<Country> populationReport(String option) {
+    public ArrayList<Country> getPopulationReport(String option) {
 
         if (option == null) {
             throw new IllegalArgumentException("Option for this query must be specified");

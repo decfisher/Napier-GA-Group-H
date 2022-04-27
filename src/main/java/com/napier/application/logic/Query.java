@@ -289,7 +289,7 @@ public class Query {
      * Orders cities based on population
      * @return an ArrayList of Cities
      */
-    public ArrayList<City> largeToSmallCityPopulation() {
+    public ArrayList<City> getCitiesByPopulation() {
         try {
             // Create an SQL statement
             Statement stmt = connection.createStatement();
@@ -326,7 +326,7 @@ public class Query {
      * @return an ArrayList of Cities
      * Fix of bug returning incorrect output in unit test
      */
-    public ArrayList<City> largeToSmallCityPopulation(String queryType, String name) {
+    public ArrayList<City> getCitiesByPopulation(String queryType, String name) {
 
         if (queryType == null || name == null) {
             throw new IllegalArgumentException("queryType or name must be specified");
@@ -450,7 +450,7 @@ public class Query {
         }
     }
 
-    public ArrayList<Country> populationInAndOutOfCity(String option) {
+    public ArrayList<Country> getCitiesByPopulationInAndOut(String option) {
 
         if (option == null) {
             throw new IllegalArgumentException("Option for this query must be specified");
@@ -964,7 +964,7 @@ public class Query {
      * @return an ArrayList of Country objects
      */
 
-    public ArrayList<Country> topNPopulatedCapitalCities(int n) {
+    public ArrayList<Country> getTopNCapitalCityPopulation(int n) {
 
         if (n < 1) {
             throw new NullPointerException("N must be greater than 0");
@@ -1009,7 +1009,7 @@ public class Query {
      * @param n
      * @return an ArrayList of Country objects
      */
-    public ArrayList<Country> topNPopulatedCapitalCities(String Continent, int n) {
+    public ArrayList<Country> getTopNCapitalCityPopulation(String Continent, int n) {
         if (n < 1) {
             throw new IllegalArgumentException("N must be greater than 0");
         }
@@ -1060,7 +1060,7 @@ public class Query {
      * @param n
      * @return an ArrayList of Country objects
      */
-    public ArrayList<Country> topNPopulatedCapitalCities(String continent, String region, int n) {
+    public ArrayList<Country> getTopNCapitalCityPopulation(String continent, String region, int n) {
 
         if (n < 1) {
             throw new IllegalArgumentException("N must be greater than 0");

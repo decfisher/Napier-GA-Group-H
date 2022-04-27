@@ -21,16 +21,9 @@ public class App {
         } else {
             a.connect(args[0], Integer.parseInt(args[1]));
         }
-//         Create query object to initialise queries
-        Query query = new Query(a.getConnection());
+
+        Query query = new Query(a.getConnection()); // Create query object to produce queries
         query.getPopulationOf();
-//        Report report = new Report(a.getConnection());
-//        report.countryReport();
-//        report.cityReport();
-//        report.capitalCityReport();
-//        report.populationReport("Continent");
-//        report.populationReport("Region");
-//        report.populationReport("Country");
 
         a.disconnect(); // Disconnect from database
     }
