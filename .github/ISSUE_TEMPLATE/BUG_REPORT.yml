@@ -24,6 +24,24 @@ body:
       placeholder: Describe the bug here!
     validations:
       required: true
+  - type: textarea
+    id: recreate-bug
+    attributes:
+      label: How can this bug be recreated?
+      description: Tell us how this bug can be recreated to produce the same issue
+      placeholder: Explain in bullet point steps here!
+    validations:
+      required: true
+  - type: checkboxes
+    attributes:
+      label: How severe is the bug?
+      description: Let us know how severe this bug is to determine the priority in which it should be fixed
+      options:
+        - label: Minor (Lowest priority)
+        - label: Less severe
+        - label: Severe
+        - label: More severe
+        - label: Major (Highest priority)
   - type: dropdown
     id: user-version
     attributes:
@@ -35,13 +53,17 @@ body:
         - 0.1-alpha-3 (Pre-release v3.0)
         - 0.1-alpha-4 (Pre-release v4.0)
         - 0.1-alpha-5 (Pre-release v5.0)
+        - 0.1-alpha-6 (Pre-release v6.0)
+        - 0.1-alpha-7 (Pre-release v7.0)
+        - 0.1-alpha-8 (Pre-release v8.0)
+        - Latest version
     validations:
       required: true
   - type: textarea
     id: user-extra
     attributes:
       label: Any additional information?
-      description: Let us know anything else you wish to tell us about the bug such as how to recreate it or important points surrounding the effects of the bug
+      description: Let us know anything else you wish to tell us about the bug such as the severity of the issue or important issues surroudning the bug
       placeholder: Add extra information here!
     validations:
       required: false
