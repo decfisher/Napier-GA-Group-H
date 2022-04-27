@@ -23,4 +23,5 @@ public class Country {
     public String HeadOfState;
     public int Capital;
     public String Code2;
+    public String CapitalCity;
 }

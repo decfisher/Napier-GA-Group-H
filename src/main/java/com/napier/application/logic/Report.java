@@ -12,6 +12,8 @@ import java.util.ArrayList;
  * Generates reports pulled from database
  */
 public class Report {
+
+    private Reporter reporter = new Reporter();
     /**
      * Connection to MySQL database
      */
@@ -29,8 +31,9 @@ public class Report {
             Statement statement = connection.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT Code, NAME, Continent, Region, Population, Capital "
-                            + "FROM country c "
+                    "SELECT co.Code, co.NAME, co.Continent, co.Region, co.Population, ci.Name AS CapitalCity "
+                            + "FROM country co "
+                            + "LEFT JOIN city ci ON co.Capital = ci.ID "
                             + "ORDER BY NAME ASC ";
 
             // Execute SQL statement
@@ -44,20 +47,16 @@ public class Report {
                 country.Continent = resultSet.getString("Continent");
                 country.Region = resultSet.getString("Region");
                 country.Population = resultSet.getInt("Population");
-                country.Capital = resultSet.getInt("Capital");
+                String capCity = resultSet.getString("CapitalCity");
+                if (capCity == null) {
+                    country.CapitalCity = "No capital";
+                } else {
+                    country.CapitalCity = capCity;
+                }
                 countries.add(country);
             }
-            // Print header
-            System.out.println("COUNTRY REPORT");
-            System.out.println(String.format("%-20s %20s %20s %20s %20s %20s ",
-                                             "Code", "Name", "Continent", "Region", "Population", "Capital"));
-            // Loop over all employees in the list
-            for (Country country : countries) {
-                String string = String.format("%-20s %20s %20s %20s %20s %20s ",
-                                country.Code, country.Name, country.Continent, country.Region,
-                                country.Population, country.Capital);
-                System.out.println(string);
-            }
+            //Generates a report for the countries by population for all countries in the world, saved as a markdown file
+            reporter.outputCountryReport(countries, "CountryReport.md");
             return countries;
 
         } catch (Exception e) {
@@ -90,15 +89,8 @@ public class Report {
                 city.Population = resultSet.getInt("Population");
                 cities.add(city);
             }
-            // Print header
-            System.out.println("CITY REPORT");
-            System.out.println(String.format("%-20s %20s %20s %20s ", "Name", "Country", "District", "Population"));
-            // Loop over all employees in the list
-            for (City city : cities) {
-                String string = String.format("%-20s %20s %20s %20s ",
-                                city.Name, city.Country, city.District, city.Population);
-                System.out.println(string);
-            }
+            //Generates a report for the countries by population for all countries in the world, saved as a markdown file
+            reporter.outputCityReport(cities, "CityReport.md");
             return cities;
 
         } catch (Exception e) {
@@ -130,15 +122,8 @@ public class Report {
                 city.Population = resultSet.getInt("Population");
                 cities.add(city);
             }
-            // Print header
-            System.out.println("CAPITAL CITY REPORT");
-            System.out.println(String.format("%-20s %20s %20s ", "Name", "Country", "Population"));
-            // Loop over all employees in the list
-            for (City city : cities) {
-                String string = String.format("%-20s %20s %20s ",
-                                city.Name, city.Country, city.Population);
-                System.out.println(string);
-            }
+            //Generates a report for the countries by population for all countries in the world, saved as a markdown file
+            reporter.outputCapitalCityReport(cities, "CapitalCityReport.md");
             return cities;
 
         } catch (Exception e) {
@@ -186,15 +171,7 @@ public class Report {
                     country.OutCityPerc = rset.getLong("Out_City_Perc");
                     countries.add(country);
                 }
-                System.out.println("Population Report By Continent");
-                System.out.println(String.format("%-10s %25s %25s %25s %25s %25s ",
-                        "Continent", "Total Population", "Population In Cities", "Population In Cities (%)", "Population Out of Cities", "Population Out of Cities (%)"));
-                // Loop over all employees in the list
-                for (Country country : countries) {
-                    String string = String.format("%-10s %25s %25s %25s %25s %25s ",
-                            country.Continent, country.Population, country.InCityPop, country.InCityPerc, country.OutCityPop, country.OutCityPerc);
-                    System.out.println(string);
-                }
+                reporter.outputPopulationReport(countries, option, "ContinentPopulationReport.md");
                 return countries;
 
             } else if (option.equals("Region")) {
@@ -228,15 +205,7 @@ public class Report {
                     country.OutCityPerc = rset.getLong("Out_City_Perc");
                     countries.add(country);
                 }
-                System.out.println("Population Report By Region");
-                System.out.println(String.format("%-10s %25s %25s %25s %25s %25s ",
-                        "Region", "Total Population", "Population In Cities", "Population In Cities (%)", "Population Out of Cities", "Population Out of Cities (%)"));
-                // Loop over all employees in the list
-                for (Country country : countries) {
-                    String string = String.format("%-10s %25s %25s %25s %25s %25s ",
-                            country.Region, country.Population, country.InCityPop, country.InCityPerc, country.OutCityPop, country.OutCityPerc);
-                    System.out.println(string);
-                }
+                reporter.outputPopulationReport(countries, option, "RegionPopulationReport.md");
                 return countries;
 
             } else if (option.equals("Country")) {
@@ -268,15 +237,7 @@ public class Report {
                     country.OutCityPerc = rset.getLong("Out_City_Perc");
                     countries.add(country);
                 }
-                System.out.println("Population Report By Country");
-                System.out.println(String.format("%-10s %25s %25s %25s %25s %25s ",
-                        "Country", "Total Population", "Population In Cities", "Population In Cities (%)", "Population Out of Cities", "Population Out of Cities (%)"));
-                // Loop over all employees in the list
-                for (Country country : countries) {
-                    String string = String.format("%-10s %25s %25s %25s %25s %25s ",
-                            country.Name, country.Population, country.InCityPop, country.InCityPerc, country.OutCityPop, country.OutCityPerc);
-                    System.out.println(string);
-                }
+                reporter.outputPopulationReport(countries, option, "CountryPopulationReport.md");
                 return countries;
 
             } else {
