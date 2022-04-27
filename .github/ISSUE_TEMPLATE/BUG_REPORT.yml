@@ -42,6 +42,7 @@ body:
         - label: Severe
         - label: More severe
         - label: Major (Highest priority)
+        required: true
   - type: dropdown
     id: user-version
     attributes:
