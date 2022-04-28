@@ -840,7 +840,7 @@ public class Query {
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT ci.Name, ci.Population "
+                    "SELECT ci.Name, co.Name as Country ci.Population "
                             + "FROM country co "
                             + "LEFT JOIN city ci ON co.Capital = ci.ID "
                             + "ORDER BY 2 DESC; ";
@@ -853,6 +853,7 @@ public class Query {
             while (rset.next()) {
                 Country cou = new Country();
                 cou.Name = rset.getString("NAME");
+                cou.Country = rset.getString("Country");
                 cou.Population = rset.getInt("Population");
                 cap_cities.add(cou);
             }
@@ -883,7 +884,7 @@ public class Query {
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT ci.Name, co.Continent, ci.Population "
+                    "SELECT ci.Name, co.Name as Country, co.Continent, ci.Population "
                             + "FROM country co "
                             + "LEFT JOIN city ci ON co.Capital = ci.ID "
                             + "WHERE co.Continent = '"+ Continent + "' "
@@ -897,6 +898,7 @@ public class Query {
             while (rset.next()) {
                 Country cou = new Country();
                 cou.Name = rset.getString("NAME");
+                cou.Country = rset.getString("Country");
                 cou.Continent = rset.getString("Continent");
                 cou.Population = rset.getInt("Population");
                 cap_cities.add(cou);
@@ -928,7 +930,7 @@ public class Query {
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT ci.Name, co.Continent, co.Region, ci.Population "
+                    "SELECT ci.Name, co.Name as Country, co.Continent, co.Region, ci.Population "
                             + "FROM country co "
                             + "LEFT JOIN city ci ON co.Capital = ci.ID "
                             + "WHERE co.Continent = '"+ Continent + "' AND co.Region = '" + Region + "' "
@@ -942,6 +944,7 @@ public class Query {
             while (rset.next()) {
                 Country country = new Country();
                 country.Name = rset.getString("NAME");
+                country.Country = rset.getString("Country");
                 country.Population = rset.getInt("Population");
                 country.Continent = rset.getString("Continent");
                 country.Region = rset.getString("Region");
@@ -975,7 +978,7 @@ public class Query {
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT ci.Name, ci.Population "
+                    "SELECT ci.Name, co.Name as Country, ci.Population "
                             + "FROM country co "
                             + "LEFT JOIN city ci ON co.Capital = ci.ID "
                             + "ORDER BY 2 DESC "
@@ -989,6 +992,7 @@ public class Query {
             while (rset.next()) {
                 Country cou = new Country();
                 cou.Name = rset.getString("NAME");
+                cou.Country = rset.getString("Country");
                 cou.Population = rset.getInt("Population");
                 cap_cities.add(cou);
             }
@@ -1023,7 +1027,7 @@ public class Query {
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT ci.Name, co.Continent, ci.Population "
+                    "SELECT ci.Name, co.Name as Country, co.Continent, ci.Population "
                             + "FROM country co "
                             + "LEFT JOIN city ci ON co.Capital = ci.ID "
                             + "WHERE co.Continent = '"+ Continent + "' "
@@ -1038,6 +1042,7 @@ public class Query {
             while (rset.next()) {
                 Country cou = new Country();
                 cou.Name = rset.getString("NAME");
+                cou.Country = rset.getString("Country");
                 cou.Population = rset.getInt("Population");
                 cou.Continent = rset.getString("Continent");
                 cap_cities.add(cou);
@@ -1075,7 +1080,7 @@ public class Query {
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT ci.Name, co.Continent, co.Region, ci.Population "
+                    "SELECT ci.Name, co.Name as Country, co.Continent, co.Region, ci.Population "
                             + "FROM country co "
                             + "LEFT JOIN city ci ON co.Capital = ci.ID "
                             + "WHERE co.Continent = '"+ continent + "' AND co.Region = '" + region + "' "
@@ -1091,6 +1096,7 @@ public class Query {
             while (rset.next()) {
                 Country country = new Country();
                 country.Name = rset.getString("NAME");
+                country.Country = rset.getString("Country");
                 country.Population = rset.getInt("Population");
                 country.Continent = rset.getString("Continent");
                 country.Region = rset.getString("Region");
