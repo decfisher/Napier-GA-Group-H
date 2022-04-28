@@ -127,43 +127,6 @@ public class SQLQuery {
     /**
      * Top N populated countries
      */
-
-    /**
-     * City population - Largest to smallest
-     */
-
-    /**
-     * Outputs population of all cities in the world - largest to smallest
-     * @return
-     */
-    public ArrayList<City> getCityPopulation() {
-        try {
-            // Create a new SQL statement
-            statement = connection.createStatement();
-            // Create string for SQL query
-            String query =
-                    "SELECT ci.Name, co.Name AS Country, ci.District, ci.Population "
-                            + "FROM city ci "
-                            + "LEFT JOIN country co ON ci.CountryCode = co.Code "
-                            + "ORDER BY ci.Population DESC ";
-            // Get result set of the SQL query
-            resultSet = getResultSet(statement, query);
-            ArrayList<City> result = addCities(resultSet);
-            // Generate report and send to "reports" folder
-            exporter.cityReport(result, "AllCitiesInTheWorldLargestToSmallest");
-            return result;
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get cities");
-            return null;
-        }
-    }
-
-    /**
-     * Top N populated cities
-     */
-
     public ArrayList<Country> getTopNCountryPopulation(int n) {
 
         if (n < 1) {
@@ -256,6 +219,43 @@ public class SQLQuery {
             return null;
         }
     }
+
+    /**
+     * City population - Largest to smallest
+     */
+
+    /**
+     * Outputs population of all cities in the world - largest to smallest
+     * @return
+     */
+    public ArrayList<City> getCityPopulation() {
+        try {
+            // Create a new SQL statement
+            statement = connection.createStatement();
+            // Create string for SQL query
+            String query =
+                    "SELECT ci.Name, co.Name AS Country, ci.District, ci.Population "
+                            + "FROM city ci "
+                            + "LEFT JOIN country co ON ci.CountryCode = co.Code "
+                            + "ORDER BY ci.Population DESC ";
+            // Get result set of the SQL query
+            resultSet = getResultSet(statement, query);
+            ArrayList<City> result = addCities(resultSet);
+            // Generate report and send to "reports" folder
+            exporter.cityReport(result, "AllCitiesInTheWorldLargestToSmallest");
+            return result;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get cities");
+            return null;
+        }
+    }
+
+    /**
+     * Top N populated cities
+     */
+
 
     /**
      * Capital city population - Largest to smallest
