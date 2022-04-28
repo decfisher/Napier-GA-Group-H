@@ -246,9 +246,9 @@ public class SQLQuery {
     }
 
     /**
-     * Top N populated capital cities
+     * Top N populated capital cities by continent or region
      */
-    public ArrayList<City> getTopNCapitalCityPopulation(int n) {
+    public ArrayList<City> getTopNCapitalCityPopulation(String option, String input, int n) {
         if (n < 1) {
             throw new NullPointerException("N must be greater than 0");
         }
@@ -291,7 +291,7 @@ public class SQLQuery {
             resultSet = getResultSet(statement, query);
             ArrayList<City> result = addCapitalCities(resultSet);
             // Generate report and send to "reports" folder
-            exporter.capitalCityReport(result, "GetTop" + input + "CapitalCitiesPopulationInTheWorld");
+            exporter.capitalCityReport(result, "GetTop" + n + "CapitalCitiesPopulationIn" + input);
             return result;
 
         } catch (Exception e) {
@@ -301,9 +301,9 @@ public class SQLQuery {
         }
     }
      /**
-     * Top N populated capital cities by continent or region
+     * Top N populated capital cities
      */
-    public ArrayList<City> getTopNCapitalCityPopulation(String option, String input, int n) {
+    public ArrayList<City> getTopNCapitalCityPopulation(int n) {
         if (n < 1) {
             throw new NullPointerException("N must be greater than 0");
         }
@@ -323,7 +323,7 @@ public class SQLQuery {
             resultSet = getResultSet(statement, query);
             ArrayList<City> result = addCapitalCities(resultSet);
             // Generate report and send to "reports" folder
-            exporter.capitalCityReport(result, "GetTop" + n + "CapitalCitiesPopulationIn" + input);
+            exporter.capitalCityReport(result, "GetTop" + n + "CapitalCitiesPopulationInTheWorld");
             return result;
 
         } catch (Exception e) {
