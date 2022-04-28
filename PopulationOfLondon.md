@@ -1,3 +1,3 @@
-| City | Population |
+| Name | Population |
 | ---- | ---------- |
-| London | 7285000 |
+| City| 7285000 |
