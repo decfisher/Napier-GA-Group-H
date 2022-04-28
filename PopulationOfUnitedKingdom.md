@@ -1,3 +1,3 @@
-| Name | Population |
-| ---- | ---------- |
-| Country| 59623400 |
+| Country | Population |
+| ------- | ---------- |
+| United Kingdom | 59623400 |
