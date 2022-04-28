@@ -263,7 +263,7 @@ public class SQLQuery {
             // Create a new SQL statement
             statement = connection.createStatement();
             // Create string for SQL query
-            String query;
+            String query; 
             
             if (option.equals("Continent")) {
                 query =
