@@ -840,7 +840,7 @@ public class Query {
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT ci.Name, ci.Country, ci.Population "
+                    "SELECT ci.Name, co.name as Country, ci.Population "
                             + "FROM country co "
                             + "LEFT JOIN city ci ON co.Capital = ci.ID "
                             + "ORDER BY 2 DESC; ";
@@ -883,7 +883,7 @@ public class Query {
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT ci.Name, ci.Country, co.Continent, ci.Population "
+                    "SELECT ci.Name, co.Name as Country, co.Continent, ci.Population "
                             + "FROM country co "
                             + "LEFT JOIN city ci ON co.Capital = ci.ID "
                             + "WHERE co.Continent = '"+ Continent + "' "
@@ -928,7 +928,7 @@ public class Query {
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT ci.Name, ci.Country, co.Continent, co.Region, ci.Population "
+                    "SELECT ci.Name, co.Name as Country, co.Continent, co.Region, ci.Population "
                             + "FROM country co "
                             + "LEFT JOIN city ci ON co.Capital = ci.ID "
                             + "WHERE co.Continent = '"+ Continent + "' AND co.Region = '" + Region + "' "
@@ -975,7 +975,7 @@ public class Query {
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT ci.Name, ci.Country, ci.Population "
+                    "SELECT ci.Name, co.Name as Country, ci.Population "
                             + "FROM country co "
                             + "LEFT JOIN city ci ON co.Capital = ci.ID "
                             + "ORDER BY 2 DESC "
@@ -1023,7 +1023,7 @@ public class Query {
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT ci.Name, ci.Country, co.Continent, ci.Population "
+                    "SELECT ci.Name, co.Name as Country, co.Continent, ci.Population "
                             + "FROM country co "
                             + "LEFT JOIN city ci ON co.Capital = ci.ID "
                             + "WHERE co.Continent = '"+ Continent + "' "
@@ -1075,7 +1075,7 @@ public class Query {
             Statement stmt = connection.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT ci.Name, ci.Country, co.Continent, co.Region, ci.Population "
+                    "SELECT ci.Name, co.Name as Country, co.Continent, co.Region, ci.Population "
                             + "FROM country co "
                             + "LEFT JOIN city ci ON co.Capital = ci.ID "
                             + "WHERE co.Continent = '"+ continent + "' AND co.Region = '" + region + "' "
