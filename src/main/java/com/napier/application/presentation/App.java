@@ -37,7 +37,7 @@ public class App {
         query.getPopulationOf("Region", "Europe", "Western Europe");
         query.getPopulationOf("Country", "United Kingdom");
         query.getPopulationOf("District", "United Kingdom", "England");
-        query.getPopulationOf("City", "England", "London");
+        query.getPopulationOf("City", "England", "London"); 
 
         a.disconnect(); // Disconnect from database
     }

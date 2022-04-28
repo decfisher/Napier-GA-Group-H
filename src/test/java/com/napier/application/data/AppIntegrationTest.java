@@ -76,7 +76,7 @@ public class AppIntegrationTest {
 //    }
 //    @Test
 //    void getPopulationOf1param()
-//    { 
+//    {
 //        Country country = query.getPopulationOf("Asia");
 //        assertEquals(country.Name, "Asia");
 //        assertEquals(country.Population, 3705025700L);
