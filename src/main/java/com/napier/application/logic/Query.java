@@ -853,7 +853,6 @@ public class Query {
             while (rset.next()) {
                 Country cou = new Country();
                 cou.Name = rset.getString("NAME");
-                cou.Country = rste.getString("Country");
                 cou.Population = rset.getInt("Population");
                 cap_cities.add(cou);
             }
@@ -898,7 +897,6 @@ public class Query {
             while (rset.next()) {
                 Country cou = new Country();
                 cou.Name = rset.getString("NAME");
-                cou.Country = rste.getString("Country");
                 cou.Continent = rset.getString("Continent");
                 cou.Population = rset.getInt("Population");
                 cap_cities.add(cou);
@@ -944,7 +942,6 @@ public class Query {
             while (rset.next()) {
                 Country country = new Country();
                 country.Name = rset.getString("NAME");
-                country.Country = rste.getString("Country");
                 country.Population = rset.getInt("Population");
                 country.Continent = rset.getString("Continent");
                 country.Region = rset.getString("Region");
@@ -992,7 +989,6 @@ public class Query {
             while (rset.next()) {
                 Country cou = new Country();
                 cou.Name = rset.getString("NAME");
-                cou.Country = rste.getString("Country");
                 cou.Population = rset.getInt("Population");
                 cap_cities.add(cou);
             }
@@ -1042,7 +1038,6 @@ public class Query {
             while (rset.next()) {
                 Country cou = new Country();
                 cou.Name = rset.getString("NAME");
-                cou.Country = rset.getString("Country");
                 cou.Population = rset.getInt("Population");
                 cou.Continent = rset.getString("Continent");
                 cap_cities.add(cou);
@@ -1096,7 +1091,6 @@ public class Query {
             while (rset.next()) {
                 Country country = new Country();
                 country.Name = rset.getString("NAME");
-                country.Country = rset.getString("Country");
                 country.Population = rset.getInt("Population");
                 country.Continent = rset.getString("Continent");
                 country.Region = rset.getString("Region");
