@@ -193,6 +193,57 @@ public class SQLQuery {
             return null;
         }
     }
+    /**
+     * Capital city population - Largest to smallest by continent or region
+     */
+
+    public ArrayList<City> getCapitalCityPopulation(String option, String input) {
+         if (option.isEmpty()) {
+            throw new IllegalArgumentException("Option for query must be specified!");
+        }
+
+        if (input.isEmpty()) {
+            throw new IllegalArgumentException("Input must be specified!");
+        }
+
+        try {
+            // Create a new SQL statement
+            statement = connection.createStatement();
+            // Create string for SQL query
+            String query;
+            
+            if (option.equals("Continent")) {
+                query =
+                    "SELECT ci.Name, co.Name AS Country, ci.Population "
+                            + "FROM country co "
+                            + "LEFT JOIN city ci ON co.Capital = ci.ID "
+                            + "WHERE co.Continent = '" + input + "' "
+                            + "ORDER BY ci.Population DESC; ";
+                
+            } else if (option.equals("Region")) {
+                query = 
+                    "SELECT ci.Name, co.Name AS Country, ci.Population "
+                            + "FROM country co "
+                            + "LEFT JOIN city ci ON co.Capital = ci.ID "
+                            + "WHERE co.Region = '" + input + "' "
+                            + "ORDER BY ci.Population DESC; ";
+            } else {
+                throw new IllegalArgumentException("Invalid option specified!");
+            }
+
+            // Get result set of the SQL query
+            resultSet = getResultSet(statement, query);
+            ArrayList<City> result = addCapitalCities(resultSet);
+            // Generate report and send to "reports" folder
+            exporter.capitalCityReport(result, "AllCapitalCitiesIn" + input + "LargestToSmallest");
+            return result;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get capital cities");
+            return null;
+        }
+    }
 
     /**
      * Top N populated capital cities
