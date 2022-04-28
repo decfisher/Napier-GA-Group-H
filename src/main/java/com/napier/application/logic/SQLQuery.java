@@ -53,7 +53,7 @@ public class SQLQuery {
                     "SELECT co.Code, co.Name, co.Continent, co.Region, co.Population, ci.Name AS CapitalCity "
                             + "FROM country co "
                             + "LEFT JOIN city ci ON co.Capital = ci.ID "
-                            + "ORDER BY 2 DESC ";
+                            + "ORDER BY co.Population DESC ";
             // Get result set of the SQL query
             resultSet = getResultSet(statement, query);
             ArrayList<Country> result = new ArrayList<>();
