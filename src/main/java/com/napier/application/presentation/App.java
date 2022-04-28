@@ -23,7 +23,7 @@ public class App {
             a.connect(args[0], Integer.parseInt(args[1]));
         }
 
-        SQLQuery query = new SQLQuery(a.getConnection()); 
+        SQLQuery query = new SQLQuery(a.getConnection());
         query.getCountryPopulation();
         query.getCountryPopulation("Continent", "Europe");
         query.getCountryPopulation("Region", "Eastern Africa");

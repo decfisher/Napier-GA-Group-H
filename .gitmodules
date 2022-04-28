@@ -4,3 +4,4 @@
 [submodule "db/world_db"]
 	path = db/world_db
 	url = https://github.com/Tide44-cmd/world_db/
+	update = merge #
