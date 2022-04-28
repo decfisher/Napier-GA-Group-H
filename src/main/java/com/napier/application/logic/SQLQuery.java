@@ -164,6 +164,38 @@ public class SQLQuery {
      * Top N populated cities
      */
 
+    public ArrayList<Country> getTopNCountryPopulation(int n) {
+
+        if (n < 1) {
+            throw new IllegalArgumentException("N must be greater than 0");
+        }
+
+        try {
+            // Create an SQL statement
+            Statement stmt = connection.createStatement();
+            // Create string for SQL statement
+            String query =
+                    "SELECT co.Code, ci.Name, co.Continent, co.Region, ci.Population, ci.Name AS CapitalCity "
+                            + "FROM country co "
+                            + "LEFT JOIN city ci ON co.Capital = ci.ID "
+                            + "ORDER BY ci.Population DESC; "
+                            + " LIMIT " + n;
+
+            // Get result set of the SQL query
+            resultSet = getResultSet(statement, query);
+            // Return query result if query is successful
+            ArrayList<Country> result = addCountries(resultSet);
+            // Generate report and send to "reports" folder
+            exporter.countryReport(result, "MostPopulatedCountriesInTheWorld");
+
+            return result;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to execute query");
+            return null;
+        }
+    }
+
     /**
      * Capital city population - Largest to smallest
      */

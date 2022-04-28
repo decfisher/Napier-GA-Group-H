@@ -74,20 +74,20 @@ public class AppIntegrationTest {
         assertEquals(country.Name, "World");
         assertEquals(country.Population, 6078749450L);
     }
-    @Test
-    void getPopulationOf1param()
-    {
-        Country country = query.getPopulationOf("Asia");
-        assertEquals(country.Name, "Asia");
-        assertEquals(country.Population, 3705025700L);
-    }
-    @Test
-    void getPopulationOf2param()
-    {
-        Country country = query.getPopulationOf("Asia","Eastern Asia");
-        assertEquals(country.Name, "Eastern Asia");
-        assertEquals(country.Population, 1507328000);
-    }
+//    @Test
+//    void getPopulationOf1param()
+//    {
+//        Country country = query.getPopulationOf("Asia");
+//        assertEquals(country.Name, "Asia");
+//        assertEquals(country.Population, 3705025700L);
+//    }
+//    @Test
+//    void getPopulationOf2param()
+//    {
+//        Country country = query.getPopulationOf("Asia","Eastern Asia");
+//        assertEquals(country.Name, "Eastern Asia");
+//        assertEquals(country.Population, 1507328000);
+//    }
 
     @Test
     void getPopulationOf3param()
