@@ -23,11 +23,9 @@ public class App {
             a.connect(args[0], Integer.parseInt(args[1]));
         }
 
-//        Query query = new Query(a.getConnection()); // Create query object to produce queries
-//        query.getPopulationOf();
-
         SQLQuery query = new SQLQuery(a.getConnection());
         query.getCountryPopulation();
+        query.getCityPopulation();
 
         a.disconnect(); // Disconnect from database
     }

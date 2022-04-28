@@ -1,5 +1,6 @@
 package com.napier.application.logic;
 
+import com.napier.application.data.City;
 import com.napier.application.data.Country;
 
 import java.io.BufferedWriter;
@@ -46,6 +47,38 @@ public class Exporter {
             // Generate report directory and markdown file
             generateReport(output, fileName);
         }
+
+        output.setLength(0);
+    }
+
+    public void cityReport(ArrayList<City> cities, String fileName) {
+
+        if (cities.isEmpty()) {
+            throw new IllegalArgumentException("No cities!");
+        }
+
+        if (fileName.isEmpty()) {
+            throw new IllegalArgumentException("No file name specified!");
+        }
+
+        // Print header
+        output.append("| Name | Country | District | Population |\r\n");
+        output.append("| ---- | ------- | -------- | ---------- |\r\n");
+
+        // Loop over all countries in the list
+        for (City city : cities) {
+            if (city == null) {
+                continue;
+            }
+            output.append("| " + city.Name + "| " + city.Country + "| " + city.District + "| " + city.Population + " |\r\n");
+        }
+
+        if (!(output.length() == 0)) {
+            // Generate report directory and markdown file
+            generateReport(output, fileName);
+        }
+
+        output.setLength(0);
     }
 
     /**
