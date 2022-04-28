@@ -8,7 +8,7 @@ public class Country {
     public String Name;
     public String Continent;
     public String Region;
-    public String District;
+    public String District; 
     public double SurfaceArea;
     public int IndepYear;
     public long Population;
