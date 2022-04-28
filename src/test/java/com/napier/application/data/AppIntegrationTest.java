@@ -67,13 +67,13 @@ public class AppIntegrationTest {
     }
 
     //James Integration Tests for story #21
-    @Test
-    void getPopulationOf0param()
-    {
-        Country country = query.getPopulationOf();
-        assertEquals(country.Name, "World");
-        assertEquals(country.Population, 6078749450L);
-    }
+//    @Test
+//    void getPopulationOf0param()
+//    {
+//        Country country = query.getPopulationOf();
+//        assertEquals(country.Name, "World");
+//        assertEquals(country.Population, 6078749450L);
+//    }
 //    @Test
 //    void getPopulationOf1param()
 //    {

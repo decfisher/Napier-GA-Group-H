@@ -196,6 +196,67 @@ public class SQLQuery {
         }
     }
 
+    public ArrayList<Country> getTopNCountryPopulation(int n, String queryType, String name) {
+
+        if (n < 1) {
+            throw new IllegalArgumentException("N must be greater than 0");
+        }
+
+        if (queryType == null || name == null) {
+            throw new IllegalArgumentException("queryType or name must be specified");
+        }
+
+        try {
+            // Create an SQL statement
+            Statement stmt = connection.createStatement();
+            ResultSet rset;
+
+            if (queryType.equals("Continent")) {
+
+                // Create string for SQL statement
+                String query =
+                        "SELECT co.Code, ci.Name, co.Continent, co.Region, ci.Population, ci.Name AS CapitalCity "
+                                + "FROM country co "
+                                + "LEFT JOIN city ci ON co.Capital = ci.ID "
+                                + "WHERE continent = '" + name + "'"
+                                + "ORDER BY ci.Population DESC; "
+                                + " LIMIT " + n;
+
+                // Get result set of the SQL query
+                resultSet = getResultSet(statement, query);
+                // Return query result if query is successful
+                ArrayList<Country> result = addCountries(resultSet);
+                // Generate report and send to "reports" folder
+                exporter.countryReport(result, "MostPopulatedCountriesIn"+name);
+                return result;
+
+            } else if (queryType.equals("Region")) {
+                // Create string for SQL statement
+                String query =
+                        "SELECT co.Code, ci.Name, co.Continent, co.Region, ci.Population, ci.Name AS CapitalCity "
+                                + "FROM country co "
+                                + "LEFT JOIN city ci ON co.Capital = ci.ID "
+                                + "WHERE region = '" + name + "'"
+                                + "ORDER BY ci.Population DESC; "
+                                + " LIMIT " + n;
+
+                // Get result set of the SQL query
+                resultSet = getResultSet(statement, query);
+                // Return query result if query is successful
+                ArrayList<Country> result = addCountries(resultSet);
+                // Generate report and send to "reports" folder
+                exporter.countryReport(result, "MostPopulatedCountriesIn"+name);
+                return result;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to execute query");
+            return null;
+        }
+    }
+
     /**
      * Capital city population - Largest to smallest
      */
