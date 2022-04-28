@@ -486,6 +486,174 @@ public final class Reporter {
         generateReport(sb, fileName);
     }
 
+    public boolean outputCountryReport(ArrayList<Country> countries, String fileName) {
+        // Check option strings are not null
+        if (fileName == null) {
+            System.out.println("Input cannot be null!");
+            return false;
+        }
+
+        // Check array is not null
+        if (countries.isEmpty()) {
+            System.out.println("No countries!");
+            return false;
+        }
+
+        // Create output string builder
+        StringBuilder sb = new StringBuilder();
+
+        // Print header
+        sb.append("| Code | Name | Continent | Region | Population | Capital |\r\n");
+        sb.append("| ---- | ---- | --------- | ------ | ---------- | ------- |\r\n");
+
+        // Loop over all cities in the list
+        for (Country country : countries) {
+            if (country == null) {
+                continue;
+            }
+            sb.append("| " + country.Code + "| " + country.Name + "| " + country.Continent + "| " + country.Region + "| " + country.Population + " | " + country.CapitalCity + " |\r\n");
+        }
+
+        if (!(sb.length() == 0)) {
+            // Generate report directory and markdown file
+            generateReport(sb, fileName);
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean outputCityReport(ArrayList<City> cities, String fileName) {
+        // Check option strings are not null
+        if (fileName == null) {
+            System.out.println("Input cannot be null!");
+            return false;
+        }
+
+        // Check array is not null
+        if (cities.isEmpty()) {
+            System.out.println("No cities!");
+            return false;
+        }
+
+        // Create output string builder
+        StringBuilder sb = new StringBuilder();
+
+        // Print header
+        sb.append("| Name | Country | District | Population |\r\n");
+        sb.append("| ---- | ------- | -------- | ---------- |\r\n");
+
+        // Loop over all cities in the list
+        for (City city : cities) {
+            if (city == null) {
+                continue;
+            }
+            sb.append("| " + city.Name + "| " + city.Country + "| " + city.District + "| " + city.Population + " |\r\n");
+        }
+
+        if (!(sb.length() == 0)) {
+            // Generate report directory and markdown file
+            generateReport(sb, fileName);
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean outputCapitalCityReport(ArrayList<City> cities, String fileName) {
+        // Check option strings are not null
+        if (fileName == null) {
+            System.out.println("Input cannot be null!");
+            return false;
+        }
+
+        // Check array is not null
+        if (cities.isEmpty()) {
+            System.out.println("No capital cities!");
+            return false;
+        }
+
+        // Create output string builder
+        StringBuilder sb = new StringBuilder();
+
+        // Print header
+        sb.append("| Name | Country | Population |\r\n");
+        sb.append("| ---- | ------- | ---------- |\r\n");
+
+        // Loop over all cities in the list
+        for (City city : cities) {
+            if (city == null) {
+                continue;
+            }
+            sb.append("| " + city.Name + "| " + city.Country + "| " + city.Population + " |\r\n");
+        }
+
+        if (!(sb.length() == 0)) {
+            // Generate report directory and markdown file
+            generateReport(sb, fileName);
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean outputPopulationReport(ArrayList<Country> countries, String option, String fileName) {
+        // Check option strings are not null
+        if (fileName == null) {
+            System.out.println("Input cannot be null!");
+            return false;
+        }
+
+        if (!(option.equals("Continent") || option.equals("Region") || option.equals("Country"))) {
+            return false;
+        }
+
+        // Check array is not null
+        if (countries.isEmpty()) {
+            System.out.println("No countries!");
+            return false;
+        }
+
+        // Create output string builder
+        StringBuilder sb = new StringBuilder();
+
+        // Print header
+        sb.append("| " + option + " | Total Population | Population In Cities | Population In Cities (%) | Population Out of Cities | Population Out of Cities (%) |\r\n");
+        sb.append("| --------- | ---------------- | -------------------- | ------------------------ | ------------------------ | ---------------------------- |\r\n");
+
+        String type = "";
+
+        // Loop over all cities in the list
+        for (Country country : countries) {
+            if (country == null) {
+                continue;
+            }
+
+            if (option.equals("Continent")) {
+                type = country.Continent;
+            }
+
+            if (option.equals("Region")) {
+                type = country.Region;
+            }
+
+            if (option.equals("Country")) {
+                type = country.Name;
+            }
+
+            sb.append("| " + type + " | " + country.Population + " | " + country.InCityPop +
+                    " | " + country.InCityPerc + " | " + country.OutCityPop + " | " + country.OutCityPerc + "|\r\n");
+        }
+
+        if (!(sb.length() == 0)) {
+            // Generate report directory and markdown file
+            generateReport(sb, fileName);
+            return true;
+        }
+
+        return false;
+    }
+
     /**
      * Helper functions
      */

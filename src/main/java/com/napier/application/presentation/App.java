@@ -2,6 +2,7 @@ package com.napier.application.presentation;
 
 import com.napier.application.logic.Query;
 import com.napier.application.logic.Report;
+import com.napier.application.logic.SQLQuery;
 
 import java.sql.*;
 
@@ -21,16 +22,22 @@ public class App {
         } else {
             a.connect(args[0], Integer.parseInt(args[1]));
         }
-//         Create query object to initialise queries
-        Query query = new Query(a.getConnection());
+
+        SQLQuery query = new SQLQuery(a.getConnection());
+        query.getCountryPopulation();
+        query.getCountryPopulation("Continent", "Europe");
+        query.getCountryPopulation("Region", "Eastern Africa");
+        query.getCityPopulation();
+        query.getCapitalCityPopulation();
+        query.getPopulationInAndOutOfCities("Continent");
+        query.getPopulationInAndOutOfCities("Region");
+        query.getPopulationInAndOutOfCities("Country");
         query.getPopulationOf();
-//        Report report = new Report(a.getConnection());
-//        report.countryReport();
-//        report.cityReport();
-//        report.capitalCityReport();
-//        report.populationReport("Continent");
-//        report.populationReport("Region");
-//        report.populationReport("Country");
+        query.getPopulationOf("Continent", "Africa");
+        query.getPopulationOf("Region", "Europe", "Western Europe");
+        query.getPopulationOf("Country", "United Kingdom");
+        query.getPopulationOf("District", "United Kingdom", "England");
+        query.getPopulationOf("City", "England", "London");
 
         a.disconnect(); // Disconnect from database
     }
