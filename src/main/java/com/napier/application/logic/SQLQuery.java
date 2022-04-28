@@ -291,7 +291,7 @@ public class SQLQuery {
             resultSet = getResultSet(statement, query);
             ArrayList<City> result = addCapitalCities(resultSet);
             // Generate report and send to "reports" folder
-            exporter.capitalCityReport(result, "GetTop" + input + "CapitalCitiesPopulationInTheWorld);
+            exporter.capitalCityReport(result, "GetTop" + input + "CapitalCitiesPopulationInTheWorld");
             return result;
 
         } catch (Exception e) {
