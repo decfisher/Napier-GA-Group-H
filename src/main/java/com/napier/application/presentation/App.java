@@ -2,6 +2,7 @@ package com.napier.application.presentation;
 
 import com.napier.application.logic.Query;
 import com.napier.application.logic.Report;
+import com.napier.application.logic.SQLQuery;
 
 import java.sql.*;
 
@@ -25,13 +26,8 @@ public class App {
 //        Query query = new Query(a.getConnection()); // Create query object to produce queries
 //        query.getPopulationOf();
 
-        Report report = new Report(a.getConnection());
-        report.getCountryReport();
-        report.getCityReport();
-        report.getCapitalCityReport();
-        report.getPopulationReport("Continent");
-        report.getPopulationReport("Region");
-        report.getPopulationReport("Country");
+        SQLQuery query = new SQLQuery(a.getConnection());
+        query.getCountryPopulation();
 
         a.disconnect(); // Disconnect from database
     }
