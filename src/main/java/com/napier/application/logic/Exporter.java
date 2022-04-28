@@ -81,6 +81,108 @@ public class Exporter {
         output.setLength(0);
     }
 
+    public void capitalCityReport(ArrayList<City> capitalCities, String fileName) {
+
+        if (capitalCities.isEmpty()) {
+            throw new IllegalArgumentException("No capital cities!");
+        }
+
+        if (fileName.isEmpty()) {
+            throw new IllegalArgumentException("No file name specified!");
+        }
+
+        // Print header
+        output.append("| Name | Country | Population |\r\n");
+        output.append("| ---- | ------- | ---------- |\r\n");
+
+        // Loop over all countries in the list
+        for (City capitalCity : capitalCities) {
+            if (capitalCity == null) {
+                continue;
+            }
+            output.append("| " + capitalCity.Name + "| " + capitalCity.Country + "| " + capitalCity.Population + " |\r\n");
+        }
+
+        if (!(output.length() == 0)) {
+            // Generate report directory and markdown file
+            generateReport(output, fileName);
+        }
+
+        output.setLength(0);
+    }
+
+    public void populationInAndOutReport(ArrayList<Country> populations, String type, String fileName) {
+
+        if (populations.isEmpty()) {
+            throw new IllegalArgumentException("No city populations!");
+        }
+
+        if (type.isEmpty()) {
+            throw new IllegalArgumentException("An option type must be specified!");
+        }
+
+        if (fileName.isEmpty()) {
+            throw new IllegalArgumentException("No file name specified!");
+        }
+
+        // Print header
+        output.append("| " + type + " | Total Population | Population In Cities | Population In Cities (%) | Population Out of Cities | Population Out of Cities (%) |\r\n");
+        output.append("| --------- | ---------------- | -------------------- | ------------------------ | ------------------------ | ---------------------------- |\r\n");
+
+        String option = "";
+        // Loop over all countries in the list
+        for (Country population : populations) {
+            if (population == null) {
+                continue;
+            }
+
+            if (type.equals("Continent")) {
+                option = population.Continent;
+            }
+
+            if (type.equals("Region")) {
+                option = population.Region;
+            }
+
+            if (type.equals("Country")) {
+                option = population.Name;
+            }
+
+            output.append("| " + option + " | " + population.Population + " | " + population.InCityPop +
+                    " | " + population.InCityPerc + " | " + population.OutCityPop + " | " + population.OutCityPerc + "|\r\n");
+        }
+
+        if (!(output.length() == 0)) {
+            // Generate report directory and markdown file
+            generateReport(output, fileName);
+        }
+
+        output.setLength(0);
+    }
+
+    public void populationReport(Country country, String fileName) {
+
+        if (country == null) {
+            throw new IllegalArgumentException("Country cannot be null object!");
+        }
+
+        if (fileName.isEmpty()) {
+            throw new IllegalArgumentException("No file name specified!");
+        }
+
+        // Print header
+        output.append("| Name | Population |\r\n");
+        output.append("| ---- | ---------- |\r\n");
+        output.append("| " + country.Name + "| " + country.Population + " |\r\n");
+
+        if (!(output.length() == 0)) {
+            // Generate report directory and markdown file
+            generateReport(output, fileName);
+        }
+
+        output.setLength(0);
+    }
+
     /**
      * Helper methods
      */

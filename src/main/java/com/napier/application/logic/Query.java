@@ -1124,24 +1124,15 @@ public class Query {
                             + "FROM country co ;";
 
             // Execute SQL statement
-            ResultSet rset = getResultSet(stmt, strSelect);
-            // Return query result if query is successful
-            // Check one is returned
-            if (rset.next()) {
-                Country country = new Country();
-                country.Name = "World";
-                country.Population = rset.getLong("Population");
-                reporter.outputPopulation(country, "World", "PopulationOfTheWorld.md");
-                return country;
-            } else {
-                return null;
-            }
+            ResultSet resultSet = getResultSet(stmt, strSelect);
+            Country country;
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to execute query getPopulationOfWorld");
             return null;
         }
+        return null;
     }
 
     /**

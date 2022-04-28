@@ -25,7 +25,19 @@ public class App {
 
         SQLQuery query = new SQLQuery(a.getConnection());
         query.getCountryPopulation();
+        query.getCountryPopulation("Continent", "Europe");
+        query.getCountryPopulation("Region", "Eastern Africa");
         query.getCityPopulation();
+        query.getCapitalCityPopulation();
+        query.getPopulationInAndOutOfCities("Continent");
+        query.getPopulationInAndOutOfCities("Region");
+        query.getPopulationInAndOutOfCities("Country");
+        query.getPopulationOf();
+        query.getPopulationOf("Continent", "Africa");
+        query.getPopulationOf("Region", "Europe", "Western Europe");
+        query.getPopulationOf("Country", "United Kingdom");
+        query.getPopulationOf("District", "United Kingdom", "England");
+        query.getPopulationOf("City", "England", "London");
 
         a.disconnect(); // Disconnect from database
     }
