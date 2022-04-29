@@ -377,6 +377,130 @@ class ApplicationQueryTests {
         Assertions.assertNull(thrown.getMessage());
     }
 
+    @Test
+    void testGetPopulationInAndOutOfCities1() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.getPopulationInAndOutOfCities("");
+        });
+
+        Assertions.assertNull(thrown.getMessage());
+    }
+
+    @Test
+    void testGetPopulationInAndOutOfCities2() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.getPopulationInAndOutOfCities("Mars");
+        });
+
+        Assertions.assertNull(thrown.getMessage());
+    }
+
+
+    @Test
+    void testGetPopulationOf1() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.getPopulationOf("","");
+        });
+
+        Assertions.assertNull(thrown.getMessage());
+    }
+    @Test
+    void testGetPopulationOf2() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.getPopulationOf("Continent", "");
+        });
+
+        Assertions.assertNull(thrown.getMessage());
+    }
+    @Test
+    void testGetPopulationOf3() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.getPopulationOf("", "Europe");
+        });
+
+        Assertions.assertNull(thrown.getMessage());
+    }
+    @Test
+    void testGetPopulationOf4() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.getPopulationOf("District", "Europe");
+        });
+
+        Assertions.assertNull(thrown.getMessage());
+    }
+    @Test
+    void testGetPopulationOf5() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.getPopulationOf("Continent", "Mars");
+        });
+
+        Assertions.assertNull(thrown.getMessage());
+    }
+    @Test
+    void testGetPopulationOf6() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.getPopulationOf("","","");
+        });
+
+        Assertions.assertNull(thrown.getMessage());
+    }
+    @Test
+    void testGetPopulationOf7() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.getPopulationOf("Region","","");
+        });
+
+        Assertions.assertNull(thrown.getMessage());
+    }
+    @Test
+    void testGetPopulationOf8() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.getPopulationOf("Region","Asia","");
+        });
+
+        Assertions.assertNull(thrown.getMessage());
+    }
+    @Test
+    void testGetPopulationOf9() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.getPopulationOf("","Asia","Middle East");
+        });
+
+        Assertions.assertNull(thrown.getMessage());
+    }
+    @Test
+    void testGetPopulationOf10() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.getPopulationOf("","","Middle East");
+        });
+
+        Assertions.assertNull(thrown.getMessage());
+    }
+    @Test
+    void testGetPopulationOf11() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.getPopulationOf("Region","","Middle East");
+        });
+
+        Assertions.assertNull(thrown.getMessage());
+    }
+    @Test
+    void testGetPopulationOf12() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.getPopulationOf("Region","Asia","Middle Earth");
+        });
+
+        Assertions.assertNull(thrown.getMessage());
+    }
+    @Test
+    void testGetPopulationOf13() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.getPopulationOf("Region","Middle East","Asia");
+        });
+
+        Assertions.assertNull(thrown.getMessage());
+    }
+
 
     //Written tests
 //
