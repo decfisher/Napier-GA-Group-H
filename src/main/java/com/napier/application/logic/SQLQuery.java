@@ -1091,23 +1091,6 @@ public class SQLQuery {
     }
 
     /**
-     * Returns population to use as output
-     * @param resultSet - provided by query method which includes the results from SQL query
-     * @param name - name of world/continent/region/country/district/city
-     * @return ArrayList of Country
-     * @throws SQLException
-     */
-    private Country addPopulation(ResultSet resultSet, String name) throws SQLException {
-        if (resultSet.next()) {
-            Country country = new Country();
-            country.Name = name;
-            country.Population = resultSet.getLong("Population");
-            return country;
-        }
-        return null;
-    }
-
-    /**
      * Outputs languages to an ArrayList to use as an output
      * @param resultSet - provided by query method which includes the results from SQL query
      * @return ArrayList of Language

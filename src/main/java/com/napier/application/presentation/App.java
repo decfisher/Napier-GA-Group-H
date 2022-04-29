@@ -1,7 +1,5 @@
 package com.napier.application.presentation;
 
-import com.napier.application.logic.Query;
-import com.napier.application.logic.Report;
 import com.napier.application.logic.SQLQuery;
 
 import java.sql.*;
