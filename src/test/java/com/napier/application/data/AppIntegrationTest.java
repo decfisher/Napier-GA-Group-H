@@ -117,57 +117,57 @@ public class AppIntegrationTest {
     //getCapitalCitiesByPopulation()
     @Test
     void getCapitalCityPopulation() {
-        ArrayList<Country> countries = query.getCapitalCityPopulation();
-        Country cou = countries.get(0);
-        assertEquals(cou.Name,"Seoul");
-        assertEquals(cou.Population,9981619);
+        ArrayList<City> cities = query.getCapitalCityPopulation();
+        City cit = cities.get(0);
+        assertEquals(cit.Name,"Seoul");
+        assertEquals(cit.Country,"South Korea");
+        assertEquals(cit.Population,9981619);
     }
 
     @Test
     void getCapitalCityPopulation1() {
-        ArrayList<Country> countries = query.getCapitalCityPopulation("Continent", "Asia");
-        Country cou = countries.get(0);
-        assertEquals(cou.Name,"Seoul");
-        assertEquals(cou.Population,9981619);
-        assertEquals(cou.Continent,"Asia");
+        ArrayList<City> cities = query.getCapitalCityPopulation("Continent", "Asia");
+        City cit = cities.get(0);
+        assertEquals(cit.Name,"Seoul");
+        assertEquals(cit.Country,"South Korea");
+        assertEquals(cit.Population,9981619);
     }
 
     @Test
     void getCapitalCityPopulation() {
-        ArrayList<Country> countries = query.getCapitalCityPopulation("Region","Southeast Asia");
-        Country cou = countries.get(0);
-        assertEquals(cou.Name,"Jakarta");
-        assertEquals(cou.Population,9604900);
-        assertEquals(cou.Continent,"Asia");
-        assertEquals(cou.Region,"Southeast Asia");
+        ArrayList<City> cities = query.getCapitalCityPopulation("Region","Southeast Asia");
+        City cit = cities.get(0);
+        assertEquals(cit.Name,"Jakarta");
+        assertEquals(cit.Country,"Indonesia");
+        assertEquals(cit.Population,9604900);
     }
 
     // Tom updated Integration Tests for new capital city query
-        @Test
+    @Test
     void getTopNCapitalCityPopulation() {
-        ArrayList<Country> countries = query.getTopNCapitalCityPopulation(1);
-        Country cou = countries.get(0);
-        assertEquals(cou.Name,"Seoul");
-        assertEquals(cou.Population,9981619);
+        ArrayList<City> cities = query.getTopNCapitalCityPopulation(1);
+        City cit = cities.get(0);
+        assertEquals(cit.Name,"Seoul");
+        assertEquals(cit.Country,"South Korea");
+        assertEquals(cit.Population,9981619);
     }
 
     @Test
     void getTopNCapitalCityPopulation() {
-        ArrayList<Country> countries = query.getTopNCapitalCityPopulation("Continent", "Asia", 1);
-        Country cou = countries.get(0);
-        assertEquals(cou.Name,"Seoul");
-        assertEquals(cou.Population,9981619);
-        assertEquals(cou.Continent,"Asia");
+        ArrayList<City> citiies = query.getTopNCapitalCityPopulation("Continent", "Asia", 1);
+        City cit = cit.get(0);
+        assertEquals(cit.Name,"Seoul");
+        assertEquals(cit.Country,"South Korea");
+        assertEquals(cit.Population,9981619);
     }
 
     @Test
     void getTopNCapitalCityPopulation() {
-        ArrayList<Country> countries = query.getTopNCapitalCityPopulation("Region", "Southeast Asia", 1);
-        Country cou = countries.get(0);
-        assertEquals(cou.Name,"Jakarta");
-        assertEquals(cou.Population,9604900);
-        assertEquals(cou.Continent,"Asia");
-        assertEquals(cou.Region,"Southeast Asia");
+        ArrayList<City> cities = query.getTopNCapitalCityPopulation("Region", "Southeast Asia", 1);
+        City cit = cities.get(0);
+        assertEquals(cit.Name,"Jakarta");
+        assertEquals(cit.Country,"Indonesia");
+        assertEquals(cit.Population,9604900);
     }
 
     @Test
