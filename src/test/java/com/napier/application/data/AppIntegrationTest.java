@@ -113,19 +113,19 @@ public class AppIntegrationTest {
         assertEquals(country.Population, 7472000);
     }
 
-    //James Integration Tests for story #5
+    //TP updated Integration Tests for new capital city query
     //getCapitalCitiesByPopulation()
     @Test
-    void getCapitalCitiesByPopulation() {
-        ArrayList<Country> countries = query.getCapitalCitiesByPopulation();
+    void getCapitalCityPopulation() {
+        ArrayList<Country> countries = query.getCapitalCityPopulation();
         Country cou = countries.get(0);
         assertEquals(cou.Name,"Seoul");
         assertEquals(cou.Population,9981619);
     }
 
     @Test
-    void getCapitalCitiesByPopulation1() {
-        ArrayList<Country> countries = query.getCapitalCitiesByPopulation("Asia");
+    void getCapitalCityPopulation1() {
+        ArrayList<Country> countries = query.getCapitalCityPopulation("Continent", "Asia");
         Country cou = countries.get(0);
         assertEquals(cou.Name,"Seoul");
         assertEquals(cou.Population,9981619);
@@ -133,8 +133,8 @@ public class AppIntegrationTest {
     }
 
     @Test
-    void getCapitalCitiesByPopulation2() {
-        ArrayList<Country> countries = query.getCapitalCitiesByPopulation("Asia","Southeast Asia");
+    void getCapitalCityPopulation() {
+        ArrayList<Country> countries = query.getCapitalCityPopulation("Region","Southeast Asia");
         Country cou = countries.get(0);
         assertEquals(cou.Name,"Jakarta");
         assertEquals(cou.Population,9604900);
@@ -142,9 +142,9 @@ public class AppIntegrationTest {
         assertEquals(cou.Region,"Southeast Asia");
     }
 
-    // Integration tests TP final queries
+    // Tom updated Integration Tests for new capital city query
         @Test
-    void topNPopulatedCapitalCities() {
+    void getTopNCapitalCityPopulation() {
         ArrayList<Country> countries = query.getTopNCapitalCityPopulation(1);
         Country cou = countries.get(0);
         assertEquals(cou.Name,"Seoul");
@@ -152,8 +152,8 @@ public class AppIntegrationTest {
     }
 
     @Test
-    void topNPopulatedCapitalCities1() {
-        ArrayList<Country> countries = query.getTopNCapitalCityPopulation("Asia",1);
+    void getTopNCapitalCityPopulation() {
+        ArrayList<Country> countries = query.getTopNCapitalCityPopulation("Continent", "Asia", 1);
         Country cou = countries.get(0);
         assertEquals(cou.Name,"Seoul");
         assertEquals(cou.Population,9981619);
@@ -161,8 +161,8 @@ public class AppIntegrationTest {
     }
 
     @Test
-    void topNPopulatedCapitalCities2() {
-        ArrayList<Country> countries = query.getTopNCapitalCityPopulation("Asia", "Southeast Asia", 1);
+    void getTopNCapitalCityPopulation() {
+        ArrayList<Country> countries = query.getTopNCapitalCityPopulation("Region", "Southeast Asia", 1);
         Country cou = countries.get(0);
         assertEquals(cou.Name,"Jakarta");
         assertEquals(cou.Population,9604900);
