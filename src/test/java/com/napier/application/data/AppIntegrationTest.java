@@ -1,5 +1,6 @@
 package com.napier.application.data;
 
+import com.napier.application.logic.SQLQuery;
 import com.napier.application.presentation.App;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -10,33 +11,86 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class AppIntegrationTest {
     static App app;
+    static SQLQuery query;
 
     @BeforeAll
     static void init() {
         app = new App();
         app.connect("localhost:33060", 30000);
+        query = new SQLQuery(app.getConnection());
     }
-//
-//    @Test
-//    void testCountryPopByContinent() {
-//        Country country = query.getCountry("ABW");
-//        assertEquals(country.Name, "Aruba");
-//        assertEquals(country.Continent, "North America");
-//        assertEquals(country.Region, "Caribbean");
-//        assertEquals(country.Capital, 129);
-//    }
-//
-//    //James Integration Tests for story #14
-//    @Test
-//    void getCountriesByPopulation0param()
-//    {
-//        ArrayList<Country> countries = query.getCountriesByPopulation();
-//        Country cou = countries.get(0);
-//        assertEquals(cou.Name,"China");
-//        assertEquals(cou.Population,1277558000);
-//
-//
-//    }
+
+    @Test
+    void getCountryPopulation_noParameters() {
+        ArrayList<Country> countries = query.getCountryPopulation();
+        Country country = countries.get(0);
+        assertEquals(country.Code, "CHN");
+        assertEquals(country.Name,"China");
+        assertEquals(country.Continent, "Asia");
+        assertEquals(country.Region, "Eastern Asia");
+        assertEquals(country.Population,1277558000);
+        assertEquals(country.Capital, "Peking");
+    }
+
+    @Test
+    void getCountryPopulation_ContinentParameter() {
+        ArrayList<Country> countries = query.getCountryPopulation("Continent", "Asia");
+        Country country = countries.get(0);
+        assertEquals(country.Code, "KOR");
+        assertEquals(country.Name,"Seoul");
+        assertEquals(country.Continent, "Asia");
+        assertEquals(country.Region, "Eastern Asia");
+        assertEquals(country.Population,9981619);
+        assertEquals(country.Capital, "Seoul");
+    }
+
+    @Test
+    void getCountryPopulation_RegionParameter() {
+        ArrayList<Country> countries = query.getCountryPopulation("Region", "Central Africa");
+        Country country = countries.get(0);
+        assertEquals(country.Code, "COD");
+        assertEquals(country.Name,"Kinshasa");
+        assertEquals(country.Continent, "Africa");
+        assertEquals(country.Region, "Central Africa");
+        assertEquals(country.Population,5064000);
+        assertEquals(country.Capital, "Kinshasa");
+    }
+
+    @Test
+    void getTopNCountryPopulation_oneParameter() {
+        ArrayList<Country> countries = query.getTopNCountryPopulation(5);
+        Country country = countries.get(0);
+        assertEquals(country.Code, "KOR");
+        assertEquals(country.Name,"Seoul");
+        assertEquals(country.Continent, "Asia");
+        assertEquals(country.Region, "Eastern Asia");
+        assertEquals(country.Population,9981619);
+        assertEquals(country.Capital, "Seoul");
+    }
+
+    @Test
+    void getTopNCountryPopulation_ContinentParameter() {
+        ArrayList<Country> countries = query.getTopNCountryPopulation(5,"Continent","Europe");
+        Country country = countries.get(0);
+        assertEquals(country.Code, "RUS");
+        assertEquals(country.Name,"Moscow");
+        assertEquals(country.Continent, "Europe");
+        assertEquals(country.Region, "Eastern Europe");
+        assertEquals(country.Population,8389200);
+        assertEquals(country.Capital, "Moscow");
+    }
+    @Test
+    void getTopNCountryPopulation_RegionParameter() {
+        ArrayList<Country> countries = query.getTopNCountryPopulation(5,"Region","Eastern Africa");
+        Country country = countries.get(0);
+        assertEquals(country.Code, "ETH");
+        assertEquals(country.Name,"Addis Abeba");
+        assertEquals(country.Continent, "Africa");
+        assertEquals(country.Region, "Eastern Africa");
+        assertEquals(country.Population,2495000);
+        assertEquals(country.Capital, "Addis Abeba");
+    }
+
 //    @Test
 //    void getCountriesByPopulation1param()
 //    {

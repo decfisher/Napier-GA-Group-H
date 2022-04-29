@@ -41,12 +41,11 @@ public class SQLQuery {
 
     /**
      * Country population - Largest to smallest
-     *
      */
 
     /**
      * Output population of all countries in the world - largest to smallest
-     * @return
+     * @return ArrayList of Country
      */
     public ArrayList<Country> getCountryPopulation() {
         try {
@@ -76,7 +75,7 @@ public class SQLQuery {
      * Output population of all countries in a continent/region - largest to smallest
      * @param option - specifies whether continent or region
      * @param input - specifies the name of continent or region to filter by
-     * @return
+     * @return ArrayList of Country
      */
     public ArrayList<Country> getCountryPopulation(String option, String input) {
         if (option.isEmpty()) {
@@ -132,7 +131,7 @@ public class SQLQuery {
     /**
      * Outputs population of top n countries in the world
      * @param n - number of countries to filter by
-     * @return
+     * @return ArrayList of Country
      */
     public ArrayList<Country> getTopNCountryPopulation(int n) {
 
@@ -171,7 +170,7 @@ public class SQLQuery {
      * @param n - number of countries to filter by
      * @param queryType - specifies continent or region
      * @param name - name of continent/region
-     * @return
+     * @return ArrayList of Country
      */
     public ArrayList<Country> getTopNCountryPopulation(int n, String queryType, String name) {
 
@@ -240,7 +239,7 @@ public class SQLQuery {
 
     /**
      * Outputs population of all cities in the world - largest to smallest
-     * @return
+     * @return ArrayList of City
      */
     public ArrayList<City> getCityPopulation() {
         try {
