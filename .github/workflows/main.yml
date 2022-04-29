@@ -18,7 +18,6 @@ jobs:
       - name: Unit Tests
         run: |
           mvn -Dtest=com.napier.application.data.ApplicationQueryTests test
-          mvn -Dtest=com.napier.application.data.ApplicationQueryTests test
 
   IntegrationTests:
     name: Integration Tests

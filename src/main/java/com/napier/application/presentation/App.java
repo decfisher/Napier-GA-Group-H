@@ -1,7 +1,6 @@
 package com.napier.application.presentation;
 
-import com.napier.application.logic.Query;
-import com.napier.application.logic.Report;
+import com.napier.application.logic.SQLQuery;
 
 import java.sql.*;
 
@@ -21,16 +20,49 @@ public class App {
         } else {
             a.connect(args[0], Integer.parseInt(args[1]));
         }
-//         Create query object to initialise queries
-        Query query = new Query(a.getConnection());
+
+        SQLQuery query = new SQLQuery(a.getConnection());
+        // All the countries - largest to smallest
+        query.getCountryPopulation();
+        query.getCountryPopulation("Continent", "Asia");
+        query.getCountryPopulation("Region", "Central Africa");
+        // Top N countries
+        query.getTopNCountryPopulation(5);
+        query.getTopNCountryPopulation(5, "Continent", "Europe");
+        query.getTopNCountryPopulation(5, "Region", "Eastern Africa");
+        // All the cities - largest to smallest
+        query.getCityPopulation();
+        query.getCityPopulation("Continent","Europe");
+        query.getCityPopulation("Region","Western Europe");
+        query.getCityPopulation("Country","United Kingdom");
+        query.getCityPopulation("District","England");
+        // Top N cities
+        query.getTopNCityPopulation(5);
+        query.getTopNCityPopulation(5,"Continent","Europe");
+        query.getTopNCityPopulation(5,"Region","Western Europe");
+        query.getTopNCityPopulation(5,"Country","United Kingdom");
+        query.getTopNCityPopulation(5,"District","England");
+        // All the capital cities - largest to smallest
+        query.getCapitalCityPopulation();
+        query.getCapitalCityPopulation("Continent", "North America");
+        query.getCapitalCityPopulation("Region", "Southeast Asia");
+        // Top N capital cities
+        query.getTopNCapitalCityPopulation(5);
+        query.getTopNCapitalCityPopulation(5,"Continent", "Oceania");
+        query.getTopNCapitalCityPopulation(5,"Region","Southern Europe");
+        // Population in and out of cities
+        query.getPopulationInAndOutOfCities("Continent");
+        query.getPopulationInAndOutOfCities("Region");
+        query.getPopulationInAndOutOfCities("Country");
+        // Total population
         query.getPopulationOf();
-//        Report report = new Report(a.getConnection());
-//        report.countryReport();
-//        report.cityReport();
-//        report.capitalCityReport();
-//        report.populationReport("Continent");
-//        report.populationReport("Region");
-//        report.populationReport("Country");
+        query.getPopulationOf("Continent", "Europe");
+        query.getPopulationOf("Country", "United Kingdom");
+        query.getPopulationOf("Region", "Asia", "Southern and Central Asia");
+        query.getPopulationOf("District", "United Kingdom", "England");
+        query.getPopulationOf("City", "England", "London");
+        // Languages spoken
+        query.getLanguagePercentage();
 
         a.disconnect(); // Disconnect from database
     }
