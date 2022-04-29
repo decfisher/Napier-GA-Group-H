@@ -589,6 +589,7 @@ public class SQLQuery {
         }
     }
 
+
     /**
      * Outputs population of top n capital cities in the world
      * @param n - number of capital cities to filter by
