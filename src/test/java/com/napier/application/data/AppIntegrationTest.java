@@ -29,7 +29,7 @@ public class AppIntegrationTest {
         assertEquals(country.Continent, "Asia");
         assertEquals(country.Region, "Eastern Asia");
         assertEquals(country.Population,1277558000);
-        assertEquals(country.Capital, "Peking");
+        assertEquals(country.CapitalCity, "Peking");
     }
 
     @Test
@@ -41,7 +41,7 @@ public class AppIntegrationTest {
         assertEquals(country.Continent, "Asia");
         assertEquals(country.Region, "Eastern Asia");
         assertEquals(country.Population,9981619);
-        assertEquals(country.Capital, "Seoul");
+        assertEquals(country.CapitalCity, "Seoul");
     }
 
     @Test
@@ -53,7 +53,7 @@ public class AppIntegrationTest {
         assertEquals(country.Continent, "Africa");
         assertEquals(country.Region, "Central Africa");
         assertEquals(country.Population,5064000);
-        assertEquals(country.Capital, "Kinshasa");
+        assertEquals(country.CapitalCity, "Kinshasa");
     }
 
     @Test
@@ -65,7 +65,7 @@ public class AppIntegrationTest {
         assertEquals(country.Continent, "Asia");
         assertEquals(country.Region, "Eastern Asia");
         assertEquals(country.Population,9981619);
-        assertEquals(country.Capital, "Seoul");
+        assertEquals(country.CapitalCity, "Seoul");
     }
 
     @Test
@@ -77,7 +77,7 @@ public class AppIntegrationTest {
         assertEquals(country.Continent, "Europe");
         assertEquals(country.Region, "Eastern Europe");
         assertEquals(country.Population,8389200);
-        assertEquals(country.Capital, "Moscow");
+        assertEquals(country.CapitalCity, "Moscow");
     }
     @Test
     void getTopNCountryPopulation_RegionParameter() {
@@ -88,7 +88,37 @@ public class AppIntegrationTest {
         assertEquals(country.Continent, "Africa");
         assertEquals(country.Region, "Eastern Africa");
         assertEquals(country.Population,2495000);
-        assertEquals(country.Capital, "Addis Abeba");
+        assertEquals(country.CapitalCity, "Addis Abeba");
+    }
+
+    @Test
+    void getCityPopulation_noParameters() {
+        ArrayList<City> cities = query.getCityPopulation();
+        City city = cities.get(0);
+        assertEquals(city.Name, "Mumbai (Bombay)");
+        assertEquals(city.Country, "India");
+        assertEquals(city.District, "Maharashtra");
+        assertEquals(city.Population, 100500000);
+    }
+
+    @Test
+    void getCapitalCityPopulation_noParameters() {
+        ArrayList<City> capitalCities = query.getCapitalCityPopulation();
+        City capitalCity = capitalCities.get(0);
+        assertEquals(capitalCity.Name, "Seoul");
+        assertEquals(capitalCity.Country, "South Korea");
+        assertEquals(capitalCity.Population, 9981619);
+    }
+
+    @Test
+    void getPopulationOf_noParameters() {
+        Country population = query.getPopulationOf().get(0);
+        assertEquals(population.Name, "World");
+        assertEquals(population.Population, 6078749450L);
+        assertEquals(population.InCityPop, 1429559884);
+        assertEquals(population.InCityPerc, 23);
+        assertEquals(population.OutCityPop, 4649189566L);
+        assertEquals(population.OutCityPerc, 76);
     }
 
 //    @Test
