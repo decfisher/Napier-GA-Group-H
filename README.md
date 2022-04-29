@@ -31,6 +31,10 @@
 **Group H - Individual Marking Sheet** can be found [here!](https://bit.ly/3HsUCPG)
 
 ### Final Submission Checklist
+[^1]
+
+[^1]: 32 requirement out of 32 have been implemented, which is 100%
+
 | ID | Name | Requirement met? | Evidence |
 | -- | ---- | ---------------- | -------- |
 | 1 | All the countries in the world organised by largest population to smallest | Yes | [Click here](https://github.com/decfisher/Napier-GA-Group-H/blob/reports/AllCountriesInTheWorldLargestToSmallest.md) |
