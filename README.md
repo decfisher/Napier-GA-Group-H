@@ -31,9 +31,7 @@
 **Group H - Individual Marking Sheet** can be found [here!](https://bit.ly/3HsUCPG)
 
 ### Final Submission Checklist
-[^1]
-
-[^1]: 32 requirement out of 32 have been implemented, which is 100%
+Below is our checklist for the queries we have implemented in out application. **32 requirements** out of **32** have been implemented, which is **100%**.
 
 | ID | Name | Requirement met? | Evidence |
 | -- | ---- | ---------------- | -------- |
