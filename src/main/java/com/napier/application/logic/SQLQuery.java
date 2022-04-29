@@ -156,7 +156,7 @@ public class SQLQuery {
             // Return query result if query is successful
             ArrayList<Country> result = addCountries(resultSet);
             // Generate report and send to "reports" folder
-            exporter.countryReport(result, "Top"+n+"PopulatedCountriesInTheWorld");
+            exporter.countryReport(result, "Top" + n + "CountriesInTheWorldLargestToSmallest");
 
             return result;
         } catch (Exception e) {
@@ -204,7 +204,7 @@ public class SQLQuery {
                 // Return query result if query is successful
                 ArrayList<Country> result = addCountries(resultSet);
                 // Generate report and send to "reports" folder
-                exporter.countryReport(result, "Top"+n+"PopulatedCountriesIn"+name);
+                exporter.countryReport(result, "Top" + n + "CountriesIn" + name + "LargestToSmallest");
                 return result;
 
             } else if (queryType.equals("Region")) {
@@ -222,7 +222,7 @@ public class SQLQuery {
                 // Return query result if query is successful
                 ArrayList<Country> result = addCountries(resultSet);
                 // Generate report and send to "reports" folder
-                exporter.countryReport(result, "Top"+n+"PopulatedCountriesIn"+name);
+                exporter.countryReport(result, "Top" + n + "CountriesIn" + name + "LargestToSmallest");
                 return result;
             } else {
                 return null;
