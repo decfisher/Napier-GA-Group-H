@@ -694,7 +694,7 @@ public class SQLQuery {
                                 "ci.countrycode " +
                                 ",SUM(ci.population) AS Population " +
                                 "FROM city ci GROUP BY 1) ci ON ci.countrycode = co.code " +
-                                "GROUP BY Continent";
+                                "GROUP BY Continent;";
 
             } else if (option.equals("Region")) {
                 query =
@@ -708,7 +708,7 @@ public class SQLQuery {
                                 "ci.countrycode " +
                                 ",SUM(ci.population) AS Population " +
                                 "FROM city ci GROUP BY 1) ci ON ci.countrycode = co.code " +
-                                "GROUP BY Region";
+                                "GROUP BY Region;";
 
             } else if (option.equals("Country")) {
                 query =
@@ -720,7 +720,7 @@ public class SQLQuery {
                                 "FROM country co " +
                                 "JOIN (SELECT ci.countrycode, SUM(ci.population) AS Population " +
                                 "FROM city ci GROUP BY 1) ci ON ci.countrycode = co.code " +
-                                "GROUP BY Name";
+                                "GROUP BY Name;";
             } else {
                 throw new IllegalArgumentException("Invalid option specified!");
             }
@@ -747,8 +747,14 @@ public class SQLQuery {
             statement = connection.createStatement();
             // Create string for SQL query
             String query =
-                    "SELECT SUM(population) AS Population "
-                            + "FROM country co ;";
+                    "SELECT SUM(co.Population) AS Total_Pop, " +
+                            "SUM(ci.Population) AS In_city, " +
+                            "round(((SUM(ci.Population)/SUM(co.Population))*100),2) AS In_City_Perc, " +
+                            "SUM(co.Population) - SUM(ci.Population) AS Out_city, " +
+                            "round((((SUM(co.Population) - SUM(ci.Population))/SUM(co.Population))*100),2) AS Out_City_Perc " +
+                            "FROM country co " +
+                            "JOIN (SELECT ci.countrycode, SUM(ci.population) AS Population " +
+                            "FROM city ci GROUP BY 1) ci ON ci.countrycode = co.code;";
             // Get result set of the SQL query
             resultSet = getResultSet(statement, query);
             Country result = addPopulation(resultSet, "World");
@@ -784,15 +790,27 @@ public class SQLQuery {
 
             if (option.equals("Continent")) {
                 query =
-                        "SELECT co.Continent, SUM(population) AS Population "
-                                + "FROM country co "
-                                + "WHERE co.continent = '" + area + "';";
+                        "SELECT co.Continent AS Continent, SUM(co.Population) AS Total_Pop, " +
+                                "SUM(ci.Population) AS In_city, " +
+                                "round(((SUM(ci.Population)/SUM(co.Population))*100),2) AS In_City_Perc, " +
+                                "SUM(co.Population) - SUM(ci.Population) AS Out_city, " +
+                                "round((((SUM(co.Population) - SUM(ci.Population))/SUM(co.Population))*100),2) AS Out_City_Perc " +
+                                "FROM country co " +
+                                "WHERE co.Continent = '" + area + "'" +
+                                "JOIN (SELECT ci.countrycode, SUM(ci.population) AS Population " +
+                                "FROM city ci GROUP BY 1) ci ON ci.countrycode = co.code ";
 
             } else if (option.equals("Country")) {
                 query =
-                        "SELECT Population "
-                                + "FROM country co "
-                                + "WHERE co.Name = '" + area + "';";
+                        "SELECT co.Name AS Name, SUM(co.Population) AS Total_Pop, " +
+                                "SUM(ci.Population) AS In_city, " +
+                                "round(((SUM(ci.Population)/SUM(co.Population))*100),2) AS In_City_Perc, " +
+                                "SUM(co.Population) - SUM(ci.Population) AS Out_city, " +
+                                "round((((SUM(co.Population) - SUM(ci.Population))/SUM(co.Population))*100),2) AS Out_City_Perc " +
+                                "FROM country co " +
+                                "WHERE co.Name = '" + area + "'" +
+                                "JOIN (SELECT ci.countrycode, SUM(ci.population) AS Population " +
+                                "FROM city ci GROUP BY 1) ci ON ci.countrycode = co.code ";
             } else {
                 throw new IllegalArgumentException("Invalid option specified!");
             }
@@ -832,23 +850,39 @@ public class SQLQuery {
 
             if (option.equals("Region")) {
                 query =
-                        "SELECT co.Region, Population "
-                                + "FROM country co "
-                                + "WHERE co.continent = '" + area + "' AND co.Region = '" + subArea + "' ;";
+                        "SELECT co.Region AS Region, SUM(co.Population) AS Total_Pop, " +
+                                "SUM(ci.Population) AS In_city, " +
+                                "round(((SUM(ci.Population)/SUM(co.Population))*100),2) AS In_City_Perc, " +
+                                "SUM(co.Population) - SUM(ci.Population) AS Out_city, " +
+                                "round((((SUM(co.Population) - SUM(ci.Population))/SUM(co.Population))*100),2) AS Out_City_Perc " +
+                                "FROM country co " +
+                                "WHERE co.continent = '" + area + "' AND co.Region = '" + subArea + "'" +
+                                "JOIN (SELECT ci.countrycode, SUM(ci.population) AS Population " +
+                                "FROM city ci GROUP BY 1) ci ON ci.countrycode = co.code;";
 
             } else if (option.equals("District")) {
                 query =
-                        "SELECT SUM(ci.Population) AS Population "
-                                + "FROM country co "
-                                + "LEFT JOIN city ci ON co.Capital = ci.ID "
-                                + "WHERE co.Name = '" + area + "' AND ci.District = '" + subArea +"';";
+                        "SELECT ci.District AS District, SUM(co.Population) AS Total_Pop, " +
+                                "SUM(ci.Population) AS In_city, " +
+                                "round(((SUM(ci.Population)/SUM(co.Population))*100),2) AS In_City_Perc, " +
+                                "SUM(co.Population) - SUM(ci.Population) AS Out_city, " +
+                                "round((((SUM(co.Population) - SUM(ci.Population))/SUM(co.Population))*100),2) AS Out_City_Perc " +
+                                "FROM country co " +
+                                "WHERE co.Name = '" + area + "' AND ci.District = '" + subArea + "'" +
+                                "JOIN (SELECT ci.countrycode, SUM(ci.population) AS Population " +
+                                "FROM city ci GROUP BY 1) ci ON ci.countrycode = co.code;";
 
             } else if (option.equals("City")) {
                 query =
-                        "SELECT SUM(ci.Population) AS Population "
-                                + "FROM country co "
-                                + "LEFT JOIN city ci ON co.Capital = ci.ID "
-                                + "WHERE ci.District = '" + area + "' AND ci.Name = '" + subArea +"';";
+                        "SELECT ci.Name AS City, SUM(co.Population) AS Total_Pop, " +
+                                "SUM(ci.Population) AS In_city, " +
+                                "round(((SUM(ci.Population)/SUM(co.Population))*100),2) AS In_City_Perc, " +
+                                "SUM(co.Population) - SUM(ci.Population) AS Out_city, " +
+                                "round((((SUM(co.Population) - SUM(ci.Population))/SUM(co.Population))*100),2) AS Out_City_Perc " +
+                                "FROM country co " +
+                                "WHERE ci.District = '" + area + "' AND ci.Name = '" + subArea + "'" +
+                                "JOIN (SELECT ci.countrycode, SUM(ci.population) AS Population " +
+                                "FROM city ci GROUP BY 1) ci ON ci.countrycode = co.code;";
             } else {
                 throw new IllegalArgumentException("Invalid option specified!");
             }

@@ -171,9 +171,10 @@ public class Exporter {
         }
 
         // Print header
-        output.append("| Name | Population |\r\n");
-        output.append("| ---- | ---------- |\r\n");
-        output.append("| " + country.Name + "| " + country.Population + " |\r\n");
+        output.append("| " + country + " | Total Population | Population In Cities | Population In Cities (%) | Population Out of Cities | Population Out of Cities (%) |\r\n");
+        output.append("| --------- | ---------------- | -------------------- | ------------------------ | ------------------------ | ---------------------------- |\r\n");
+        output.append("| " + country + " | " + country.Population + " | " + population.InCityPop +
+                " | " + population.InCityPerc + " | " + population.OutCityPop + " | " + population.OutCityPerc + "|\r\n");
 
         if (!(output.length() == 0)) {
             // Generate report directory and markdown file
