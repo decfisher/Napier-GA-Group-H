@@ -98,7 +98,7 @@ public class AppIntegrationTest {
         assertEquals(city.Name, "Mumbai (Bombay)");
         assertEquals(city.Country, "India");
         assertEquals(city.District, "Maharashtra");
-        assertEquals(city.Population, 10050000);
+        assertEquals(city.Population, 10500000);
     }
 
     @Test
