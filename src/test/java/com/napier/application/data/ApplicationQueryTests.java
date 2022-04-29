@@ -27,7 +27,7 @@ class ApplicationQueryTests {
             query.getCountryPopulation("","");
         });
 
-        Assertions.assertEquals("Option for query must be specified!", thrown.getMessage());
+        Assertions.assertEquals(null, thrown.getMessage());
     }
 
     @Test
@@ -36,7 +36,7 @@ class ApplicationQueryTests {
             query.getCountryPopulation("Continent","");
         });
 
-        Assertions.assertEquals("Option for query must be specified!", thrown.getMessage());
+        Assertions.assertEquals(null, thrown.getMessage());
     }
 
     @Test
@@ -45,7 +45,7 @@ class ApplicationQueryTests {
             query.getCountryPopulation("","Europe");
         });
 
-        Assertions.assertEquals("Input must be specified!", thrown.getMessage());
+        Assertions.assertEquals(null, thrown.getMessage());
     }
 
     @Test
@@ -54,7 +54,7 @@ class ApplicationQueryTests {
             query.getCountryPopulation("","");
         });
 
-        Assertions.assertEquals("Invalid option specified!", thrown.getMessage());
+        Assertions.assertEquals(null, thrown.getMessage());
     }
 
     @Test
@@ -66,6 +66,68 @@ class ApplicationQueryTests {
         Assertions.assertEquals(null, thrown.getMessage());
     }
 
+    @Test
+    void testGetTopNCountryPopulation1() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.getTopNCountryPopulation(0);
+        });
+
+        Assertions.assertEquals(null, thrown.getMessage());
+    }
+
+    @Test
+    void testGetTopNCountryPopulation2() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.getTopNCountryPopulation(0, "", "");
+        });
+
+        Assertions.assertEquals(null, thrown.getMessage());
+    }
+
+    @Test
+    void testGetTopNCountryPopulation3() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.getTopNCountryPopulation(1, "", "");
+        });
+
+        Assertions.assertEquals(null, thrown.getMessage());
+    }
+
+    @Test
+    void testGetTopNCountryPopulation4() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.getTopNCountryPopulation(1, "Continent", "");
+        });
+
+        Assertions.assertEquals(null, thrown.getMessage());
+    }
+
+    @Test
+    void testGetTopNCountryPopulation5() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.getTopNCountryPopulation(1, "", "Europe");
+        });
+
+        Assertions.assertEquals(null, thrown.getMessage());
+    }
+
+    @Test
+    void testGetTopNCountryPopulation6() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.getTopNCountryPopulation(1, "District", "Europe");
+        });
+
+        Assertions.assertEquals(null, thrown.getMessage());
+    }
+
+    @Test
+    void testGetTopNCountryPopulation7() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            query.getTopNCountryPopulation(1, "Continent", "Mars");
+        });
+
+        Assertions.assertEquals(null, thrown.getMessage());
+    }
     //Written tests
 //
 //    @Test
