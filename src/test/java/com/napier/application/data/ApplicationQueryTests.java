@@ -1,21 +1,19 @@
 package com.napier.application.data;
 
-import com.napier.application.logic.Query;
-import com.napier.application.logic.Report;
 import com.napier.application.logic.SQLQuery;
 import com.napier.application.presentation.App;
 import org.junit.jupiter.api.*;
 
 class ApplicationQueryTests {
     static App app;
-    static Report report;
+    //static Report report;
     static SQLQuery query;
 
     @BeforeAll
     static void init() {
         app = new App();
         app.connect("localhost:33060", 30000);
-        report = new Report(app.getConnection());
+        //report = new Report(app.getConnection());
         //query = new SQLQuery(app.getConnection());
         SQLQuery query = new SQLQuery(app.getConnection());
     }
