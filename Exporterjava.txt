@@ -1,0 +1,23 @@
+    public void populationReport(Country country, String fileName) {
+
+        if (country == null) {
+            throw new IllegalArgumentException("Country cannot be null object!");
+        }
+
+        if (fileName.isEmpty()) {
+            throw new IllegalArgumentException("No file name specified!");
+        }
+
+        // Print header
+        output.append("| " + country + " | Total Population | Population In Cities | Population In Cities (%) | Population Out of Cities | Population Out of Cities (%) |\r\n");
+        output.append("| --------- | ---------------- | -------------------- | ------------------------ | ------------------------ | ---------------------------- |\r\n");
+        output.append("| " + country + " | " + country.Population + " | " + country.InCityPop +
+                " | " + country.InCityPerc + " | " + country.OutCityPop + " | " + country.OutCityPerc + "|\r\n");
+
+        if (!(output.length() == 0)) {
+            // Generate report directory and markdown file
+            generateReport(output, fileName);
+        }
+
+        output.setLength(0);
+    }

@@ -1,0 +1,233 @@
+  /**
+     * Population in and out of cities
+     */
+
+    /**
+     * Outputs population in and out of all cities in a continent/region/country
+     * @param option - specifies whether continent/region/country
+     * @return
+     */
+    public ArrayList<Country> getPopulationInAndOutOfCities(String option) {
+        try {
+            // Create a new SQL statement
+            statement = connection.createStatement();
+            // Create string for SQL query
+            String query;
+
+            if (option.equals("Continent")) {
+                query =
+                        "SELECT co.Continent AS Continent, SUM(co.Population) AS Total_Pop, " +
+                                "SUM(ci.Population) AS In_city, " +
+                                "round(((SUM(ci.Population)/SUM(co.Population))*100),2) AS In_City_Perc, " +
+                                "SUM(co.Population) - SUM(ci.Population) AS Out_city, " +
+                                "round((((SUM(co.Population) - SUM(ci.Population))/SUM(co.Population))*100),2) AS Out_City_Perc " +
+                                "FROM country co " +
+                                "JOIN (SELECT " +
+                                "ci.countrycode " +
+                                ",SUM(ci.population) AS Population " +
+                                "FROM city ci GROUP BY 1) ci ON ci.countrycode = co.code " +
+                                "GROUP BY Continent;";
+
+            } else if (option.equals("Region")) {
+                query =
+                        "SELECT co.Region AS Region, SUM(co.Population) AS Total_Pop, " +
+                                "SUM(ci.Population) AS In_city, " +
+                                "round(((SUM(ci.Population)/SUM(co.Population))*100),2) AS In_City_Perc, " +
+                                "SUM(co.Population) - SUM(ci.Population) AS Out_city, " +
+                                "round((((SUM(co.Population) - SUM(ci.Population))/SUM(co.Population))*100),2) AS Out_City_Perc " +
+                                "FROM country co " +
+                                "JOIN (SELECT " +
+                                "ci.countrycode " +
+                                ",SUM(ci.population) AS Population " +
+                                "FROM city ci GROUP BY 1) ci ON ci.countrycode = co.code " +
+                                "GROUP BY Region;";
+
+            } else if (option.equals("Country")) {
+                query =
+                        "SELECT co.Name AS Name, SUM(co.Population) AS Total_Pop, " +
+                                "SUM(ci.Population) AS In_city, " +
+                                "round(((SUM(ci.Population)/SUM(co.Population))*100),2) AS In_City_Perc, " +
+                                "SUM(co.Population) - SUM(ci.Population) AS Out_city, " +
+                                "round((((SUM(co.Population) - SUM(ci.Population))/SUM(co.Population))*100),2) AS Out_City_Perc " +
+                                "FROM country co " +
+                                "JOIN (SELECT ci.countrycode, SUM(ci.population) AS Population " +
+                                "FROM city ci GROUP BY 1) ci ON ci.countrycode = co.code " +
+                                "GROUP BY Name;";
+            } else {
+                throw new IllegalArgumentException("Invalid option specified!");
+            }
+            // Get result set of the SQL query
+            resultSet = getResultSet(statement, query);
+            ArrayList<Country> result = addPopulations(resultSet, option);
+            // Generate report and send to "reports" folder
+            exporter.populationInAndOutReport(result, option, "AllCityPopulationsInAndOutEach" + option);
+            return result;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city populations");
+            return null;
+        }
+    }
+
+    /**
+     * Total population
+     */
+    public Country getPopulationOf() {
+        try {
+            // Create a new SQL statement
+            statement = connection.createStatement();
+            // Create string for SQL query
+            String query =
+                    "SELECT SUM(co.Population) AS Total_Pop, " +
+                            "SUM(ci.Population) AS In_city, " +
+                            "round(((SUM(ci.Population)/SUM(co.Population))*100),2) AS In_City_Perc, " +
+                            "SUM(co.Population) - SUM(ci.Population) AS Out_city, " +
+                            "round((((SUM(co.Population) - SUM(ci.Population))/SUM(co.Population))*100),2) AS Out_City_Perc " +
+                            "FROM country co " +
+                            "JOIN (SELECT ci.countrycode, SUM(ci.population) AS Population " +
+                            "FROM city ci GROUP BY 1) ci ON ci.countrycode = co.code;";
+            // Get result set of the SQL query
+            resultSet = getResultSet(statement, query);
+            Country result = addPopulation(resultSet, "World");
+            if (result == null) {
+                throw new RuntimeException("Country data is null!");
+            }
+            // Generate report and send to "reports" folder
+            exporter.populationReport(result, "PopulationOfTheWorld");
+            return result;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get population data!");
+            return null;
+        }
+    }
+
+    public Country getPopulationOf(String option, String area) {
+
+        if (option.isEmpty()) {
+            throw new IllegalArgumentException("Option must be specified!");
+        }
+
+        if (area.isEmpty()) {
+            throw new IllegalArgumentException("Area must be specified!");
+        }
+
+        try {
+            // Create a new SQL statement
+            statement = connection.createStatement();
+            // Create string for SQL query
+            String query;
+
+            if (option.equals("Continent")) {
+                query =
+                        "SELECT co.Continent AS Continent, SUM(co.Population) AS Total_Pop, " +
+                                "SUM(ci.Population) AS In_city, " +
+                                "round(((SUM(ci.Population)/SUM(co.Population))*100),2) AS In_City_Perc, " +
+                                "SUM(co.Population) - SUM(ci.Population) AS Out_city, " +
+                                "round((((SUM(co.Population) - SUM(ci.Population))/SUM(co.Population))*100),2) AS Out_City_Perc " +
+                                "FROM country co " +
+                                "WHERE co.Continent = '" + area + "'" +
+                                "JOIN (SELECT ci.countrycode, SUM(ci.population) AS Population " +
+                                "FROM city ci GROUP BY 1) ci ON ci.countrycode = co.code ";
+
+            } else if (option.equals("Country")) {
+                query =
+                        "SELECT co.Name AS Name, SUM(co.Population) AS Total_Pop, " +
+                                "SUM(ci.Population) AS In_city, " +
+                                "round(((SUM(ci.Population)/SUM(co.Population))*100),2) AS In_City_Perc, " +
+                                "SUM(co.Population) - SUM(ci.Population) AS Out_city, " +
+                                "round((((SUM(co.Population) - SUM(ci.Population))/SUM(co.Population))*100),2) AS Out_City_Perc " +
+                                "FROM country co " +
+                                "WHERE co.Name = '" + area + "'" +
+                                "JOIN (SELECT ci.countrycode, SUM(ci.population) AS Population " +
+                                "FROM city ci GROUP BY 1) ci ON ci.countrycode = co.code ";
+            } else {
+                throw new IllegalArgumentException("Invalid option specified!");
+            }
+            // Get result set of the SQL query
+            resultSet = getResultSet(statement, query);
+            Country result = addPopulation(resultSet, option);
+            // Generate report and send to "reports" folder
+            exporter.populationReport(result, "PopulationOf" + area);
+            return result;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get population data!");
+            return null;
+        }
+    }
+
+    public Country getPopulationOf(String option, String area, String subArea) {
+
+        if (option.isEmpty()) {
+            throw new IllegalArgumentException("Option must be specified!");
+        }
+
+        if (area.isEmpty()) {
+            throw new IllegalArgumentException("Area must be specified!");
+        }
+
+        if (subArea.isEmpty()) {
+            throw new IllegalArgumentException("Sub-area must be specified!");
+        }
+
+        try {
+            // Create a new SQL statement
+            statement = connection.createStatement();
+            // Create string for SQL query
+            String query;
+
+            if (option.equals("Region")) {
+                query =
+                        "SELECT co.Region AS Region, SUM(co.Population) AS Total_Pop, " +
+                                "SUM(ci.Population) AS In_city, " +
+                                "round(((SUM(ci.Population)/SUM(co.Population))*100),2) AS In_City_Perc, " +
+                                "SUM(co.Population) - SUM(ci.Population) AS Out_city, " +
+                                "round((((SUM(co.Population) - SUM(ci.Population))/SUM(co.Population))*100),2) AS Out_City_Perc " +
+                                "FROM country co " +
+                                "WHERE co.continent = '" + area + "' AND co.Region = '" + subArea + "'" +
+                                "JOIN (SELECT ci.countrycode, SUM(ci.population) AS Population " +
+                                "FROM city ci GROUP BY 1) ci ON ci.countrycode = co.code;";
+
+            } else if (option.equals("District")) {
+                query =
+                        "SELECT ci.District AS District, SUM(co.Population) AS Total_Pop, " +
+                                "SUM(ci.Population) AS In_city, " +
+                                "round(((SUM(ci.Population)/SUM(co.Population))*100),2) AS In_City_Perc, " +
+                                "SUM(co.Population) - SUM(ci.Population) AS Out_city, " +
+                                "round((((SUM(co.Population) - SUM(ci.Population))/SUM(co.Population))*100),2) AS Out_City_Perc " +
+                                "FROM country co " +
+                                "WHERE co.Name = '" + area + "' AND ci.District = '" + subArea + "'" +
+                                "JOIN (SELECT ci.countrycode, SUM(ci.population) AS Population " +
+                                "FROM city ci GROUP BY 1) ci ON ci.countrycode = co.code;";
+
+            } else if (option.equals("City")) {
+                query =
+                        "SELECT ci.Name AS City, SUM(co.Population) AS Total_Pop, " +
+                                "SUM(ci.Population) AS In_city, " +
+                                "round(((SUM(ci.Population)/SUM(co.Population))*100),2) AS In_City_Perc, " +
+                                "SUM(co.Population) - SUM(ci.Population) AS Out_city, " +
+                                "round((((SUM(co.Population) - SUM(ci.Population))/SUM(co.Population))*100),2) AS Out_City_Perc " +
+                                "FROM country co " +
+                                "WHERE ci.District = '" + area + "' AND ci.Name = '" + subArea + "'" +
+                                "JOIN (SELECT ci.countrycode, SUM(ci.population) AS Population " +
+                                "FROM city ci GROUP BY 1) ci ON ci.countrycode = co.code;";
+            } else {
+                throw new IllegalArgumentException("Invalid option specified!");
+            }
+            // Get result set of the SQL query
+            resultSet = getResultSet(statement, query);
+            Country result = addPopulation(resultSet, option);
+            // Generate report and send to "reports" folder
+            exporter.populationReport(result, "PopulationOf" + subArea);
+            return result;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get population data!");
+            return null;
+        }
+    }
