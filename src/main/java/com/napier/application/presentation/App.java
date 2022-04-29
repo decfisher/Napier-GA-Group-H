@@ -24,20 +24,39 @@ public class App {
         }
 
         SQLQuery query = new SQLQuery(a.getConnection());
+//        query.getCountryPopulation();
+//        query.getCountryPopulation("Continent", "Europe");
+//        query.getCountryPopulation("Region", "Eastern Africa");
+//        query.getCityPopulation();
+//        query.getCapitalCityPopulation();
+//        query.getPopulationInAndOutOfCities("Continent");
+//        query.getPopulationInAndOutOfCities("Region");
+//        query.getPopulationInAndOutOfCities("Country");
+//        query.getPopulationOf();
+//        query.getPopulationOf("Continent", "Africa");
+//        query.getPopulationOf("Region", "Europe", "Western Europe");
+//        query.getPopulationOf("Country", "United Kingdom");
+//        query.getPopulationOf("District", "United Kingdom", "England");
+//        query.getPopulationOf("City", "England", "London");
+
+        //James Test
         query.getCountryPopulation();
-        query.getCountryPopulation("Continent", "Europe");
-        query.getCountryPopulation("Region", "Eastern Africa");
+        query.getCountryPopulation("Continent","Europe");
+        query.getCountryPopulation("Region","Eastern Africa");
+        query.getTopNCountryPopulation(5);
+        query.getTopNCountryPopulation(5,"Continent","Europe");
+        query.getTopNCountryPopulation(5,"Region","Eastern Africa");
         query.getCityPopulation();
-        query.getCapitalCityPopulation();
-        query.getPopulationInAndOutOfCities("Continent");
-        query.getPopulationInAndOutOfCities("Region");
-        query.getPopulationInAndOutOfCities("Country");
-        query.getPopulationOf();
-        query.getPopulationOf("Continent", "Africa");
-        query.getPopulationOf("Region", "Europe", "Western Europe");
-        query.getPopulationOf("Country", "United Kingdom");
-        query.getPopulationOf("District", "United Kingdom", "England");
-        query.getPopulationOf("City", "England", "London");
+        query.getCityPopulation("Continent","Europe");
+        query.getCityPopulation("Region","Western Europe");
+        query.getCityPopulation("Country","United Kingdom");
+        query.getCityPopulation("District","England");
+        query.getCityPopulation(5);
+        query.getCityPopulation("Continent","Europe",5);
+        query.getCityPopulation("Region","Western Europe",5);
+        query.getCityPopulation("Country","United Kingdom",5);
+        query.getCityPopulation("District","England",5);
+        //End
 
         a.disconnect(); // Disconnect from database
     }

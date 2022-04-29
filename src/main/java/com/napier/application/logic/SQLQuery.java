@@ -252,7 +252,7 @@ public class SQLQuery {
         }
     }
 
-    // James Code here
+
     /**
      * Orders the cities in a continent/region/country/district based on population
      * @param name
@@ -349,11 +349,151 @@ public class SQLQuery {
             return null;
         }
     }
-    //end
+
 
     /**
      * Top N populated cities
+     *
      */
+    //Jamed Code Here
+
+    public ArrayList<City> getCityPopulation(int n) {
+
+        if (n < 1) {
+            throw new IllegalArgumentException("N must be greater than 0");
+        }
+
+        try {
+            // Create a new SQL statement
+            statement = connection.createStatement();
+            // Create string for SQL query
+            String query =
+                    "SELECT ci.Name, co.Name AS Country, ci.District, ci.Population "
+                            + "FROM city ci "
+                            + "LEFT JOIN country co ON ci.CountryCode = co.Code "
+                            + "ORDER BY ci.Population DESC "
+                            + " LIMIT " + n;
+            // Get result set of the SQL query
+            resultSet = getResultSet(statement, query);
+            ArrayList<City> result = addCities(resultSet);
+            // Generate report and send to "reports" folder
+            exporter.cityReport(result, "Top"+n+"CitiesInTheWorldLargestToSmallest");
+            return result;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get cities");
+            return null;
+        }
+    }
+
+
+    /**
+     * Orders the cities in a continent/region/country/district based on population
+     * @param name
+     * @param queryType
+     * @return an ArrayList of Cities
+     * Fix of bug returning incorrect output in unit test
+     */
+    public ArrayList<City> getCityPopulation(String queryType, String name, int n) {
+
+        if (queryType == null || name == null) {
+            throw new IllegalArgumentException("queryType or name must be specified");
+        }
+
+        if (n < 1) {
+            throw new IllegalArgumentException("N must be greater than 0");
+        }
+
+        try {
+
+            if (queryType.equals("Continent")) {
+                // Create a new SQL statement
+                statement = connection.createStatement();
+                // Create string for SQL query
+                String query =
+                        "SELECT ci.Name, co.Name AS Country, ci.District, ci.Population "
+                                + "FROM city ci "
+                                + "LEFT JOIN country co ON ci.CountryCode = co.Code "
+                                + "WHERE co.continent = '" + name + "'"
+                                + "ORDER BY ci.Population DESC "
+                                + "LIMIT " + n;
+
+                // Get result set of the SQL query
+                resultSet = getResultSet(statement, query);
+                ArrayList<City> result = addCities(resultSet);
+                // Generate report and send to "reports" folder
+                exporter.cityReport(result, "Top"+n+" citiesIn" + name +"LargestToSmallest");
+                return result;
+
+            } else if (queryType.equals("Region")) {
+                // Create a new SQL statement
+                statement = connection.createStatement();
+                // Create string for SQL query
+                String query =
+                        "SELECT ci.Name, co.Name AS Country, ci.District, ci.Population "
+                                + "FROM city ci "
+                                + "LEFT JOIN country co ON ci.CountryCode = co.Code "
+                                + "WHERE co.Region = '" + name + "'"
+                                + "ORDER BY ci.Population DESC "
+                                + "LIMIT " + n;
+
+                // Get result set of the SQL query
+                resultSet = getResultSet(statement, query);
+                ArrayList<City> result = addCities(resultSet);
+                // Generate report and send to "reports" folder
+                exporter.cityReport(result, "Top"+n+" citiesIn" + name +"LargestToSmallest");
+                return result;
+
+            } else if (queryType.equals("Country")) {
+                // Create a new SQL statement
+                statement = connection.createStatement();
+                // Create string for SQL query
+                String query =
+                        "SELECT ci.Name, co.Name AS Country, ci.District, ci.Population "
+                                + "FROM city ci "
+                                + "LEFT JOIN country co ON ci.CountryCode = co.Code "
+                                + "WHERE co.Name = '" + name + "'"
+                                + "ORDER BY ci.Population DESC "
+                                + "LIMIT " + n;
+
+                // Get result set of the SQL query
+                resultSet = getResultSet(statement, query);
+                ArrayList<City> result = addCities(resultSet);
+                // Generate report and send to "reports" folder
+                exporter.cityReport(result, "Top"+n+" citiesIn" + name +"LargestToSmallest");
+                return result;
+
+            } else if (queryType.equals("District")) {
+                // Create a new SQL statement
+                statement = connection.createStatement();
+                // Create string for SQL query
+                String query =
+                        "SELECT ci.Name, co.Name AS Country, ci.District, ci.Population "
+                                + "FROM city ci "
+                                + "LEFT JOIN country co ON ci.CountryCode = co.Code "
+                                + "WHERE ci.District = '" + name + "'"
+                                + "ORDER BY ci.Population DESC "
+                                + "LIMIT " + n;
+
+                // Get result set of the SQL query
+                resultSet = getResultSet(statement, query);
+                ArrayList<City> result = addCities(resultSet);
+                // Generate report and send to "reports" folder
+                exporter.cityReport(result, "Top"+n+" citiesIn" + name +"LargestToSmallest");
+                return result;
+
+            } else {
+                throw new Exception();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to execute getCityPopulation");
+            return null;
+        }
+    }
+
+    //End
 
 
     /**
