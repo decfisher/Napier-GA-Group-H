@@ -2,6 +2,7 @@ package com.napier.application.logic;
 
 import com.napier.application.data.City;
 import com.napier.application.data.Country;
+import com.napier.application.data.Language;
 
 import javax.xml.transform.Result;
 import java.sql.Connection;
@@ -127,6 +128,12 @@ public class SQLQuery {
     /**
      * Top N populated countries
      */
+
+    /**
+     * Outputs population of top n countries in the world
+     * @param n - number of countries to filter by
+     * @return
+     */
     public ArrayList<Country> getTopNCountryPopulation(int n) {
 
         if (n < 1) {
@@ -159,6 +166,13 @@ public class SQLQuery {
         }
     }
 
+    /**
+     * Outputs population of top n countries in a continent/region
+     * @param n - number of countries to filter by
+     * @param queryType - specifies continent or region
+     * @param name - name of continent/region
+     * @return
+     */
     public ArrayList<Country> getTopNCountryPopulation(int n, String queryType, String name) {
 
         if (n < 1) {
@@ -254,9 +268,9 @@ public class SQLQuery {
 
 
     /**
-     * Orders the cities in a continent/region/country/district based on population
-     * @param name
-     * @param queryType
+     * Outputs population of all cities in a continent/region/country/district - largest to smallest
+     * @param name - name of continent/region/country/district
+     * @param queryType - specifies continent/region/country/district
      * @return an ArrayList of Cities
      * Fix of bug returning incorrect output in unit test
      */
@@ -283,7 +297,7 @@ public class SQLQuery {
             resultSet = getResultSet(statement, query);
             ArrayList<City> result = addCities(resultSet);
             // Generate report and send to "reports" folder
-            exporter.cityReport(result, "AllCitiesIn" + name +"LargestToSmallest");
+            exporter.cityReport(result, "AllCitiesIn" + name + "LargestToSmallest");
             return result;
 
             } else if (queryType.equals("Region")) {
@@ -301,7 +315,7 @@ public class SQLQuery {
                 resultSet = getResultSet(statement, query);
                 ArrayList<City> result = addCities(resultSet);
                 // Generate report and send to "reports" folder
-                exporter.cityReport(result, "AllCitiesIn" + name +"LargestToSmallest");
+                exporter.cityReport(result, "AllCitiesIn" + name + "LargestToSmallest");
                 return result;
 
             } else if (queryType.equals("Country")) {
@@ -319,7 +333,7 @@ public class SQLQuery {
                 resultSet = getResultSet(statement, query);
                 ArrayList<City> result = addCities(resultSet);
                 // Generate report and send to "reports" folder
-                exporter.cityReport(result, "AllCitiesIn" + name +"LargestToSmallest");
+                exporter.cityReport(result, "AllCitiesIn" + name + "LargestToSmallest");
                 return result;
 
             } else if (queryType.equals("District")) {
@@ -352,12 +366,11 @@ public class SQLQuery {
 
 
     /**
-     * Top N populated cities
-     *
+     * Outputs population of top n cities in the world
+     * @param n - number of cities to filter by
+     * @return ArrayList of City
      */
-    //Jamed Code Here
-
-    public ArrayList<City> getCityPopulation(int n) {
+    public ArrayList<City> getTopNCityPopulation(int n) {
 
         if (n < 1) {
             throw new IllegalArgumentException("N must be greater than 0");
@@ -387,15 +400,14 @@ public class SQLQuery {
         }
     }
 
-
     /**
-     * Orders the cities in a continent/region/country/district based on population
-     * @param name
-     * @param queryType
-     * @return an ArrayList of Cities
-     * Fix of bug returning incorrect output in unit test
+     * Outputs population of top n cities in a continent/region/country/district - largest to smallest
+     * @param queryType - specifies continent/region/country/district
+     * @param name - name of continent/region/country/district
+     * @param n - number of countries to filter by
+     * @return ArrayList of City
      */
-    public ArrayList<City> getCityPopulation(String queryType, String name, int n) {
+    public ArrayList<City> getTopNCityPopulation(int n, String queryType, String name) {
 
         if (queryType == null || name == null) {
             throw new IllegalArgumentException("queryType or name must be specified");
@@ -423,7 +435,7 @@ public class SQLQuery {
                 resultSet = getResultSet(statement, query);
                 ArrayList<City> result = addCities(resultSet);
                 // Generate report and send to "reports" folder
-                exporter.cityReport(result, "Top"+n+" citiesIn" + name +"LargestToSmallest");
+                exporter.cityReport(result, "Top" + n + " CitiesIn" + name + "LargestToSmallest");
                 return result;
 
             } else if (queryType.equals("Region")) {
@@ -442,7 +454,7 @@ public class SQLQuery {
                 resultSet = getResultSet(statement, query);
                 ArrayList<City> result = addCities(resultSet);
                 // Generate report and send to "reports" folder
-                exporter.cityReport(result, "Top"+n+" citiesIn" + name +"LargestToSmallest");
+                exporter.cityReport(result, "Top" + n + " CitiesIn" + name + "LargestToSmallest");
                 return result;
 
             } else if (queryType.equals("Country")) {
@@ -461,7 +473,7 @@ public class SQLQuery {
                 resultSet = getResultSet(statement, query);
                 ArrayList<City> result = addCities(resultSet);
                 // Generate report and send to "reports" folder
-                exporter.cityReport(result, "Top"+n+" citiesIn" + name +"LargestToSmallest");
+                exporter.cityReport(result, "Top" + n + " CitiesIn" + name + "LargestToSmallest");
                 return result;
 
             } else if (queryType.equals("District")) {
@@ -480,7 +492,7 @@ public class SQLQuery {
                 resultSet = getResultSet(statement, query);
                 ArrayList<City> result = addCities(resultSet);
                 // Generate report and send to "reports" folder
-                exporter.cityReport(result, "Top"+n+" citiesIn" + name +"LargestToSmallest");
+                exporter.cityReport(result, "Top" + n + " CitiesIn" + name + "LargestToSmallest");
                 return result;
 
             } else {
@@ -493,13 +505,11 @@ public class SQLQuery {
         }
     }
 
-    //End
-
 
     /**
-     * Capital city population - Largest to smallest
+     * Outputs population of all capital cities in the world - largest to smallest
+     * @return ArrayList of City
      */
-
     public ArrayList<City> getCapitalCityPopulation() {
         try {
             // Create a new SQL statement
@@ -525,10 +535,13 @@ public class SQLQuery {
             return null;
         }
     }
-    /**
-     * Capital city population - Largest to smallest by continent or region
-     */
 
+    /**
+     * Outputs population of all capital cities in a continent/region - largest to smallest
+     * @param option - specifies continent/region
+     * @param input - specifies name of continent/region
+     * @return ArrayList of City
+     */
     public ArrayList<City> getCapitalCityPopulation(String option, String input) {
          if (option.isEmpty()) {
             throw new IllegalArgumentException("Option for query must be specified!");
@@ -578,42 +591,85 @@ public class SQLQuery {
     }
 
     /**
-     * Top N populated capital cities by continent or region
+     * Outputs population of top n capital cities in the world
+     * @param n - number of capital cities to filter by
+     * @return ArrayList of City
      */
-    public ArrayList<City> getTopNCapitalCityPopulation(String option, String input, int n) {
+    public ArrayList<City> getTopNCapitalCityPopulation(int n) {
+
         if (n < 1) {
             throw new NullPointerException("N must be greater than 0");
         }
-         if (option.isEmpty()) {
+
+        try {
+            // Create a new SQL statement
+            statement = connection.createStatement();
+            // Create string for SQL query
+            String query =
+                    "SELECT ci.Name, co.Name AS Country, ci.Population "
+                            + "FROM country co "
+                            + "LEFT JOIN city ci ON co.Capital = ci.ID "
+                            + "ORDER BY ci.Population DESC "
+                            + "LIMIT " + n + ";";
+
+
+            // Get result set of the SQL query
+            resultSet = getResultSet(statement, query);
+            ArrayList<City> result = addCapitalCities(resultSet);
+            // Generate report and send to "reports" folder
+            exporter.capitalCityReport(result, "Top" + n + "CapitalCitiesPopulationInTheWorld");
+            return result;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get capital cities");
+            return null;
+        }
+    }
+
+    /**
+     * Outputs population of top n capital cities in a continent/region
+     * @param n - number of capital cities to filter by
+     * @param option - specifies continent/region
+     * @param input - specifies name of continent/region
+     * @return ArrayList of City
+     */
+    public ArrayList<City> getTopNCapitalCityPopulation(int n, String option, String input) {
+        if (n < 1) {
+            throw new NullPointerException("N must be greater than 0");
+        }
+
+        if (option.isEmpty()) {
             throw new IllegalArgumentException("Option for query must be specified!");
         }
 
         if (input.isEmpty()) {
             throw new IllegalArgumentException("Input must be specified!");
         }
+
         try {
             // Create a new SQL statement
             statement = connection.createStatement();
             // Create string for SQL query
-            String query; 
-            
+            String query;
+
             if (option.equals("Continent")) {
                 query =
-                    "SELECT ci.Name, co.Name AS Country, ci.Population "
-                            + "FROM country co "
-                            + "LEFT JOIN city ci ON co.Capital = ci.ID "
-                            + "WHERE co.Continent = '" + input + "' "
-                            + "ORDER BY ci.Population DESC; "
-                            + " LIMIT " + n + ";";
-                
+                        "SELECT ci.Name, co.Name AS Country, ci.Population "
+                                + "FROM country co "
+                                + "LEFT JOIN city ci ON co.Capital = ci.ID "
+                                + "WHERE co.Continent = '" + input + "' "
+                                + "ORDER BY ci.Population DESC "
+                                + "LIMIT " + n + ";";
+
             } else if (option.equals("Region")) {
                 query =
-                    "SELECT ci.Name, co.Name AS Country, ci.Population "
-                            + "FROM country co "
-                            + "LEFT JOIN city ci ON co.Capital = ci.ID "
-                            + "WHERE co.Region = '" + input + "' "
-                            + "ORDER BY ci.Population DESC; "
-                            + " LIMIT " + n + ";";
+                        "SELECT ci.Name, co.Name AS Country, ci.Population "
+                                + "FROM country co "
+                                + "LEFT JOIN city ci ON co.Capital = ci.ID "
+                                + "WHERE co.Region = '" + input + "' "
+                                + "ORDER BY ci.Population DESC "
+                                + "LIMIT " + n + ";";
             } else {
                 throw new IllegalArgumentException("Invalid option specified!");
             }
@@ -623,7 +679,7 @@ public class SQLQuery {
             resultSet = getResultSet(statement, query);
             ArrayList<City> result = addCapitalCities(resultSet);
             // Generate report and send to "reports" folder
-            exporter.capitalCityReport(result, "GetTop" + n + "CapitalCitiesPopulationIn" + input);
+            exporter.capitalCityReport(result, "Top" + n + "CapitalCitiesPopulationIn" + input);
             return result;
 
         } catch (Exception e) {
@@ -632,39 +688,6 @@ public class SQLQuery {
             return null;
         }
     }
-     /**
-     * Top N populated capital cities
-     */
-    public ArrayList<City> getTopNCapitalCityPopulation(int n) {
-        if (n < 1) {
-            throw new NullPointerException("N must be greater than 0");
-        }
-        try {
-            // Create a new SQL statement
-            statement = connection.createStatement();
-            // Create string for SQL query
-            String query =
-                    "SELECT ci.Name, co.Name AS Country, ci.Population "
-                            + "FROM country co "
-                            + "LEFT JOIN city ci ON co.Capital = ci.ID "
-                            + "ORDER BY ci.Population DESC; "
-                            + " LIMIT " + n + ";";
-
-
-            // Get result set of the SQL query
-            resultSet = getResultSet(statement, query);
-            ArrayList<City> result = addCapitalCities(resultSet);
-            // Generate report and send to "reports" folder
-            exporter.capitalCityReport(result, "GetTop" + n + "CapitalCitiesPopulationInTheWorld");
-            return result;
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get capital cities");
-            return null;
-        }
-    }   
-    
     
     /**
      * Population in and out of cities
@@ -672,8 +695,8 @@ public class SQLQuery {
 
     /**
      * Outputs population in and out of all cities in a continent/region/country
-     * @param option - specifies whether continent/region/country
-     * @return
+     * @param option - specifies continent/region/country
+     * @return ArrayList of Country
      */
     public ArrayList<Country> getPopulationInAndOutOfCities(String option) {
         try {
@@ -741,22 +764,31 @@ public class SQLQuery {
     /**
      * Total population
      */
-    public Country getPopulationOf() {
+
+    /**
+     * Outputs total population of the world
+     * @return ArrayList of Country
+     */
+    public ArrayList<Country> getPopulationOf() {
         try {
             // Create a new SQL statement
             statement = connection.createStatement();
             // Create string for SQL query
             String query =
-                    "SELECT SUM(population) AS Population "
-                            + "FROM country co ;";
+                    "SELECT SUM(co.Population) AS Total_Pop, " +
+                            "SUM(ci.Population) AS In_city, " +
+                            "round(((SUM(ci.Population)/SUM(co.Population))*100),2) AS In_City_Perc, " +
+                            "SUM(co.Population) - SUM(ci.Population) AS Out_city, " +
+                            "round((((SUM(co.Population) - SUM(ci.Population))/SUM(co.Population))*100),2) AS Out_City_Perc " +
+                            "FROM country co " +
+                            "JOIN (SELECT ci.countrycode, SUM(ci.population) AS Population " +
+                            "FROM city ci GROUP BY 1) ci ON ci.countrycode = co.code;";
+
             // Get result set of the SQL query
             resultSet = getResultSet(statement, query);
-            Country result = addPopulation(resultSet, "World");
-            if (result == null) {
-                throw new RuntimeException("Country data is null!");
-            }
+            ArrayList<Country> result = addPopulations(resultSet, "World");
             // Generate report and send to "reports" folder
-            exporter.populationReport(result, "PopulationOfTheWorld");
+            exporter.populationInAndOutReport(result, "World", "PopulationOfTheWorld");
             return result;
 
         } catch (Exception e) {
@@ -766,7 +798,13 @@ public class SQLQuery {
         }
     }
 
-    public Country getPopulationOf(String option, String area) {
+    /**
+     * Outputs total population of a continent/country
+     * @param option - specifies continent/country
+     * @param area - specifies name of area
+     * @return Country
+     */
+    public ArrayList<Country> getPopulationOf(String option, String area) {
 
         if (option.isEmpty()) {
             throw new IllegalArgumentException("Option must be specified!");
@@ -784,23 +822,36 @@ public class SQLQuery {
 
             if (option.equals("Continent")) {
                 query =
-                        "SELECT co.Continent, SUM(population) AS Population "
-                                + "FROM country co "
-                                + "WHERE co.continent = '" + area + "';";
+                        "SELECT co.Continent AS Continent, SUM(co.Population) AS Total_Pop, " +
+                                "SUM(ci.Population) AS In_city, " +
+                                "round(((SUM(ci.Population)/SUM(co.Population))*100),2) AS In_City_Perc, " +
+                                "SUM(co.Population) - SUM(ci.Population) AS Out_city, " +
+                                "round((((SUM(co.Population) - SUM(ci.Population))/SUM(co.Population))*100),2) AS Out_City_Perc " +
+                                "FROM country co " +
+                                "JOIN (SELECT ci.countrycode, SUM(ci.population) AS Population " +
+                                "FROM city ci GROUP BY 1) ci ON ci.countrycode = co.code " +
+                                "WHERE co.Continent = '" + area + "';";
+
 
             } else if (option.equals("Country")) {
                 query =
-                        "SELECT Population "
-                                + "FROM country co "
-                                + "WHERE co.Name = '" + area + "';";
+                        "SELECT co.Name AS Name, SUM(co.Population) AS Total_Pop, " +
+                                "SUM(ci.Population) AS In_city, " +
+                                "round(((SUM(ci.Population)/SUM(co.Population))*100),2) AS In_City_Perc, " +
+                                "SUM(co.Population) - SUM(ci.Population) AS Out_city, " +
+                                "round((((SUM(co.Population) - SUM(ci.Population))/SUM(co.Population))*100),2) AS Out_City_Perc " +
+                                "FROM country co " +
+                                "JOIN (SELECT ci.countrycode, SUM(ci.population) AS Population " +
+                                "FROM city ci GROUP BY 1) ci ON ci.countrycode = co.code " +
+                                "WHERE co.Name = '" + area + "';";
             } else {
                 throw new IllegalArgumentException("Invalid option specified!");
             }
             // Get result set of the SQL query
             resultSet = getResultSet(statement, query);
-            Country result = addPopulation(resultSet, option);
+            ArrayList<Country> result = addPopulations(resultSet, option);
             // Generate report and send to "reports" folder
-            exporter.populationReport(result, "PopulationOf" + area);
+            exporter.populationInAndOutReport(result, option, "PopulationOf" + area);
             return result;
 
         } catch (Exception e) {
@@ -810,7 +861,14 @@ public class SQLQuery {
         }
     }
 
-    public Country getPopulationOf(String option, String area, String subArea) {
+    /**
+     * Outputs total population of a continent/country
+     * @param option - specifies region/district/city
+     * @param area - specifies name of area
+     * @param subArea - specifies name of sub-area
+     * @return Country
+     */
+    public ArrayList<Country> getPopulationOf(String option, String area, String subArea) {
 
         if (option.isEmpty()) {
             throw new IllegalArgumentException("Option must be specified!");
@@ -832,31 +890,50 @@ public class SQLQuery {
 
             if (option.equals("Region")) {
                 query =
-                        "SELECT co.Region, Population "
-                                + "FROM country co "
-                                + "WHERE co.continent = '" + area + "' AND co.Region = '" + subArea + "' ;";
+                        "SELECT co.Region AS Region, SUM(co.Population) AS Total_Pop, " +
+                                "SUM(ci.Population) AS In_city, " +
+                                "round(((SUM(ci.Population)/SUM(co.Population))*100),2) AS In_City_Perc, " +
+                                "SUM(co.Population) - SUM(ci.Population) AS Out_city, " +
+                                "round((((SUM(co.Population) - SUM(ci.Population))/SUM(co.Population))*100),2) AS Out_City_Perc " +
+                                "FROM country co " +
+                                "JOIN (SELECT ci.countrycode, SUM(ci.population) AS Population " +
+                                "FROM city ci GROUP BY 1) ci ON ci.countrycode = co.code " +
+                                "WHERE co.continent = '" + area + "' AND co.Region = '" + subArea + "';";
 
             } else if (option.equals("District")) {
                 query =
-                        "SELECT SUM(ci.Population) AS Population "
-                                + "FROM country co "
-                                + "LEFT JOIN city ci ON co.Capital = ci.ID "
-                                + "WHERE co.Name = '" + area + "' AND ci.District = '" + subArea +"';";
+                        "SELECT ci.District, SUM(ci.Population) AS Total_Pop, " +
+                                "SUM(ci.Population) AS In_city, " +
+                                "round(((SUM(ci.Population)/SUM(co.Population))*100),2) AS In_City_Perc, " +
+                                "SUM(co.Population) - SUM(ci.Population) AS Out_city, " +
+                                "round((((SUM(co.Population) - SUM(ci.Population))/SUM(co.Population))*100),2) AS Out_City_Perc " +
+                                "FROM country co " +
+                                "JOIN (SELECT ci.countrycode, ci.District, SUM(ci.population) AS Population " +
+                                "FROM city ci WHERE ci.District = '" + subArea + "' GROUP BY 1,2) ci ON ci.countrycode = co.code " +
+                                "WHERE co.Name = '" + area + "' AND ci.District = '" + subArea + "'" +
+                                "GROUP BY ci.District;";
 
             } else if (option.equals("City")) {
                 query =
-                        "SELECT SUM(ci.Population) AS Population "
-                                + "FROM country co "
-                                + "LEFT JOIN city ci ON co.Capital = ci.ID "
-                                + "WHERE ci.District = '" + area + "' AND ci.Name = '" + subArea +"';";
+                        "SELECT ci.Name, SUM(ci.Population) AS Total_Pop, " +
+                                "SUM(ci.Population) AS In_city, " +
+                                "round(((SUM(ci.Population)/SUM(co.Population))*100),2) AS In_City_Perc, " +
+                                "SUM(co.Population) - SUM(ci.Population) AS Out_city, " +
+                                "round((((SUM(co.Population) - SUM(ci.Population))/SUM(co.Population))*100),2) AS Out_City_Perc " +
+                                "FROM country co " +
+                                "JOIN (SELECT ci.countrycode, ci.Name, ci.District, SUM(ci.population) AS Population " +
+                                "FROM city ci WHERE ci.Name = '" + subArea + "'GROUP BY 1,2,3) ci ON ci.countrycode = co.code " +
+                                "WHERE ci.District = '" + area + "' AND ci.Name = '" + subArea + "'" +
+                                "GROUP BY ci.Name;";
+
             } else {
                 throw new IllegalArgumentException("Invalid option specified!");
             }
             // Get result set of the SQL query
             resultSet = getResultSet(statement, query);
-            Country result = addPopulation(resultSet, option);
+            ArrayList<Country> result = addPopulations(resultSet, option);
             // Generate report and send to "reports" folder
-            exporter.populationReport(result, "PopulationOf" + subArea);
+            exporter.populationInAndOutReport(result, option, "PopulationOf" + subArea);
             return result;
 
         } catch (Exception e) {
@@ -869,16 +946,53 @@ public class SQLQuery {
     /**
      * Languages - Percentage spoken
      */
+    public ArrayList<Language> getLanguagePercentage() {
+        try {
+            // Create a new SQL statement
+            statement = connection.createStatement();
+            // Create string for SQL query
+            String query =
+                    "SELECT A.Language, ROUND(SUM((A.Percentage/100) * (B.Population/1000000)),2) AS TotalSpeakers, " +
+                            "ROUND((SUM((A.Percentage/100) * (B.Population/1000000))/(SELECT SUM(Population/1000000) from country))*100,2) AS PercentOfWorldPop "
+                            + "FROM countrylanguage A "
+                            + "LEFT JOIN country B ON A.CountryCode = B.Code "
+                            + "WHERE A.Language IN('Chinese', 'English', 'Hindi', 'Spanish', 'Arabic') "
+                            + "GROUP BY A.Language "
+                            + "ORDER BY 2 DESC;";
 
+            // Get result set of the SQL query
+            resultSet = getResultSet(statement, query);
+            ArrayList<Language> result = addLanguages(resultSet);
+            // Generate report and send to "reports" folder
+            exporter.languageReport(result, "PercentageOfLanguagesSpoken");
+            return result;
+
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
     /**
      * Helper methods
      */
 
+    /**
+     * Gets result set of an SQL query
+     * @param statement - Statement object provided by connection
+     * @param query - String of query provided from query method
+     * @return ResultSet
+     * @throws SQLException
+     */
     private ResultSet getResultSet(Statement statement, String query) throws SQLException {
         return statement.executeQuery(query);
     }
 
+    /**
+     * Adds countries to an ArrayList to use as output
+     * @param resultSet - provided by query method which includes the results from SQL query
+     * @return ArrayList of Country
+     * @throws SQLException
+     */
     private ArrayList<Country> addCountries(ResultSet resultSet) throws SQLException {
         ArrayList<Country> countries = new ArrayList<>();
 
@@ -900,6 +1014,12 @@ public class SQLQuery {
         return countries;
     }
 
+    /**
+     * Adds cities to an ArrayList to use as output
+     * @param resultSet - provided by query method which includes the results from SQL query
+     * @return ArrayList of City
+     * @throws SQLException
+     */
     private ArrayList<City> addCities(ResultSet resultSet) throws SQLException {
         ArrayList<City> cities = new ArrayList<>();
 
@@ -914,6 +1034,12 @@ public class SQLQuery {
         return cities;
     }
 
+    /**
+     * Adds capital cities to an ArrayList to use as output
+     * @param resultSet - provided by query method which includes the results from SQL query
+     * @return ArrayList of City
+     * @throws SQLException
+     */
     private ArrayList<City> addCapitalCities(ResultSet resultSet) throws SQLException {
         ArrayList<City> capitalCities = new ArrayList<>();
 
@@ -927,16 +1053,30 @@ public class SQLQuery {
         return capitalCities;
     }
 
+    /**
+     * Adds populations to an ArrayList to use as output
+     * @param resultSet - provided by query method which includes the results from SQL query
+     * @param type - specifies continent/region/country
+     * @return ArrayList of Country
+     * @throws SQLException
+     */
     private ArrayList<Country> addPopulations(ResultSet resultSet, String type) throws SQLException {
         ArrayList<Country> populations = new ArrayList<>();
+
         while (resultSet.next()) {
             Country country = new Country();
-            if (type.equals("Continent")) {
+            if (type.equals("World")) {
+                country.Name = "World";
+            } else if (type.equals("Continent")) {
                 country.Continent = resultSet.getString("Continent");
             } else if (type.equals("Region")) {
                 country.Region = resultSet.getString("Region");
             } else if (type.equals("Country")) {
-                country.Name = resultSet.getString("NAME");
+                country.Name = resultSet.getString("Name");
+            } else if (type.equals("District")) {
+                country.District = resultSet.getString("ci.District");
+            } else if (type.equals("City")) {
+                country.Name = resultSet.getString("ci.Name");
             } else {
                 country.Name = null;
             }
@@ -950,6 +1090,13 @@ public class SQLQuery {
         return populations;
     }
 
+    /**
+     * Returns population to use as output
+     * @param resultSet - provided by query method which includes the results from SQL query
+     * @param name - name of world/continent/region/country/district/city
+     * @return ArrayList of Country
+     * @throws SQLException
+     */
     private Country addPopulation(ResultSet resultSet, String name) throws SQLException {
         if (resultSet.next()) {
             Country country = new Country();
@@ -958,5 +1105,23 @@ public class SQLQuery {
             return country;
         }
         return null;
+    }
+
+    /**
+     * Outputs languages to an ArrayList to use as an output
+     * @param resultSet - provided by query method which includes the results from SQL query
+     * @return ArrayList of Language
+     * @throws SQLException
+     */
+    private ArrayList<Language> addLanguages(ResultSet resultSet) throws SQLException {
+        ArrayList<Language> languages = new ArrayList<>();
+        while (resultSet.next()) {
+            Language language = new Language();
+            language.Language = resultSet.getString("Language");
+            language.TotalSpeakers = resultSet.getDouble("TotalSpeakers");
+            language.PercentOfWorldPop = resultSet.getDouble("PercentOfWorldPop");
+            languages.add(language);
+        }
+        return languages;
     }
 }

@@ -2,6 +2,7 @@ package com.napier.application.logic;
 
 import com.napier.application.data.City;
 import com.napier.application.data.Country;
+import com.napier.application.data.Language;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -126,8 +127,8 @@ public class Exporter {
         }
 
         // Print header
-        output.append("| " + type + " | Total Population | Population In Cities | Population In Cities (%) | Population Out of Cities | Population Out of Cities (%) |\r\n");
-        output.append("| --------- | ---------------- | -------------------- | ------------------------ | ------------------------ | ---------------------------- |\r\n");
+        output.append("| Area | Total Population | Population In Cities | Population In Cities (%) | Population Out of Cities | Population Out of Cities (%) |\r\n");
+        output.append("| ---- | ---------------- | -------------------- | ------------------------ | ------------------------ | ---------------------------- |\r\n");
 
         String option = "";
         // Loop over all countries in the list
@@ -144,7 +145,11 @@ public class Exporter {
                 option = population.Region;
             }
 
-            if (type.equals("Country")) {
+            if (type.equals("District")) {
+                option = population.District;
+            }
+
+            if (type.equals("Country") || type.equals("World") || type.equals("City")) {
                 option = population.Name;
             }
 
@@ -174,6 +179,34 @@ public class Exporter {
         output.append("| Name | Population |\r\n");
         output.append("| ---- | ---------- |\r\n");
         output.append("| " + country.Name + "| " + country.Population + " |\r\n");
+
+        if (!(output.length() == 0)) {
+            // Generate report directory and markdown file
+            generateReport(output, fileName);
+        }
+
+        output.setLength(0);
+    }
+
+    public void languageReport(ArrayList<Language> languages, String fileName) {
+        if (languages.isEmpty()) {
+            throw new IllegalArgumentException("Languages cannot be empty!");
+        }
+
+        if (fileName.isEmpty()) {
+            throw new IllegalArgumentException("No file name specified!");
+        }
+
+        // Print header
+        output.append("| Language | Total Speakers (M) | Percent Of World Population (%) |\r\n");
+        output.append("| -------- | ------------------ | ------------------------------- |\r\n");
+
+        for (Language language : languages) {
+            if (language == null) {
+                continue;
+            }
+            output.append("| " + language.Language + " | " + language.TotalSpeakers + " | " + language.PercentOfWorldPop + " |\r\n");
+        }
 
         if (!(output.length() == 0)) {
             // Generate report directory and markdown file
