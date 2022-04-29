@@ -141,15 +141,15 @@ public class SQLQuery {
                     "SELECT co.Code, ci.Name, co.Continent, co.Region, ci.Population, ci.Name AS CapitalCity "
                             + "FROM country co "
                             + "LEFT JOIN city ci ON co.Capital = ci.ID "
-                            + "ORDER BY ci.Population DESC; "
-                            + " LIMIT " + n;
+                            + "ORDER BY ci.Population DESC "
+                            + "LIMIT " + n;
 
             // Get result set of the SQL query
             resultSet = getResultSet(statement, query);
             // Return query result if query is successful
             ArrayList<Country> result = addCountries(resultSet);
             // Generate report and send to "reports" folder
-            exporter.countryReport(result, "MostPopulatedCountriesInTheWorld");
+            exporter.countryReport(result, "Top"+n+"PopulatedCountriesInTheWorld");
 
             return result;
         } catch (Exception e) {
@@ -182,15 +182,15 @@ public class SQLQuery {
                                 + "FROM country co "
                                 + "LEFT JOIN city ci ON co.Capital = ci.ID "
                                 + "WHERE continent = '" + name + "'"
-                                + "ORDER BY ci.Population DESC; "
-                                + " LIMIT " + n;
+                                + "ORDER BY ci.Population DESC "
+                                + "LIMIT " + n;
 
                 // Get result set of the SQL query
                 resultSet = getResultSet(statement, query);
                 // Return query result if query is successful
                 ArrayList<Country> result = addCountries(resultSet);
                 // Generate report and send to "reports" folder
-                exporter.countryReport(result, "MostPopulatedCountriesIn"+name);
+                exporter.countryReport(result, "Top"+n+"PopulatedCountriesIn"+name);
                 return result;
 
             } else if (queryType.equals("Region")) {
@@ -200,15 +200,15 @@ public class SQLQuery {
                                 + "FROM country co "
                                 + "LEFT JOIN city ci ON co.Capital = ci.ID "
                                 + "WHERE region = '" + name + "'"
-                                + "ORDER BY ci.Population DESC; "
-                                + " LIMIT " + n;
+                                + "ORDER BY ci.Population DESC "
+                                + "LIMIT " + n;
 
                 // Get result set of the SQL query
                 resultSet = getResultSet(statement, query);
                 // Return query result if query is successful
                 ArrayList<Country> result = addCountries(resultSet);
                 // Generate report and send to "reports" folder
-                exporter.countryReport(result, "MostPopulatedCountriesIn"+name);
+                exporter.countryReport(result, "Top"+n+"PopulatedCountriesIn"+name);
                 return result;
             } else {
                 return null;
